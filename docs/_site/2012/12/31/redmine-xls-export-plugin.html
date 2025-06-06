@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Redmine XLS Export pluginへの機能追加 | Your awesome title</title>
+<title>Redmine XLS Export pluginへの機能追加 | Step by Step</title>
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Redmine XLS Export pluginへの機能追加" />
 <meta name="author" content="ソフトウェア開発にまつわる話" />
@@ -12,7 +12,7 @@
 <meta property="og:description" content="以前、Redmine XLS Export plugin をgithubに入れて機能追加をしたりしてました。 ただ、0.2.0から大きくソースが変更されて以来、放置していました orz 過去のブログ Redmine XLS Export plugin Redmiine XLS Plugin 0.2.0を試す フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。 https://github.com/two-pack/redmine_xls_export リポジトリの整理 上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。 officialRedmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。 featuresRedmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。 次のリリースがあったら、 official へ追加してから features にマージ、と言う形で管理していけるといいかなと考えています。 日付の形式を指定する機能追加 以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。 https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb 以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。 今回、この辺なんとかしないとなあ、、、と思ったのは、ALminiumのプラグインリストに、上記githubのアドレスから取得しているのがコメントアウトされていたこと。 せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。 今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。" />
 <link rel="canonical" href="http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html" />
 <meta property="og:url" content="http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html" />
-<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:site_name" content="Step by Step" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2012-12-31T00:14:00+09:00" />
 <meta name="twitter:card" content="summary" />
@@ -20,10 +20,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2012-12-31T00:14:00+09:00","datePublished":"2012-12-31T00:14:00+09:00","description":"以前、Redmine XLS Export plugin をgithubに入れて機能追加をしたりしてました。 ただ、0.2.0から大きくソースが変更されて以来、放置していました orz 過去のブログ Redmine XLS Export plugin Redmiine XLS Plugin 0.2.0を試す フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。 https://github.com/two-pack/redmine_xls_export リポジトリの整理 上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。 officialRedmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。 featuresRedmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。 次のリリースがあったら、 official へ追加してから features にマージ、と言う形で管理していけるといいかなと考えています。 日付の形式を指定する機能追加 以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。 https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb 以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。 今回、この辺なんとかしないとなあ、、、と思ったのは、ALminiumのプラグインリストに、上記githubのアドレスから取得しているのがコメントアウトされていたこと。 せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。 今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。","headline":"Redmine XLS Export pluginへの機能追加","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html"},"url":"http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Step by Step" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Step by Step</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -90,19 +90,19 @@ https://github.com/two-pack/redmine_xls_export<br />
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Your awesome title</h2>
+    <h2 class="footer-heading">Step by Step</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+          <li class="p-name">Step by Step</li><li><a class="u-email" href="mailto:twopackas@gmail.com">twopackas@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/two-pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">two-pack</span></a></li><li><a href="https://www.twitter.com/two_pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">two_pack</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <p></p>
       </div>
     </div>
 

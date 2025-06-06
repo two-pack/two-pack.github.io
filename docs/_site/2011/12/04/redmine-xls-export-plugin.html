@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Redmine XLS Export plugin | Your awesome title</title>
+<title>Redmine XLS Export plugin | Step by Step</title>
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Redmine XLS Export plugin" />
 <meta name="author" content="ソフトウェア開発にまつわる話" />
@@ -12,7 +12,7 @@
 <meta property="og:description" content="Redmine Advent Calendar jp 2011の９日目になります。よろしくお願いします。 で、なにを書こう？ということで、XLS Export pluginについて書こうと思います。 どんなプラグイン？ このプラグインは、Vitaly Klimovさんの作られた、チケットの一覧をExcelの形式で出力するプラグインです。 普段はRedmineで見ていればいい情報も、どこかへの報告だったり、決められたExcelの帳票で提出しないとだったり、とExcelで出せると便利な場面はまだあります。そんなときに役立ちます。 こんな感じで、チケット一覧の右下に出力用のリンクが表示されます。 標準は、プラグインの設定画面で設定したとおりに出力します。 オプションは、出力方法を設定してから出力します。以下のような設定ができます。 どこにあるの？ プラグインのページからダウンロードできます。ダウンロードできるのは、ver0.1.3です。 リポジトリはどこからにあるのかな？と思って探してみたりもしたのですが、見つけられず。 代わりに、Redmineのフォーラムで機能追加したと投稿があったり、バージョンアップが行われていたりします。 http://www.redmine.org/boards/3/topics/11986 そんなわけで、プラグインのページから頂いたものをgithubに入れてRedmineのフォーラムで出てくる改善などを気の向くままに取り込んでいます。 https://github.com/two-pack/redmine_xls_export githubで取り込んでいること githubはver0.1.2をベースに始めました。ver0.1.3もマージしていますが、それ以外にもフォーラムにアップされた以下を反映しています。 フォーラムに投稿された変更 各種言語の翻訳。 サブタスク（チケットの親子関係）をインデントで示す機能。 履歴を出力する機能。 自前で追加した変更 日本語の翻訳。ver0.1.3にも取り込まれています。履歴出力の翻訳も、一部言語についてやってみました。 更新日時、作成日時に日付形式が反映されない問題の修正。また、日付の形式を指定できるようにしています。 翻訳について XLS Export pluginは、使える！けど日本語のリソースが無いと使ってもらいづらい・・・・というのがgithubに入れた発端でした。 フォーラムでもいろいろな言語が増えていってます。やはり、自分が使うものは母国語の方が使いやすいですしね。 履歴出力の機能のときは、Google翻訳を使って他の言語も翻訳してみました。History Exportというのを翻訳するのですが、Google翻訳でやったものを入れてOK・・・と思いかけましたが、既存の翻訳はどうなんだ？と思い調べてみると、全然違う；； 気づいてよかった、と思いながら既に使われているものに合わせました。。。 また、イタリア語の翻訳についてはイタリアの方がパッチを出してくれたのですが、別の方も翻訳をフォーラムにあげてくれました。微妙に違っていてさすがにその辺はわからないので、パッチ出してくれた方に、どっちのほうが適切か見てくれない？とお願いしてマージしたということがありました。 人のふんどしでgithubに登録したものですが、こういったことがあると面白いですね。 次は@yohhatuさんです。よろしくお願いします。" />
 <link rel="canonical" href="http://localhost:4000/2011/12/04/redmine-xls-export-plugin.html" />
 <meta property="og:url" content="http://localhost:4000/2011/12/04/redmine-xls-export-plugin.html" />
-<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:site_name" content="Step by Step" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2011-12-04T10:57:00+09:00" />
 <meta name="twitter:card" content="summary" />
@@ -20,10 +20,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2011-12-04T10:57:00+09:00","datePublished":"2011-12-04T10:57:00+09:00","description":"Redmine Advent Calendar jp 2011の９日目になります。よろしくお願いします。 で、なにを書こう？ということで、XLS Export pluginについて書こうと思います。 どんなプラグイン？ このプラグインは、Vitaly Klimovさんの作られた、チケットの一覧をExcelの形式で出力するプラグインです。 普段はRedmineで見ていればいい情報も、どこかへの報告だったり、決められたExcelの帳票で提出しないとだったり、とExcelで出せると便利な場面はまだあります。そんなときに役立ちます。 こんな感じで、チケット一覧の右下に出力用のリンクが表示されます。 標準は、プラグインの設定画面で設定したとおりに出力します。 オプションは、出力方法を設定してから出力します。以下のような設定ができます。 どこにあるの？ プラグインのページからダウンロードできます。ダウンロードできるのは、ver0.1.3です。 リポジトリはどこからにあるのかな？と思って探してみたりもしたのですが、見つけられず。 代わりに、Redmineのフォーラムで機能追加したと投稿があったり、バージョンアップが行われていたりします。 http://www.redmine.org/boards/3/topics/11986 そんなわけで、プラグインのページから頂いたものをgithubに入れてRedmineのフォーラムで出てくる改善などを気の向くままに取り込んでいます。 https://github.com/two-pack/redmine_xls_export githubで取り込んでいること githubはver0.1.2をベースに始めました。ver0.1.3もマージしていますが、それ以外にもフォーラムにアップされた以下を反映しています。 フォーラムに投稿された変更 各種言語の翻訳。 サブタスク（チケットの親子関係）をインデントで示す機能。 履歴を出力する機能。 自前で追加した変更 日本語の翻訳。ver0.1.3にも取り込まれています。履歴出力の翻訳も、一部言語についてやってみました。 更新日時、作成日時に日付形式が反映されない問題の修正。また、日付の形式を指定できるようにしています。 翻訳について XLS Export pluginは、使える！けど日本語のリソースが無いと使ってもらいづらい・・・・というのがgithubに入れた発端でした。 フォーラムでもいろいろな言語が増えていってます。やはり、自分が使うものは母国語の方が使いやすいですしね。 履歴出力の機能のときは、Google翻訳を使って他の言語も翻訳してみました。History Exportというのを翻訳するのですが、Google翻訳でやったものを入れてOK・・・と思いかけましたが、既存の翻訳はどうなんだ？と思い調べてみると、全然違う；； 気づいてよかった、と思いながら既に使われているものに合わせました。。。 また、イタリア語の翻訳についてはイタリアの方がパッチを出してくれたのですが、別の方も翻訳をフォーラムにあげてくれました。微妙に違っていてさすがにその辺はわからないので、パッチ出してくれた方に、どっちのほうが適切か見てくれない？とお願いしてマージしたということがありました。 人のふんどしでgithubに登録したものですが、こういったことがあると面白いですね。 次は@yohhatuさんです。よろしくお願いします。","headline":"Redmine XLS Export plugin","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2011/12/04/redmine-xls-export-plugin.html"},"url":"http://localhost:4000/2011/12/04/redmine-xls-export-plugin.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Step by Step" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Step by Step</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -103,19 +103,19 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Your awesome title</h2>
+    <h2 class="footer-heading">Step by Step</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+          <li class="p-name">Step by Step</li><li><a class="u-email" href="mailto:twopackas@gmail.com">twopackas@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/two-pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">two-pack</span></a></li><li><a href="https://www.twitter.com/two_pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">two_pack</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <p></p>
       </div>
     </div>
 

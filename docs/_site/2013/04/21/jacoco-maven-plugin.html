@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>JaCoCO Maven Pluginでテストケースのカバレッジもとる | Your awesome title</title>
+<title>JaCoCO Maven Pluginでテストケースのカバレッジもとる | Step by Step</title>
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="JaCoCO Maven Pluginでテストケースのカバレッジもとる" />
 <meta name="author" content="ソフトウェア開発にまつわる話" />
@@ -12,7 +12,7 @@
 <meta property="og:description" content="JaCoCoというJavaのカバレッジライブラリを調べています。 テストコードを書いて確認。EclipseのプラグインであるEclEMMAは内部でJaCoCoを使っています。 とりあえずオールグリーンです。 カバレッジが100%ではないですが、ここでは問題にしません。＃ほんとはこれを調べてたんですが。 ちゃんとテストコードのカバレッジもとれてます。 次にMaven Pluginです。使ったバージョンは、0.6.3-SNAPSHOT。 HTML、XML、CSVでレポートが出力されます。HTMLのレポートを開いたものです。テストコードのカバレッジが無いです。 調べていくと、prepare-agentゴールでデータを作って、reportゴールでレポート化しています。 prepare-agentゴールでは、JavaAgentを使ってデータを取っています。この辺はたぶんEclEMMAも一緒のはず。 実際、HTMLレポートのSessionsのリンクをたどると、実行時のデータがすべて出てます。 ここを見るとちゃんとテストコードも通ってます。ということは、データは取れているけどレポートできてない、EclEMMAで出てるという事は、Maven Pluginで出ていないですね。 で、いろいろとpomをいじってみましたが駄目だったのでソースをみることに。 https://github.com/two-pack/jacoco/blob/master/jacoco-maven-plugin/src/org/jacoco/maven/BundleCreator.java public IBundleCoverage createBundle( final ExecutionDataStore executionDataStore) throws IOException { final CoverageBuilder builder = new CoverageBuilder(); final Analyzer analyzer = new Analyzer(executionDataStore, builder); final File classesDir = new File(this.project.getBuild() .getOutputDirectory());" />
 <link rel="canonical" href="http://localhost:4000/2013/04/21/jacoco-maven-plugin.html" />
 <meta property="og:url" content="http://localhost:4000/2013/04/21/jacoco-maven-plugin.html" />
-<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:site_name" content="Step by Step" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2013-04-21T18:02:00+09:00" />
 <meta name="twitter:card" content="summary" />
@@ -20,10 +20,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2013-04-21T18:02:00+09:00","datePublished":"2013-04-21T18:02:00+09:00","description":"JaCoCoというJavaのカバレッジライブラリを調べています。 テストコードを書いて確認。EclipseのプラグインであるEclEMMAは内部でJaCoCoを使っています。 とりあえずオールグリーンです。 カバレッジが100%ではないですが、ここでは問題にしません。＃ほんとはこれを調べてたんですが。 ちゃんとテストコードのカバレッジもとれてます。 次にMaven Pluginです。使ったバージョンは、0.6.3-SNAPSHOT。 HTML、XML、CSVでレポートが出力されます。HTMLのレポートを開いたものです。テストコードのカバレッジが無いです。 調べていくと、prepare-agentゴールでデータを作って、reportゴールでレポート化しています。 prepare-agentゴールでは、JavaAgentを使ってデータを取っています。この辺はたぶんEclEMMAも一緒のはず。 実際、HTMLレポートのSessionsのリンクをたどると、実行時のデータがすべて出てます。 ここを見るとちゃんとテストコードも通ってます。ということは、データは取れているけどレポートできてない、EclEMMAで出てるという事は、Maven Pluginで出ていないですね。 で、いろいろとpomをいじってみましたが駄目だったのでソースをみることに。 https://github.com/two-pack/jacoco/blob/master/jacoco-maven-plugin/src/org/jacoco/maven/BundleCreator.java public IBundleCoverage createBundle( final ExecutionDataStore executionDataStore) throws IOException { final CoverageBuilder builder = new CoverageBuilder(); final Analyzer analyzer = new Analyzer(executionDataStore, builder); final File classesDir = new File(this.project.getBuild() .getOutputDirectory());","headline":"JaCoCO Maven Pluginでテストケースのカバレッジもとる","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2013/04/21/jacoco-maven-plugin.html"},"url":"http://localhost:4000/2013/04/21/jacoco-maven-plugin.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Step by Step" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Step by Step</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -129,19 +129,19 @@ classesDirがgetOutputDirectory()になってます。target/classesだけみた
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Your awesome title</h2>
+    <h2 class="footer-heading">Step by Step</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+          <li class="p-name">Step by Step</li><li><a class="u-email" href="mailto:twopackas@gmail.com">twopackas@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/two-pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">two-pack</span></a></li><li><a href="https://www.twitter.com/two_pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">two_pack</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <p></p>
       </div>
     </div>
 

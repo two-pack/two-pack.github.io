@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>JavaScript+QUnitでTDDしてみた。 | Your awesome title</title>
+<title>JavaScript+QUnitでTDDしてみた。 | Step by Step</title>
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="JavaScript+QUnitでTDDしてみた。" />
 <meta name="author" content="ソフトウェア開発にまつわる話" />
@@ -12,7 +12,7 @@
 <meta property="og:description" content="TDD Boot Camp 行ったので復習を兼ねて JavaScript で TDD してみました。 なんでC言語でやら（ry お題 JQueryを使ってFizzBuzz、にしました。 ちなみに、JavaScriptはわかりません。Google先生に誰が知ってるか聞きました。 JQueryもわかりません。Google先生に誰が知ってるか聞きました。 いろいろ調べ過ぎてどこみたかも不明ですが、ツイート参照ということで、先人に感謝。 準備 環境は QUnit + Eclipse + JSDT Plugin という感じでやりました。 jsTestDriver を使おうとしたのですが、うまく行かず、テストの実行自体はブラウザです。 JQueryはダウンロードしてきて、main/js/external/ というフォルダを作っていれました。 QUnitの準備 QUnit は npm で入れました。package.jsonを作ったので、PJルートで以下のコマンドでインストールされます。 /node_modules にインストールされるので、そこのパスをみるように実装しています。 $ npm install テスト実装のHTMLは /test/html/runner.html です。 基本的にはオフィシャルをみれば分かる感じでしたが、 #qunit-fixture のdivタグの中に、評価条件のHTMLを入れるというのがポイントでした。 テストコードの setup() でタグを置き換えても良さそうでしたが、今回は複雑ではないので固定にして、プロダクトコードの body と一緒にしています。 ちなみに、 #qunit-fixture の divタグ内は、テストケースごとに初期化されます。 この状態でブラウザで runner.html を開いておいて随時テストを実行します。 TDDをやった経過 TODOリストも随時コミットすれば良かった・・・と思ったのは後の祭り。 でも、最終的なものをコミットしています。 Red -&gt; Green -&gt; Refactoring の流れのうち、Red -&gt; Green でコミット、 Refactoring でコミットを基本にして、 Red -&gt; Green -&gt; Refactoring でコミット、大きなリファクタリングでのコミットと、ログで経過が追えるようにしました。 仮実装、三角測量といった TDD Boot Camp で体験した事を意識してやりました。 気になるポイント ”Refactors that Expected exchanges Result.” のコミットで修正したのですが、 QUnit では (期待値, 実測値) ではなく (実測値, 期待値) なんですね。 ちゃんと調べてやらないから（ry そもそも大きくないコード量なのですが、”Refactors selecting colors.”のコミットは、if文がちょっと・・・でリファクタリングしたのですが、なんかもっといい方法がありそうな？ HTMLからのイベント（onClick）、表示を扱うViewModel（fizzbuzz_vm.js）と、fizzbuzzのロジックを扱うModel（fizzbuzz.js）に分けて作りはじめました（最後までそうなのですが）。MVVMって言葉に憧れてwこういう名前にしただけですが、イメージ合ってるのかしら？ モックを使う必要は今回なかったですが、ModelとVM分けたのでテストを書きやすくなった、というかテストすべき範囲がはっきりした感じはしました。 Modelの振る舞いという視点と、操作とそれをきっかけにした表示更新という視点で分けやすくなりました。　＃当たり前？ 残課題 折角の JavaScript なんで BitBucket 上で動かしてみれるようにしてみたい、、、、と index.html を入れてみたんだけども動かず。 jsTestDriver がイマイチうまく動かず。Phantom.js での CI 以外にも各ブラウザでテスト実行できるのは良さそうなので、もうちょっと調べてみたいです。 最後に やっぱ、TDDいいです。楽しい。TDD Boot Campバンザイw" />
 <link rel="canonical" href="http://localhost:4000/2013/05/25/javascriptqunittdd.html" />
 <meta property="og:url" content="http://localhost:4000/2013/05/25/javascriptqunittdd.html" />
-<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:site_name" content="Step by Step" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2013-05-25T00:04:00+09:00" />
 <meta name="twitter:card" content="summary" />
@@ -20,10 +20,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2013-05-25T00:04:00+09:00","datePublished":"2013-05-25T00:04:00+09:00","description":"TDD Boot Camp 行ったので復習を兼ねて JavaScript で TDD してみました。 なんでC言語でやら（ry お題 JQueryを使ってFizzBuzz、にしました。 ちなみに、JavaScriptはわかりません。Google先生に誰が知ってるか聞きました。 JQueryもわかりません。Google先生に誰が知ってるか聞きました。 いろいろ調べ過ぎてどこみたかも不明ですが、ツイート参照ということで、先人に感謝。 準備 環境は QUnit + Eclipse + JSDT Plugin という感じでやりました。 jsTestDriver を使おうとしたのですが、うまく行かず、テストの実行自体はブラウザです。 JQueryはダウンロードしてきて、main/js/external/ というフォルダを作っていれました。 QUnitの準備 QUnit は npm で入れました。package.jsonを作ったので、PJルートで以下のコマンドでインストールされます。 /node_modules にインストールされるので、そこのパスをみるように実装しています。 $ npm install テスト実装のHTMLは /test/html/runner.html です。 基本的にはオフィシャルをみれば分かる感じでしたが、 #qunit-fixture のdivタグの中に、評価条件のHTMLを入れるというのがポイントでした。 テストコードの setup() でタグを置き換えても良さそうでしたが、今回は複雑ではないので固定にして、プロダクトコードの body と一緒にしています。 ちなみに、 #qunit-fixture の divタグ内は、テストケースごとに初期化されます。 この状態でブラウザで runner.html を開いておいて随時テストを実行します。 TDDをやった経過 TODOリストも随時コミットすれば良かった・・・と思ったのは後の祭り。 でも、最終的なものをコミットしています。 Red -&gt; Green -&gt; Refactoring の流れのうち、Red -&gt; Green でコミット、 Refactoring でコミットを基本にして、 Red -&gt; Green -&gt; Refactoring でコミット、大きなリファクタリングでのコミットと、ログで経過が追えるようにしました。 仮実装、三角測量といった TDD Boot Camp で体験した事を意識してやりました。 気になるポイント ”Refactors that Expected exchanges Result.” のコミットで修正したのですが、 QUnit では (期待値, 実測値) ではなく (実測値, 期待値) なんですね。 ちゃんと調べてやらないから（ry そもそも大きくないコード量なのですが、”Refactors selecting colors.”のコミットは、if文がちょっと・・・でリファクタリングしたのですが、なんかもっといい方法がありそうな？ HTMLからのイベント（onClick）、表示を扱うViewModel（fizzbuzz_vm.js）と、fizzbuzzのロジックを扱うModel（fizzbuzz.js）に分けて作りはじめました（最後までそうなのですが）。MVVMって言葉に憧れてwこういう名前にしただけですが、イメージ合ってるのかしら？ モックを使う必要は今回なかったですが、ModelとVM分けたのでテストを書きやすくなった、というかテストすべき範囲がはっきりした感じはしました。 Modelの振る舞いという視点と、操作とそれをきっかけにした表示更新という視点で分けやすくなりました。　＃当たり前？ 残課題 折角の JavaScript なんで BitBucket 上で動かしてみれるようにしてみたい、、、、と index.html を入れてみたんだけども動かず。 jsTestDriver がイマイチうまく動かず。Phantom.js での CI 以外にも各ブラウザでテスト実行できるのは良さそうなので、もうちょっと調べてみたいです。 最後に やっぱ、TDDいいです。楽しい。TDD Boot Campバンザイw","headline":"JavaScript+QUnitでTDDしてみた。","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2013/05/25/javascriptqunittdd.html"},"url":"http://localhost:4000/2013/05/25/javascriptqunittdd.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Step by Step" /></head>
 <body><header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Step by Step</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -115,19 +115,19 @@ Modelの振る舞いという視点と、操作とそれをきっかけにした
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Your awesome title</h2>
+    <h2 class="footer-heading">Step by Step</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+          <li class="p-name">Step by Step</li><li><a class="u-email" href="mailto:twopackas@gmail.com">twopackas@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/two-pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">two-pack</span></a></li><li><a href="https://www.twitter.com/two_pack"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">two_pack</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
-        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <p></p>
       </div>
     </div>
 
