@@ -1,0 +1,32 @@
+---
+layout: post
+title: Spring3 MVCでJSONを返すRESTもどき2
+date: '2012-11-27T21:25:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Spring
+modified_time: '2013-01-09T07:35:20.062+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-52930643418732937
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/11/spring3-mvcjsonrest2.html
+---
+
+今回は電車の中でやってます。<br />
+というわけで、HTTPステータスコードを返す&amp;Junitでのテストです。<br />
+<br />
+<h2>ステータスコードの設定</h2>ステータスコードの設定は、コントローラーのメソッドに対して@ResponseStatusアノテーションでできる。<br />
+ステータスコード自体は、HttpStatus.*を使う。<br />
+<br />
+POSTで201(Created)を返すコードを追加した。<br />
+試してみるのに<a href="http://code.google.com/p/rest-client/" target="_blank">rest-client</a>を使用した。これは便利。<br />
+<br />
+作成したコードは以下でコミット。<br />
+<a href="https://bitbucket.org/twopack/jsonrest/changeset/c903d770a37754f04ddd0dccaa83971e">https://bitbucket.org/twopack/jsonrest/changeset/c903d770a37754f04ddd0dccaa83971e</a><br />
+<br />
+<h2>RESTをJUnitでテストする</h2><a href="http://developer.eclipsesource.com/restfuse/" target="_blank">restfuse</a>を使用。<br />
+前回のpom.xmlでJUnitのバージョンを4.6としていたせいで、@Ruleアノテーションが使えずはまった。。<br />
+他はrestfuseのトップにあるとおりでできた。<br />
+JSONについては、JacksonのObjectMapperを使ってMapにしてから比較するようにした。<br />
+<br />
+作成したコードは以下でコミット。<br />
+<a href="https://bitbucket.org/twopack/jsonrest/changeset/1e233fb47e482b80fc3bf69156c04e76">https://bitbucket.org/twopack/jsonrest/changeset/1e233fb47e482b80fc3bf69156c04e76</a><br />
+<br />

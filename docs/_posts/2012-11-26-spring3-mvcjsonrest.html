@@ -1,0 +1,42 @@
+---
+layout: post
+title: Spring3 MVCでJSONを返すRESTもどき
+date: '2012-11-26T23:45:00.005+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Spring
+modified_time: '2013-01-09T07:35:20.061+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-4764843731801345487
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/11/spring3-mvcjsonrest.html
+---
+
+Eclipseでプロジェクトを作るところから開始。<br />
+環境は、Mac OS X 10.7.5 + Eclipse Juno + Spring Tool Suite。<br />
+<br />
+<h3>
+プロジェクトの作成</h3>
+<ol>
+<li>File -&gt; New -&gt; Other -&gt; Spring Template Project -&gt; Spring MVC Project<br />
+の順で選択していく。Importの確認メッセージがでたらYesで継続する。</li>
+<li>Project NameとPackage Nameを入力してFinish。</li>
+<li>junitのdependencyでエラーになったため、pom.xmlでバージョンを4.6に変更。</li>
+<li>Debug As -&gt; Debug on Server でできたプロジェクトを実行する。<br />
+今回はTomcat6で実行した。</li>
+<li>ここまでで、Hello Worldが表示される。</li>
+</ol>
+<h3>
+JSONを返す処理</h3>
+<a href="http://blog.safaribooksonline.com/2012/03/28/spring-mvc-tip-returning-json-from-a-spring-controller/">Spring MVC Tip: Returning JSON from a Spring Controller</a><br />
+<a href="http://d.hatena.ne.jp/ryoasai/20110203/1296749495" target="_blank">Spring MVCでJSONデータを返すための手順</a><br />
+を参考にして処理を作成した。<br />
+<ol>
+<li>pom.xmlにjackson-mapper-aslの依存関係を追加。</li>
+<li>servlet-context.xmlでMappingJacksonJsonViewを使うように内容を修正。</li>
+<li>コントローラーにGETに対する処理を追加。<br />
+@RequestBody, @RequestMapping, @PathVariableのアノテーションを利用。<br />
+Personクラスを返した結果として、JSONに変換が行われる。</li>
+</ol>
+<br />
+とりあえず、ここまで。<br />
+ソースは以下にアップ。<br />
+<a href="https://bitbucket.org/twopack/jsonrest/changeset/5c0ddd8400ba24e9fbdd976dad288567cc653f94">https://bitbucket.org/twopack/jsonrest/changeset/5c0ddd8400ba24e9fbdd976dad288567cc653f94</a>

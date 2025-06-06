@@ -1,0 +1,82 @@
+---
+layout: post
+title: "[Spring Advent Calendar 2013 3日目] Thymesheetを使ってみる #spadc13"
+date: '2013-12-03T21:39:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2013-12-03T21:39:21.785+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-3741248473782510485
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2013/12/spring-advent-calendar-2013-3.html
+---
+
+Spring Advent Calendar 2013 3日目です。<br />
+<a href="http://www.adventar.org/calendars/153">http://www.adventar.org/calendars/153</a><br />
+<br />
+<h1>Thymesheetとは</h1><br />
+Thymeleafのテンプレートからth属性を取り除いてCSSみたいに外だししようというものです。<br />
+<a href="https://github.com/connect-group/thymesheet">https://github.com/connect-group/thymesheet</a><br />
+<br />
+<br />
+<h1>Thymeleafのおさらい</h1><br />
+ThymesheetのREADMEに書いてあるので、おさらいがてら適当訳してみました。<br />
+<br />
+Thymeleafは、Javaのライブラリーです。XHTML/HTML5を提供するWebはもちろんWebでない環境でもっともいい感じの、XML / XHTML / HTML5（他のフォーマットも拡張可能）のテンプレートエンジンです。<br />
+Spring MVCに組み込むためのモジュールが提供されており、Spring MVCのJSPテンプレートエンジンに対する、HTML5での完全な代替として使うことが出来ます。<br />
+Thymeleafのゴールは、エレガントでちゃんとした形式でのパワフルで自然なテンプレート、つまり静的なプロトタイプとして動作しブラウザで正しく表示できるテンプレートを作る方法を提供することです。<br />
+<br />
+詳しくは<a href="http://www.thymeleaf.org/">こちら</a>をご覧下さい。<br />
+<br />
+<br />
+<h1>Thymesheetの使い方</h1><br />
+とっかかりレベルではREADMEみればOKって感じですが、一応サンプル作ってみました。<br />
+去年のAdvent Calendarで書いたものから修正しています。<br />
+https://bitbucket.org/twopack/spring-thymeleaf/branch/thymesheet<br />
+というわけで、さくさくと説明です。<br />
+<br />
+<h1>Mavenの設定</h1><br />
+pom.xmlに以下を追加します。<br />
+Thymesheetは、Thymeleafは2.1.0以降をサポートですのでdependencyのバージョンもチェック。<br />
+<pre class="prettyprint">&lt;dependency&gt;
+        &lt;groupId&gt;com.connect-group&lt;/groupId&gt;
+        &lt;artifactId&gt;thymesheet-spring3&lt;/artifactId&gt;
+        &lt;version&gt;2.1.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre><br />
+<h1>Spring Configration</h1>コンテキストファイルでテンプレートエンジンの指定をThymesheetのものにします。<br />
+<pre class="prettyprint">&lt;beans:bean id=&quot;templateEngine&quot; class=&quot;com.connect_group.thymesheet.spring3.SpringThymesheetTemplateEngine&quot;&gt;
+    &lt;beans:property name=&quot;templateResolver&quot; ref=&quot;templateResolver&quot; /&gt;
+&lt;/beans:bean&gt;
+</pre><br />
+<h1>テンプレート</h1><br />
+今回のサンプルだとThymesheetを使う前はこんなです。<br />
+<pre class="prettyprint">&lt;P th:text=&quot;${serverTimeMessage}&quot;&gt;  The time on the server is 2012/12/05 10:01:10 JST. &lt;/P&gt;
+</pre><br />
+これが、Thymesheetを使うとこんなになります。th属性はなくなりました。<br />
+<pre class="prettyprint">&lt;P&gt;  The time on the server is 2012/12/05 10:01:10 JST. &lt;/P&gt;
+</pre><br />
+ただし、CSSのようにTSSファイル（Thymesheet Style Sheetかな？）をリンクします。<br />
+th属性で指定していた埋め込みの情報は、home.tssに追い出しています。<br />
+<pre class="prettyprint">&lt;link rel=&quot;thymesheet&quot; href=&quot;resources/ts/home.tss&quot;/&gt;
+</pre><br />
+<h1>TSSファイル</h1><br />
+で、TSSファイルは以下です。とっかかり過ぎですねw<br />
+pタグは以下のth属性入れてね、ということです。<br />
+<pre class="prettyprint">p { 
+    th-text: &quot;${serverTimeMessage}&quot;
+}
+</pre><br />
+th:textがth-textになったぐらいです。わかりやすいですね。<br />
+CSSのようなイメージで以下のような表現が出来ます。READMEより拝借。<br />
+<pre class="prettyprint">table &gt; tbody &gt; tr {
+    th-each:&quot;prod : ${allProducts}&quot;;
+}
+</pre><br />
+<br />
+<h1>まとめ</h1><br />
+Thymeleafのコンセプトを更に進めた感じのものだなと思います。<br />
+さらにHTMLとの分離が進んで、デザイナーさんとの分解点がはっきりすると思います。<br />
+ただ、実用するにはとっかかりだけじゃ不十分ですね、完全に。。。。<br />
+Standard Dialectとの対応など、いろいろ確認してみないとダメかな、という感じです。また来年w<br />
+<br />
+<br />
+明日はToshiaki Makiさんです！<br />

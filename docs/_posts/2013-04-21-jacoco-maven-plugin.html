@@ -1,0 +1,83 @@
+---
+layout: post
+title: JaCoCO Maven Pluginでテストケースのカバレッジもとる
+date: '2013-04-21T18:02:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2013-04-21T18:02:41.209+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyGS0VYh3gaKvrtPXtTEX_7Zti7KNRWEZ56sKmQMRE7jvpf2UPeNCECCHETL55Jq8jLaXhqoj12iyEz4v2d3IMqFQFYb_UG-SF99e8U6cWxKFO_WmjXR8FheP99rjj-9xYGw3UPklxT1Q/s72-c/allgreen.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-1207629375320620194
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2013/04/jacoco-maven-plugin.html
+---
+
+<a href="http://www.eclemma.org/jacoco/trunk/index.html">JaCoCo</a>というJavaのカバレッジライブラリを調べています。<br />
+<br />
+<a href="https://bitbucket.org/twopack/jacoco-sample">テストコード</a>を書いて確認。Eclipseのプラグインである<a href="http://www.eclemma.org/index.html">EclEMMA</a>は内部でJaCoCoを使っています。<br />
+とりあえずオールグリーンです。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyGS0VYh3gaKvrtPXtTEX_7Zti7KNRWEZ56sKmQMRE7jvpf2UPeNCECCHETL55Jq8jLaXhqoj12iyEz4v2d3IMqFQFYb_UG-SF99e8U6cWxKFO_WmjXR8FheP99rjj-9xYGw3UPklxT1Q/s1600/allgreen.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyGS0VYh3gaKvrtPXtTEX_7Zti7KNRWEZ56sKmQMRE7jvpf2UPeNCECCHETL55Jq8jLaXhqoj12iyEz4v2d3IMqFQFYb_UG-SF99e8U6cWxKFO_WmjXR8FheP99rjj-9xYGw3UPklxT1Q/s320/allgreen.png" /></a><br />
+<br />
+カバレッジが100%ではないですが、ここでは問題にしません。＃ほんとはこれを調べてたんですが。<br />
+ちゃんとテストコードのカバレッジもとれてます。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYrORXiNRQntosXIcisM1AOoPNlp33MIpkqrk0N8Vxw89vQgURb2sz-gh3O_azwS21kcJJF7yT4YBH_MjhxMZwNaGjwjmBQNoBO070NVZP9Bs5gB8Ns9YrYXjXxRmB5U-zFs0pA2RvBFQ/s1600/coverage1.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYrORXiNRQntosXIcisM1AOoPNlp33MIpkqrk0N8Vxw89vQgURb2sz-gh3O_azwS21kcJJF7yT4YBH_MjhxMZwNaGjwjmBQNoBO070NVZP9Bs5gB8Ns9YrYXjXxRmB5U-zFs0pA2RvBFQ/s320/coverage1.png" /></a><br />
+<br />
+次に<a href="http://www.eclemma.org/jacoco/trunk/doc/maven.html">Maven Plugin</a>です。使ったバージョンは、0.6.3-SNAPSHOT。<br />
+HTML、XML、CSVでレポートが出力されます。HTMLのレポートを開いたものです。テストコードのカバレッジが無いです。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjg66hxZEUBu5bYRNh_esLZAhgo-o10mbF_44LPZn5QiIULmGJVdXnI7ZhIJISadf57aJ_P5MZ_aSQIjqbMufeHBHDal5nV9O9YR1RRtPj7o3atoZt-pFEL20LdP3twWifbh2V3Kgrf_xI/s1600/coverage2.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjg66hxZEUBu5bYRNh_esLZAhgo-o10mbF_44LPZn5QiIULmGJVdXnI7ZhIJISadf57aJ_P5MZ_aSQIjqbMufeHBHDal5nV9O9YR1RRtPj7o3atoZt-pFEL20LdP3twWifbh2V3Kgrf_xI/s320/coverage2.png" /></a><br />
+<br />
+調べていくと、prepare-agentゴールでデータを作って、reportゴールでレポート化しています。<br />
+prepare-agentゴールでは、<a href="http://www.eclemma.org/jacoco/trunk/doc/agent.html">JavaAgent</a>を使ってデータを取っています。この辺はたぶんEclEMMAも一緒のはず。<br />
+実際、HTMLレポートのSessionsのリンクをたどると、実行時のデータがすべて出てます。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhl4yzCqAoPxavCxuMmjp39HvpiARlvaGv3JFW5i0tirL_XRWoSwNXOLUE02878NW6DWfch9JfwOHgWhQ9Bh4pMtl_HWvAmhXrEsk4gQUYpHbOZwJ7uDwVp4yPykPbPQ5TycwBP8UZzXDY/s1600/sessions1.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhl4yzCqAoPxavCxuMmjp39HvpiARlvaGv3JFW5i0tirL_XRWoSwNXOLUE02878NW6DWfch9JfwOHgWhQ9Bh4pMtl_HWvAmhXrEsk4gQUYpHbOZwJ7uDwVp4yPykPbPQ5TycwBP8UZzXDY/s320/sessions1.png" /></a><br />
+<br />
+ここを見るとちゃんとテストコードも通ってます。ということは、データは取れているけどレポートできてない、EclEMMAで出てるという事は、Maven Pluginで出ていないですね。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiAbPsSl2eBo7CTu9DcByGewrj1ftPnJYOY_J7aso40BKzXdKTpaPJYYD-SRfx7sMmFzfhcKihRPo7XC37dhlJ2uQ0-ZsxwoiZc0TMQyQkjgAJjUHK2fBULV1i0_hpqOa44L3IhmQ8PV0/s1600/sessions2.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiAbPsSl2eBo7CTu9DcByGewrj1ftPnJYOY_J7aso40BKzXdKTpaPJYYD-SRfx7sMmFzfhcKihRPo7XC37dhlJ2uQ0-ZsxwoiZc0TMQyQkjgAJjUHK2fBULV1i0_hpqOa44L3IhmQ8PV0/s320/sessions2.png" /></a><br />
+<br />
+で、いろいろとpomをいじってみましたが駄目だったのでソースをみることに。<br />
+https://github.com/two-pack/jacoco/blob/master/jacoco-maven-plugin/src/org/jacoco/maven/BundleCreator.java<br />
+<pre class="prettyprint linenums"> public IBundleCoverage createBundle(
+   final ExecutionDataStore executionDataStore) throws IOException {
+  final CoverageBuilder builder = new CoverageBuilder();
+  final Analyzer analyzer = new Analyzer(executionDataStore, builder);
+  final File classesDir = new File(this.project.getBuild()
+    .getOutputDirectory());
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  final List&lt;File&gt; filesToAnalyze = FileUtils.getFiles(classesDir,
+    fileFilter.getIncludes(), fileFilter.getExcludes());
+
+  for (final File file : filesToAnalyze) {
+   analyzer.analyzeAll(file);
+  }
+
+  return builder.getBundle(this.project.getName());
+ }
+</pre><br />
+classesDirがgetOutputDirectory()になってます。target/classesだけみたい。。。<br />
+ということは、target/test-classesも入れれば良いってことかな？<br />
+<pre class="prettyprint linenums"> @SuppressWarnings("unchecked")
+ public IBundleCoverage createBundle(
+   final ExecutionDataStore executionDataStore) throws IOException {
+  final CoverageBuilder builder = new CoverageBuilder();
+  final Analyzer analyzer = new Analyzer(executionDataStore, builder);
+  final File classesDir = new File(this.project.getBuild()
+    .getOutputDirectory());
+  final File testClassesDir = new File(this.project.getBuild()
+    .getTestOutputDirectory());
+
+  final List<File> filesToAnalyze = FileUtils.getFiles(classesDir,
+    fileFilter.getIncludes(), fileFilter.getExcludes());
+  filesToAnalyze.addAll(FileUtils.getFiles(testClassesDir,
+    fileFilter.getIncludes(), fileFilter.getExcludes()));
+
+  for (final File file : filesToAnalyze) {
+   analyzer.analyzeAll(file);
+  }
+
+  return builder.getBundle(this.project.getName());
+ }
+</pre><br />
+ということでビルドして入れてレポート出した見た結果がこちら。ちゃんと出ました。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhU6Zq81oJ-rJ8r20EV57Fx7P3RVsui3IA0UeGDGb_r0WwcVNjPdc4c-FyGF_RnwQKUcm4cj8S3QcVKosFE2TXG7FOI-fgYy9XTTZmPYXBJj7Z6cEyMw0gwT-5Xm49OAB3Fn_ghtgqimF8/s1600/coverage4.png" imageanchor="1" ><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhU6Zq81oJ-rJ8r20EV57Fx7P3RVsui3IA0UeGDGb_r0WwcVNjPdc4c-FyGF_RnwQKUcm4cj8S3QcVKosFE2TXG7FOI-fgYy9XTTZmPYXBJj7Z6cEyMw0gwT-5Xm49OAB3Fn_ghtgqimF8/s320/coverage4.png" /></a><br />
+<br />
+テストコードのカバレッジってデフォルトで出た方が、テストが思いがけず通ってない場合が見れていいと思うんですが、どうですかね？<br />
+フラグとテスト作ってリクエストしてみようかな。<br />

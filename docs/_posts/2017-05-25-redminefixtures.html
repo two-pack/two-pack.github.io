@@ -1,0 +1,32 @@
+---
+layout: post
+title: RedmineのテストFixturesを手動テスト用に投入する
+date: '2017-05-25T00:13:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+modified_time: '2017-05-25T00:13:59.434+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirPd723LQShhq5ssEI3IEwbbP8f2-mKVSUQZwerMRpuPy_O6OQ4c6JUykUJ63YHUgPPkFH7ejjegVfNQlXgovlVRC_VoUX5n_cnFV-kxGUFj9SP5OS14xk_SRo9WZ61WF0ckvtQHeadSA/s72-c/screenshot.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-7062226279897156077
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2017/05/redminefixtures.html
+---
+
+RedmineのテストFixturesを手動テスト用に投入するのに以下のようなスクリプトを作成しました。<br />
+https://github.com/jbbarth/redmine-scripts<br />
+を参考にしました。<br />
+<br />
+<pre class="brush:bash;">#!/bin/bash
+export RAILS_ENV=test
+test -e test/.fixtures.core || cp -a test/fixtures test/.fixtures.core
+rm -rf test/fixtures
+mkdir test/fixtures
+cp -i test/.fixtures.core/*yml test/fixtures/
+cp -i plugins/*/test/fixtures/*yml test/fixtures/
+cp -i plugins/*/spec/fixtures/*yml test/fixtures/
+bundle exec rake db:drop db:create db:migrate redmine:plugins db:schema:dump db:fixtures:load
+cp -f db/test.sqlite3 db/test.template.sqlite3
+</pre><br />
+上記を実行してから、<br />
+<pre class="brush:bash;">$ RAILS_ENV=test ruby bin/rails server
+</pre>で起動すると、Fixturesに含まれているeCookbookなどのプロジェクトが使えます。<br />
+<div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirPd723LQShhq5ssEI3IEwbbP8f2-mKVSUQZwerMRpuPy_O6OQ4c6JUykUJ63YHUgPPkFH7ejjegVfNQlXgovlVRC_VoUX5n_cnFV-kxGUFj9SP5OS14xk_SRo9WZ61WF0ckvtQHeadSA/s1600/screenshot.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirPd723LQShhq5ssEI3IEwbbP8f2-mKVSUQZwerMRpuPy_O6OQ4c6JUykUJ63YHUgPPkFH7ejjegVfNQlXgovlVRC_VoUX5n_cnFV-kxGUFj9SP5OS14xk_SRo9WZ61WF0ckvtQHeadSA/s320/screenshot.png" width="320" height="117" data-original-width="1376" data-original-height="501" /></a></div>

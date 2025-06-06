@@ -1,0 +1,45 @@
+---
+layout: post
+title: 祝 Redmine 4.0.0リリース！
+date: '2018-12-09T21:52:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+modified_time: '2018-12-09T21:56:51.310+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5691693788607319310
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2018/12/redmine-400.html
+---
+
+<a href="https://adventar.org/calendars/3352">Redmine Advent Calendar 2018</a>の9日目です！<br />
+<br />
+ついに<a href="http://www.redmine.org/projects/redmine/wiki/Download" target="_blank">今日、Redmine 4.0.0がリリース</a>されました！<br />
+JPLはじめ、コミッタの皆様、コミュニティの皆様、ありがとうございました！<br />
+<br />
+で、プラグインのことを書こうかと思いましたが、急遽変更で<a href="http://www.redmine.org/news/119" target="_blank">Redmine.orgのニュースに投稿された、JPLのリリース通知</a><span id="goog_593095874"></span><a href="https://www.blogger.com/"></a><span id="goog_593095875"></span>を翻訳したいと思います。<br />
+ざっくりな感じですので、誤訳などあればご指摘を。。。<br />
+<h3>
+<span style="font-size: small;">----------------</span><br />
+<span style="font-size: large;">Redmine 4.0.0, 3.4.7, 3.3.9 リリース</span></h3>
+昨年、Redmineにコントリビュートしてくれた多くの方に感謝します。Redmine 4.0.0のリリースを報告できて嬉しく思います。Redmine 4.0.0では、200を超える変更が行われました。<br />
+<ul>
+<li>メール通知での大きな変更： これまで1つのメールですべてのユーザーへ通知していましたが、それぞれのユーザー宛てになりました。</li>
+<li>テキストの書式に関する多くの改善</li>
+<li><a href="http://coderay.rubychan.de/" target="_blank">Coderay</a>から<a href="http://rouge.jneen.net/" target="_blank">Rouge</a>への変更により、コードハイライトで多くの言語をサポート</li>
+</ul>
+メールの配信は、現在Rails ActiveJobを使用しています。デフォルトでは非同期で送信されます。しかし、デフォルトではプロダクション環境には適していないインメモリキューが使用されるため、ActiveJobの永続的なバックエンドを設定することを検討する必要があります。<br />
+<a href="https://guides.rubyonrails.org/v5.2/active_job_basics.html#job-execution" target="_blank">https://guides.rubyonrails.org/v5.2/active_job_basics.html#job-execution</a><br />
+<br />
+Redmine 4.0.0は、先日リリースされた最新のRails 5.2.2を使用しています。<br />
+<br />
+Redmine 3.4.7と3.3.9は、3.4.x、3.3.xのユーザー向けメンテナンスリリースです。詳細はチェンジログを参照してください。それぞれ、2つのRailsの脆弱性が修正されたRails 4.2.11への更新も含んでいます。それらの脆弱性はRedmine3.xには影響しないですが、可能であれば更新すべきです。<br />
+----------------<br />
+<br />
+ついでに、拙作＆メンテのプラグインの4.0.0対応状況は以下の通りです。<br />
+<ul>
+<li><a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter" target="_blank">Redmine XLSX format issue exporter</a><br />
+Githubのmasterは4.0.0で動作しますが、4.0.0の最後の最後で直ったCSVエクスポートのバグと同じものがあるため対応中。。。</li>
+<li><a href="https://github.com/two-pack/redmine_auto_assign_group" target="_blank">Redmine Auto Assign Group Plugin</a><br />
+v0.1.1で対応済み</li>
+<li><a href="https://github.com/two-pack/redmine_xls_export" target="_blank">Redmine XLS Export plugin</a><br />
+v0.2.1.t11で対応済み</li>
+</ul>

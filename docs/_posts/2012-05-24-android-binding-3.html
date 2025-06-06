@@ -1,0 +1,53 @@
+---
+layout: post
+title: android-bindingを使ってみる その3
+date: '2012-05-24T16:34:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-24T16:34:36.164+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2379265514986553046
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android-binding-3.html
+---
+
+今回はリストビューをバインドして使ってみました。<br />
+android-bindingのサンプルでも提供されていますが、以下を試してみました。<br />
+<ul><li>リストビューのアイテムとして複数のウィジェットを使用できること。</li>
+<li>アイテムを随時読む込んで表示するような実装が可能なこと。</li>
+</ul><br />
+android-bindingのMarkupDemoのDynamic Listsのソースを参考にしています。<br />
+http://code.google.com/p/android-binding/source/browse/#svn%2Ftrunk%2FAndroidBindingMarkupDemo<br />
+<br />
+実装した結果は以下にコミットしています。<br />
+https://bitbucket.org/twopack/android-binding-sample/changeset/3136f4d0742e<br />
+<br />
+<h3>リストビューのアイテムとして複数のウィジェットを使用</h3><a href="http://code.google.com/p/android-binding/wiki/BindingToCollection" target="_blank">BindingToCollection - android-binding</a>に書かれている<b> ArrayListObservable</b>を使用してリストビューに対してバインドします。<br />
+<b>T</b>にはリストビューのアイテムのレイアウトに対してバインドする変数を定義したクラスを作って指定します。<br />
+ソースは以下のようなものになります。<br />
+<pre class="prettyprint">public transient ArrayListObservable&lt;ListViewSampleItem&gt; listviewItems = 
+new ArrayListObservable&lt;ListViewSampleItem&gt;(ListViewSampleItem.class);
+</pre>対応するレイアウトのXMLは以下です。<br />
+<pre class="prettyprint">&lt;ListView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    binding:itemSource="listviewItems"
+    binding:itemTemplate="@layout/listview_item" /&gt;</pre><br />
+<b>@layout/listview_item</b>でリストビューの項目レイアウトを定義して、それに対してのViewModelを<b>ListViewSampleItem</b>クラスで定義しています。こちらは以前の投稿と同じ形です。<br />
+<br />
+<br />
+<h3>アイテムを随時読む込んで表示するような実装が可能なこと。<br />
+</h3>上記のリストビューの項目に対するViewModelのクラスである<b>ListViewSampleItem</b>クラスで、<b>LazyLoadRowModel</b>クラスを継承しています。<br />
+このクラスで<b>display</b>メソッドと<b>hide</b>メソッドをインプリしています。<br />
+<b>display</b>メソッドは項目を表示する必要がある場合に、<b>hide</b>メソッドは項目を表示する必要がなくなった場合に呼び出されます。<br />
+実装では、画面以上の項目を用意しておき、最後の項目を表示した際に、項目を追加するような処理にしています。<br />
+冒頭のサンプルや以下のページを参考にしています。<br />
+http://code.google.com/p/android-binding/wiki/BindingToCursors<br />
+<br />
+<br />
+<h3>テストについて<br />
+</h3>今回、リストビューの項目で使うアイコンとしてリソースを使用しています。<br />
+テストでアイコン用のDrawableがインスタンス化できなかったため、AndroidTestCaseを継承したテストとしました。結果として、エミュレータを使わない形でのテストにできませんでした。。。<br />
+エミュレータを使うとやはりテストの開始までに時間がかかります。ここは何かしらもう一工夫必要なので、引き続き考えてみないと駄目なようです。<br />
+<br />
+<br />
+<br />
+<br />
+<br />

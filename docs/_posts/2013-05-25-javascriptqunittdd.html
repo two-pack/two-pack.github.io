@@ -1,0 +1,69 @@
+---
+layout: post
+title: JavaScript+QUnitでTDDしてみた。
+date: '2013-05-25T00:04:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2013-05-25T00:04:20.631+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-728747811303989325
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2013/05/javascriptqunittdd.html
+---
+
+TDD Boot Camp 行ったので復習を兼ねて <a href="https://bitbucket.org/twopack/jsfizzbuzz/overview">JavaScript で TDD してみました</a>。<br />
+なんでC言語でやら（ry<br />
+<br />
+<h2>
+お題</h2>
+JQueryを使ってFizzBuzz、にしました。<br />
+ちなみに、JavaScriptはわかりません。Google先生に誰が知ってるか聞きました。<br />
+JQueryもわかりません。Google先生に誰が知ってるか聞きました。<br />
+いろいろ調べ過ぎてどこみたかも不明ですが、ツイート参照ということで、先人に感謝。<br />
+<br />
+<h2>
+準備</h2>
+環境は QUnit +&nbsp;Eclipse + JSDT Plugin という感じでやりました。<br />
+jsTestDriver を使おうとしたのですが、うまく行かず、テストの実行自体はブラウザです。<br />
+JQueryはダウンロードしてきて、main/js/external/ というフォルダを作っていれました。<br />
+<br />
+<h2>
+QUnitの準備</h2>
+<a href="http://qunitjs.com/" target="_blank">QUnit</a> は npm で入れました。<a href="https://bitbucket.org/twopack/jsfizzbuzz/src/c66fde34ca43/package.json?at=default">package.json</a>を作ったので、PJルートで以下のコマンドでインストールされます。<br />
+/node_modules にインストールされるので、そこのパスをみるように実装しています。<br />
+<pre class="prettyprint linenums">$ npm install
+</pre>
+<br />
+テスト実装のHTMLは <a href="https://bitbucket.org/twopack/jsfizzbuzz/src/c66fde34ca43b92f5b713f3fa689b7f2d8886983/test/html/runner.html?at=default" target="_blank">/test/html/runner.html</a> です。<br />
+基本的にはオフィシャルをみれば分かる感じでしたが、 #qunit-fixture のdivタグの中に、評価条件のHTMLを入れるというのがポイントでした。<br />
+テストコードの setup() でタグを置き換えても良さそうでしたが、今回は複雑ではないので固定にして、プロダクトコードの body と一緒にしています。<br />
+ちなみに、 #qunit-fixture の divタグ内は、テストケースごとに初期化されます。<br />
+<br />
+この状態でブラウザで runner.html を開いておいて随時テストを実行します。<br />
+<br />
+<h2>
+TDDをやった経過</h2>
+TODOリストも随時コミットすれば良かった・・・と思ったのは後の祭り。<br />
+でも、<a href="https://bitbucket.org/twopack/jsfizzbuzz/src/c66fde34ca43/todo.txt?at=default" target="_blank">最終的なもの</a>をコミットしています。<br />
+Red -&gt; Green -&gt; Refactoring の流れのうち、Red -&gt; Green でコミット、 Refactoring でコミットを基本にして、 Red -&gt; Green -&gt; Refactoring でコミット、大きなリファクタリングでのコミットと、<a href="https://bitbucket.org/twopack/jsfizzbuzz/commits/all">ログ</a>で経過が追えるようにしました。<br />
+仮実装、三角測量といった TDD Boot Camp で体験した事を意識してやりました。<br />
+<br />
+<h2>
+気になるポイント</h2>
+<ul>
+<li>”Refactors that Expected exchanges Result.” のコミットで修正したのですが、 QUnit では (期待値, 実測値) ではなく (実測値, 期待値) なんですね。<br />
+ちゃんと調べてやらないから（ry</li>
+<li>そもそも大きくないコード量なのですが、”Refactors selecting colors.”のコミットは、if文がちょっと・・・でリファクタリングしたのですが、なんかもっといい方法がありそうな？</li>
+<li>HTMLからのイベント（onClick）、表示を扱うViewModel（fizzbuzz_vm.js）と、fizzbuzzのロジックを扱うModel（fizzbuzz.js）に分けて作りはじめました（最後までそうなのですが）。MVVMって言葉に憧れてwこういう名前にしただけですが、イメージ合ってるのかしら？</li>
+<li>モックを使う必要は今回なかったですが、ModelとVM分けたのでテストを書きやすくなった、というかテストすべき範囲がはっきりした感じはしました。<br />
+Modelの振る舞いという視点と、操作とそれをきっかけにした表示更新という視点で分けやすくなりました。　＃当たり前？</li>
+</ul>
+<br />
+<h2>
+残課題</h2>
+<ul>
+<li>折角の JavaScript なんで BitBucket 上で動かしてみれるようにしてみたい、、、、と index.html を入れてみたんだけども動かず。</li>
+<li>jsTestDriver がイマイチうまく動かず。Phantom.js での CI 以外にも各ブラウザでテスト実行できるのは良さそうなので、もうちょっと調べてみたいです。</li>
+</ul>
+<br />
+<h2>
+最後に</h2>
+やっぱ、TDDいいです。楽しい。TDD Boot Campバンザイw

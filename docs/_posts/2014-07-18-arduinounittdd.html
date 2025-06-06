@@ -1,0 +1,53 @@
+---
+layout: post
+title: ArduinoUnitでTDDを試してみる
+date: '2014-07-18T12:05:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- TDD
+- ArduinoUnit
+- Arduino
+- Test
+modified_time: '2014-07-18T12:05:44.355+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2uw3KuVagCBUgrqM1g6U-OnKZs-3PKvy-mG0vy9mURHaFchWK2YoYplL_vzX_x9kN0f0BWKsE8sR4ZxRqjSIM2oRPezCwHrFe_EWy8VZA1NgIST69ULMykTFRf58oRospnX617XpsVDY/s72-c/menu.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-1489149196917640426
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/arduinounittdd.html
+---
+
+Arduino開発でのTDDについて少し調べてみましたが、C/C++でやるというのが多いようです。Arduino IDEは、スケッチをC++に変換してビルド、実機へ転送する仕組みになっているので、そこを使うようです。TDDのサイクルを早くするためには、実機への転送時間とかを考えるとC++でやるのがいいのかもしれません。<br />
+とはいえ、スケッチでできるユニットテストのフレームワーク「<a href="https://github.com/mmurdoch/arduinounit/">ArduinoUnit</a>」もありました。手軽にやるにはこちらのほうがよさそうなので、これを試してみることにします。<br />
+<br />
+<h2>ArduinoUnit</h2>ArduinoUnitは、Arduino向けのユニットテストのフレームワークです。<br />
+以下の環境で試してみます。<br />
+<ul><li>Arduino UNO Rev.3</li>
+<li>Mac OS X 10.9.4</li>
+<li>Arduino IDE 1.0.5</li>
+</ul><br />
+<h2>準備</h2><ol><li>Githubからクローンしてきてます。ZIPファイルでダウンロードしてもかまいません。<br />
+</li>
+<li>srcフォルダを<b>ArduinoUnit</b>とリネーム、もしくは別フォルダにコピーします。ここでつけた名前が、Arduino IDEで表示されるライブラリ名になります。<br />
+</li>
+<li>Arduino IDEで、<b>スケッチ -&gt; ライブラリを使用 -&gt; Add Library...</b>をクリックして、ダイアログで先のフォルダを選択します。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2uw3KuVagCBUgrqM1g6U-OnKZs-3PKvy-mG0vy9mURHaFchWK2YoYplL_vzX_x9kN0f0BWKsE8sR4ZxRqjSIM2oRPezCwHrFe_EWy8VZA1NgIST69ULMykTFRf58oRospnX617XpsVDY/s1600/menu.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2uw3KuVagCBUgrqM1g6U-OnKZs-3PKvy-mG0vy9mURHaFchWK2YoYplL_vzX_x9kN0f0BWKsE8sR4ZxRqjSIM2oRPezCwHrFe_EWy8VZA1NgIST69ULMykTFRf58oRospnX617XpsVDY/s1600/menu.png" height="78" width="320" /></a></div>すると、ライブラリとしてArduinoUnitが追加されます。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiw9AwjYysCyhUDeDjV7BBR43U4HoEAW6EBoPbK702h0W3QjlLaryABGfIaD-9yIxFYgGEwhcqePWvu0sHYVsuB3JAlRQ7fsD3a94y9FhakYz0zq9l4Xdkqod-2ntQGEGoygOrteL79UVY/s1600/menu2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiw9AwjYysCyhUDeDjV7BBR43U4HoEAW6EBoPbK702h0W3QjlLaryABGfIaD-9yIxFYgGEwhcqePWvu0sHYVsuB3JAlRQ7fsD3a94y9FhakYz0zq9l4Xdkqod-2ntQGEGoygOrteL79UVY/s1600/menu2.png" height="260" width="320" /></a></div>また、<a href="http://arduino.cc/en/Guide/Libraries">Arduino Libraries Directory</a>に選択したフォルダがコピーされます。GithubのREADMEでは、まずArduino Libraries Directoryにフォルダを作るとありますが、選択すればコピーされるので不要でした。<br />
+ちなみに、私の環境では、<b>~/Documents/Arduino/libraries</b>にコピーされました。<br />
+</li>
+</ol><br />
+<h2>サンプルを動かす</h2><a href="https://github.com/mmurdoch/arduinounit/#getting-started">READMEのGetting Started</a>にあるサンプルを動かしてみます。<br />
+新規のスケッチにコピペしてArduinoに転送、シリアルモニタを開くと以下のように出力されました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTRvEjIkQYU3uF9O2R6YgO75xmUaxasGLT7PnMhgpeAwToy_Ry7shj3BrGz8OozWaIeMnMRo-hja9pe8tUoAdYsv5CX9eybzowuG1ci0IubcacqCzUmp_UGuIiHvMW14G-osvDo9F9wko/s1600/serial_monitor_of_example.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTRvEjIkQYU3uF9O2R6YgO75xmUaxasGLT7PnMhgpeAwToy_Ry7shj3BrGz8OozWaIeMnMRo-hja9pe8tUoAdYsv5CX9eybzowuG1ci0IubcacqCzUmp_UGuIiHvMW14G-osvDo9F9wko/s1600/serial_monitor_of_example.png" height="192" width="320" /></a></div>結果が２回出力されてます。頭の方はなんか変ですし。。。転送とシリアルモニタを開くタイミングとかかなと思い、<b>loop()</b>のテスト実行前にdelayを入れたらきれいに出ました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEin69Qj9UPGQgYzlwV7GIa9nyd1_6DtcS1AVrku98gJcm8gSDQmSJwdl4_AGzx8rRfRwB5hf_xsHDsd0CVDcNjt3tDM6RN1j2DQxxnHylcJ3HytHTLF4grbMYPYQyjBz0Q9njcsNM0cIf4/s1600/serial_monitor_of_example2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEin69Qj9UPGQgYzlwV7GIa9nyd1_6DtcS1AVrku98gJcm8gSDQmSJwdl4_AGzx8rRfRwB5hf_xsHDsd0CVDcNjt3tDM6RN1j2DQxxnHylcJ3HytHTLF4grbMYPYQyjBz0Q9njcsNM0cIf4/s1600/serial_monitor_of_example2.png" height="207" width="320" /></a></div>あとで気づいたんですが、シリアルモニタを開くたびにテストが実行されるようです。delayがない状態でもシリアルモニタを再度開くと、正しく結果が出力されました。<br />
+<br />
+<h2>やってみる</h2>TDDでコードを書いてみました。<br />
+https://github.com/two-pack/ArduinoExample/tree/master/ArduinoUnitExample<br />
+コミットの<a href="https://github.com/two-pack/ArduinoExample/commit/3534377ffeda75300558555df59218a3b21010b1">ここ</a>から<a href="https://github.com/two-pack/ArduinoExample/commit/437ccf8e79633d8b5f69cfda846531472c30f381">ここ</a>までで、細かくコミットしています。<br />
+<br />
+<ul><li>LEDを点滅させるコードを書いてます。簡単な例なので直接ピンの状態を見たりしています。センサーが絡んだりしてくるとそうもいかないので、実機に絡む関数をラップしたりしないとダメそうです。C++でやる場合は、モックのライブラリもありそうです。<br />
+</li>
+<li>テスト用のソースを分けて、setup()とloop()を持つソースでは#define、#ifdefでテストとプロダクトの場合分けをしました。テスト用のソースを消せば、プロダクトのコードだけをビルドできるはず。<br />
+</li>
+<li>実機への転送時間とシリアルモニタを開くのにかかる待ち時間は、やっぱり気になりました。特にシリアルモニタが転送時に一度閉じてしまうのが邪魔です。転送はサイズが大きくなるともっと気になるかな。<br />
+</li>
+<li>やっぱりこういうのがあるのはいいです。C++を持ち出すほどのスケッチを書かないなら、ArduinoUnitである程度割り切りながらテストを書いていくのもいいと思いました。<br />
+</li>
+</ul>

@@ -1,0 +1,59 @@
+---
+layout: post
+title: 半固定抵抗を使ってみる（回路図も書いてみた）
+date: '2014-07-22T10:10:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- TDD
+- Arduino
+- 回路図
+modified_time: '2014-07-22T10:10:34.788+09:00'
+thumbnail: https://i.ytimg.com/vi/SYFA7SMkqfU/default.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-4132024837390339727
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/blog-post.html
+---
+
+<a href="http://www.amazon.co.jp/gp/product/B008PQEWIW/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;camp=247&amp;creative=1211&amp;creativeASIN=B008PQEWIW&amp;linkCode=as2&amp;tag=twopack-22">Arduinoエントリーキット</a><img alt="" border="0" src="http://ir-jp.amazon-adsystem.com/e/ir?t=twopack-22&amp;l=as2&amp;o=9&amp;a=B008PQEWIW" height="1" style="border: none !important; margin: 0px !important;" width="1" />についてきた部品で、まだ使っていないものが以下の２つ。<br />
+<ul>
+<li>半固定抵抗 10kΩ</li>
+<li>温度センサー</li>
+</ul>
+<br />
+ついてきたものは使ってみよう！ということで、まずは<b>半固定抵抗</b>から。<br />
+半固定抵抗の調節に合わせて音の調子が変わるというものを作ってみます。作ったものはこんな感じ。<br />
+<iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/SYFA7SMkqfU" width="420"></iframe><br />
+<br />
+<h2>
+半固定抵抗</h2>
+これです。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbkCKC-Tthisp-m8YFF7_MITVnf_gQVtXKFawv-5srdq1nZzb8iSTvWyP34JT27MWex0XPhsfccZ9NN1JxyDVRkYUuM_xbYHs67nqM6k7YTAvg-QzWZIPQuc6uV7hQBQv8GObBfUVczkM/s1600/20140722_093812.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbkCKC-Tthisp-m8YFF7_MITVnf_gQVtXKFawv-5srdq1nZzb8iSTvWyP34JT27MWex0XPhsfccZ9NN1JxyDVRkYUuM_xbYHs67nqM6k7YTAvg-QzWZIPQuc6uV7hQBQv8GObBfUVczkM/s1600/20140722_093812.jpg" height="138" width="160" /></a><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuwbcTSlxshmBvRlkyKqJpUICf02fNqKJhU1bKAlv0l5df0ScZlDDYa7b0IlClReORy850k1-p1eul5LRgkC1qmyqhUZxXyH7Iv5buLGJDmQ9OTFn7bJ43mm14O2XnyI0-EUiFaYLiTpo/s1600/20140722_093832(0).jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiuwbcTSlxshmBvRlkyKqJpUICf02fNqKJhU1bKAlv0l5df0ScZlDDYa7b0IlClReORy850k1-p1eul5LRgkC1qmyqhUZxXyH7Iv5buLGJDmQ9OTFn7bJ43mm14O2XnyI0-EUiFaYLiTpo/s1600/20140722_093832(0).jpg" height="140" width="160" /></a><br />
+三本ある足の真ん中にかかる抵抗が上のつまみに連動しています。<br />
+<br />
+<h2>
+回路図</h2>
+配線はこんな感じ。<br />
+<div class="separator" style="clear: both;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAuGu5haMud3aCYlyAAyYEKf9LxI_EQf-H8cuVEbkvPD3uh23bFO3RMtQSCzM1PxZu27mt2NWRDfysKXeFe16QKfepe0knxlmNOM5N5a3ug4khEQDtg01YxmXm7IbeKSi9awhX8XoWCtI/s1600/20140719_173037.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAuGu5haMud3aCYlyAAyYEKf9LxI_EQf-H8cuVEbkvPD3uh23bFO3RMtQSCzM1PxZu27mt2NWRDfysKXeFe16QKfepe0knxlmNOM5N5a3ug4khEQDtg01YxmXm7IbeKSi9awhX8XoWCtI/s1600/20140719_173037.jpg" height="240" width="320" /></a></div>
+写真だけだとわからない、、、と今更ですが回路図を書いてみようと思い立ちました。<br />
+<br />
+調べてみると、<a href="http://fritzing.org/home/">Fritzing</a>というツールが使いやすそうなのでこれを使いました。<br />
+以下のようにブレッドボードのイメージが出てきて、そこにパーツを置いて描けます。Arduino自体ももパーツとしてあるのが便利。<br />
+<div class="separator">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7dcAr68nJungPxjubMa-CNOsWQ2NCSVPzEChVbfqmsGFHiYyQoSA1CONrEdW46iK7af8_-viCISoTf7i-qfcG2pXqPlp856iv4HIEoAI_93fv8ybEYtcEG9niX13Fa8Dgm_Rgg89qqUY/s1600/scshot.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7dcAr68nJungPxjubMa-CNOsWQ2NCSVPzEChVbfqmsGFHiYyQoSA1CONrEdW46iK7af8_-viCISoTf7i-qfcG2pXqPlp856iv4HIEoAI_93fv8ybEYtcEG9niX13Fa8Dgm_Rgg89qqUY/s1600/scshot.png" height="190" width="320" /></a></div>
+これを元に整形して回路図を描けます。<br />
+<div class="separator" style="clear: both;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEga-X2nE0e3F6FYiEP04ocQayvTEYtdpo456DJGFtLVMOEYyENeK2QFHxNMkx1j0TgdVF6dkxm0I0V1UTBrCvuJHen2Hvsbn92xmrVmZ-tWxuwh6801NjnRzOjBLltiGrYqGatN0LUMvqw/s1600/scshot2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEga-X2nE0e3F6FYiEP04ocQayvTEYtdpo456DJGFtLVMOEYyENeK2QFHxNMkx1j0TgdVF6dkxm0I0V1UTBrCvuJHen2Hvsbn92xmrVmZ-tWxuwh6801NjnRzOjBLltiGrYqGatN0LUMvqw/s1600/scshot2.png" height="190" width="320" /></a></div>
+上と同じですがエクスポートした回路図がこれ。簡単に描けて便利ですね。<br />
+<div class="separator" style="clear: both;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigjzp_Q4In1J7SOf1nEsDrMvkkoWNQWGFIzEGXPeTbKGpyStevC40wlAMZ-n7Lh0TCFPlzkPTGkJibNHf3UaPqD3eMLGSUbzIvTmvBOcnTvT_yQIPxYCBe3pQbwIr76Nb9KJeDAOyaprY/s1600/circut.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigjzp_Q4In1J7SOf1nEsDrMvkkoWNQWGFIzEGXPeTbKGpyStevC40wlAMZ-n7Lh0TCFPlzkPTGkJibNHf3UaPqD3eMLGSUbzIvTmvBOcnTvT_yQIPxYCBe3pQbwIr76Nb9KJeDAOyaprY/s1600/circut.png" height="247" width="320" /></a></div>
+<br />
+<h2>
+スケッチ</h2>
+スケッチは<a href="https://github.com/two-pack/ArduinoExample/commit/95f1d9b37b9da8f1c2cdd8373a7a8992327e8178">ここ</a>でコミットしています。<br />
+TDDでかいてみました。#ifdefで実機に出力／入力する関数をラップしてテストするようにしました。toneW()やanalogReadW()などです。うまくラッパーをまとめていけば、TDDもしやすくなると感じました。というか、まとめないとコードが汚くなりそう。。。<br />
+<br />
+<br />
+次は温度センサーです。<br />
+<br />
+<br />
+<iframe frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="http://rcm-fe.amazon-adsystem.com/e/cm?t=twopack-22&amp;o=9&amp;p=8&amp;l=as1&amp;asins=B008PQEWIW&amp;ref=qf_sp_asin_til&amp;fc1=000000&amp;IS2=1&amp;lt1=_blank&amp;m=amazon&amp;lc1=0000FF&amp;bc1=000000&amp;bg1=FFFFFF&amp;f=ifr" style="height: 240px; width: 120px;"></iframe>

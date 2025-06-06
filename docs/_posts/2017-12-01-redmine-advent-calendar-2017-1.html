@@ -1,0 +1,55 @@
+---
+layout: post
+title: "[Redmine Advent Calendar 2017 1日目] shields.ioでredmine.orgのプラグインレイティングのバッヂを表示する"
+date: '2017-12-01T12:26:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- shield.io
+- Redmine
+- Redmine Plugin
+modified_time: '2017-12-01T12:26:49.641+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZO4pmMfQb2Izdh9-mZHz4ixinLqSjbdMKjd4LNfSthHI1VFiLfJUHx-_9bKwAFQWdePioxuURDT17GKLCJKcUEHRiLP0l2jtgbWyfg-armWfKM-XVuwgaGgFZLqjPCiRIBFY7nkvPwik/s72-c/redmineorg-pluginsdictionary.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2040128689805443739
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2017/12/redmine-advent-calendar-2017-1.html
+---
+
+<a href="https://qiita.com/advent-calendar/2017/redmine" target="_blank">Redmine Advent Calendar 2017</a>の1日目です！<br />
+<br />
+<a href="https://www.redmine.org/">Redmineのオフィシャルサイトであるredmine.org</a>には、開発されているプラグインを確認できる<a href="https://www.redmine.org/plugins">Plugins Directory</a>があります。<br />
+<img border="0" data-original-height="297" data-original-width="1335" height="140" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZO4pmMfQb2Izdh9-mZHz4ixinLqSjbdMKjd4LNfSthHI1VFiLfJUHx-_9bKwAFQWdePioxuURDT17GKLCJKcUEHRiLP0l2jtgbWyfg-armWfKM-XVuwgaGgFZLqjPCiRIBFY7nkvPwik/s640/redmineorg-pluginsdictionary.png" width="640" /><br />
+<div class="separator" style="clear: both; text-align: left;">
+Plugins Directoryにプラグインを登録しておくと、Redmine上から最新バージョンのチェックも行えます（管理画面のCheck for updatesから行えます）。</div>
+<div class="separator" style="clear: both; text-align: left;">
+</div>
+<div class="separator" style="clear: both; text-align: left;">
+<img border="0" data-original-height="216" data-original-width="1031" height="134" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8MY_0lOX8lMNjZ4yeKIY7anlZAERUmTlrK9FOM4sv5U0e2nj1Ncvo5DrLCbHSefVGyGkYSCAX47eynbXdQf0gOZzRvYOVidw508bahNsUIEsZgroXb4o_kGReoMAfKHWRcKRHRzyHDhc/s640/admin-plugins.png" width="640" /></div>
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfnxFHMCu-i061bj-pHGlqeK96Df7xq06CEj_3sGjpY492D9DUEO3dkJD51EWv_nR52VzGcweSU__5CCXeIxeDsVbwAAKF8CmJTmZijFYe_DyJPxLbX1mHmp9ce0Q-nU8qMzbW29LwQy8/s1600/admin-plugins.png" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><br />
+</a></div>
+しかし、ソースコードは別のリポジトリに登録してある状態になります。<br />
+例えばGitHubにソースを登録しておいた場合、READMEやWiki、Issuesなど、そこだけで足りてしまうのが実際のところです。<br />
+検索してGitHubに飛んだら、Plugins Directoryを見ることがない場合も多いと思います。<br />
+<br />
+そこで何か誘導するものがあれば、Plugins Directoryで他のプラグインに巡り会う機械にもつながるな、ということで、Plugins Directoryのレイティングをバッヂとして表示する仕組みを考えました。<br />
+バッヂからPlugins Directoryへリンクしてレイティングしてもらう、というモチベーションでプラグイン開発者の方にも入れてもらいやすいかなと考えています。<br />
+<br />
+<a href="https://shields.io/">shields.io</a>というサービスが、いろいろなサービスのバッヂを提供しています。<br />
+これにredmine.orgのプラグインレイティングが載れば、プラグイン開発者の方がみんなで使えるな、ということで<a href="https://github.com/badges/shields/pull/1247">プルリクエストを出したところ、入れてもらえました</a>。<br />
+<br />
+以下は<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a>の GitHubにバッヂを入れた例です。<br />
+星がでるパターンですが、数字で出すパターンもあります。<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div class="separator" style="clear: both; text-align: left;">
+<img border="0" data-original-height="328" data-original-width="661" height="197" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyCbecfXXHduzzPR5jJZROSdlrD40DchWmYRUF2xtvXcKNJQWshgSgXIr8T-gv0E5M5KwLH_hQmu8PwfQarH3O_py5lOQ-fqMhT7WV0J8PRVW-RMAp3MAyS9TYL4S0NCA3_2uRPXqeKZU/s400/pluginrating.png" width="400" /></div>
+<br />
+READMEには、Markdownで以下のように記載してPlugins Directoryへリンクしています。<br />
+<pre>[![Stars](https://img.shields.io/redmine/plugin/stars/redmine_xlsx_format_issue_exporter.svg)](https://www.redmine.org/plugins/redmine_xlsx_format_issue_exporter)
+</pre>
+SVGのファイル名部分は、プラグインのPlugins DirectoryでのURL末端になります。<br />
+<br />
+<br />
+２日目は<a href="https://qiita.com/y503Unavailable">y503Unavailableさん</a>です！<br />
+<br />

@@ -1,0 +1,143 @@
+---
+layout: post
+title: Travis-CIで行っているRedmineプラグイン用テストをローカルで行う
+date: '2017-05-21T23:41:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+- Travis CI
+modified_time: '2017-05-22T00:06:40.856+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-6535917249617189952
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2017/05/travis-ciredmine.html
+---
+
+<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a>のCIはTravis-CIを使わせてもらっています。<br />
+<a href="https://github.com/alexbevi/redmine_plugins_travis-ci">Travis Integration for Redmine Plugins</a>を使うとRubyとRedmineのバージョンの組み合わせなども結構簡単に環境を作れます。<br />
+ただGitHubへのPushがトリガーなのでローカルでもできると確認とかできていいかな、と思って、Travis-CI環境をローカルでというのをやってみました。<br />
+結論から言うと、Pushしちゃう方が早い、と言う感じでした。。。<br />
+<br />
+<h3>
+まずは公式</h3>
+<a href="https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image">Troubleshooting Locally in a Docker Image</a>で、Dockerで提供されているイメージと.travis.ymlからCI用のシェルスクリプトを出力する<a href="https://github.com/travis-ci/travis-build">travis-build</a>のインストールについて書かれています。<br />
+最後の最後で手動で依存関係解決しCIコマンド実行してね、で終わってて詰まりました。<br />
+<br />
+<h3>
+実際にやった手順</h3>
+<h4>
+環境</h4>
+<ul>
+<li>macOS Sierra 10.12.4</li>
+<li>Docker version 17.03.1-ce, build c6d412e</li>
+</ul>
+<h4>
+手順</h4>
+<b><u>1. Dockerイメージを起動してログインする</u></b><br />
+<pre class="brush:bash;">~ $ docker pull travisci/ci-garnet:packer-1478744932
+packer-1478744932: Pulling from travisci/ci-garnet
+Digest: sha256:9380acbb65ed1ae6e5a0b545616f2f4a9f8d6855c264a45924dd52d3ff0589f5
+Status: Image is up to date for travisci/ci-garnet:packer-1478744932
+~ $ docker run --name travis-redmine-ci --rm -dit travisci/ci-garnet:packer-1478744932 /sbin/init
+&lt;snip&gt;
+~ $ docker exec -it travis-redmine-ci bash -l
+root@foo:/# su - travis
+travis@bar:~$
+</pre>
+<br />
+<i><u>参考ページ</u></i><br />
+<a href="https://docs.docker.com/engine/reference/commandline/run/">https://docs.docker.com/engine/reference/commandline/run/</a><br />
+<a href="http://docs.docker.jp/engine/reference/run.html">http://docs.docker.jp/engine/reference/run.html</a><br />
+<a href="https://docs.docker.com/engine/reference/commandline/exec">https://docs.docker.com/engine/reference/commandline/exec</a><br />
+<br />
+<b><u>2. Travis-CI CLIをインストールする</u></b><br />
+<pre class="brush:bash;">travis@bar:~$ gem install travis
+&lt;snip&gt;
+travis@bar:~$ git clone --depth=50 --branch=master https://github.com/travis-ci/travis-build.git
+&lt;snip&gt;
+travis@cc01d74d8710:~$ travis
+Shell completion not installed. Would you like to install it now? |y|
+&lt;snip&gt;
+travis@bar:~$ cd travis-build
+travis@bar:~$ ln -s `pwd` ~/.travis/travis-build
+travis@bar:~$ bundle install --gemfile ~/.travis/travis-build/Gemfile
+&lt;snip&gt;
+travis@bar:~$
+</pre>
+<br />
+<div>
+<i><u>参考ページ</u></i></div>
+<a href="https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image">https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image</a><br />
+<a href="https://github.com/travis-ci/travis.rb">https://github.com/travis-ci/travis.rb</a><br />
+<br />
+<b><u>3. .travis.ymlからCI用のスクリプトを生成する</u></b><br />
+ここでは、Redmine XLSX issue exporterのリポジトリをクローンしています。<br />
+リポジトリのルートに.travis.ymlがあります。<br />
+<pre class="brush:bash;">travis@bar:~$ cd ~/builds
+travis@bar:~$ git clone https://github.com/two-pack/redmine_xlsx_format_issue_exporter.git
+travis@bar:~$ cd redmine_xlsx_format_issue_exporter
+travis@bar:~$ travis compile 1.1 &gt; ci.sh
+</pre>
+<br />
+<b><u>4. スクリプトを修正する（その１）</u></b><br />
+Dockerの制約でスクリプト内で行っている/etc/hostsの変更ができなくなっています。<br />
+このため、無理やりですが参考ページを参考に、スクリプトを変更して対処します。<br />
+<i><br />
+</i> <i>変更前</i><br />
+<div>
+<pre class="brush:bash;">sudo sed -e 's/^\(127\.0\.0\.1.*\)$/\1 '`hostname`'/' -i'.bak' /etc/hosts
+test -f ~/.m2/settings.xml &amp;&amp; sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml
+sudo sed -e 's/^\([0-9a-f:]\+\) localhost/\1/' -i'.bak' /etc/hosts
+</pre>
+<div>
+<br /></div>
+<div>
+変更後</div>
+<pre class="brush:bash;">cp /etc/hosts ./hosts.new
+sudo sed -e 's/^\(127\.0\.0\.1.*\)$/\1 '`hostname`'/' -i'.bak' ./hosts.new
+test -f ~/.m2/settings.xml &amp;&amp; sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml
+sudo sed -e 's/^\([0-9a-f:]\+\) localhost/\1/' -i'.bak' ./hosts.new
+cp -f ./hosts.new /etc/hosts
+</pre>
+<i><u><br />
+</u></i></div>
+<div>
+<i><u>参考ページ</u></i></div>
+<a href="http://blog.jonathanargentiero.com/docker-sed-cannot-rename-etcsedl8ysxl-device-or-resource-busy/">http://blog.jonathanargentiero.com/docker-sed-cannot-rename-etcsedl8ysxl-device-or-resource-busy/</a><br />
+<br />
+<u style="font-weight: bold;">5</u><u style="font-weight: bold;">. スクリプトを修正する（その2</u><u style="font-weight: bold;">）</u><br />
+<a href="https://github.com/travis-ci/travis-build#use-as-addon-for-cli">travis-buildのページに書いてあります</a>が、.travis.ymlに書かれているenvやmatrixはスクリプト生成時に反映されません。このため、スクリプトでいくつかの修正が必要です。<br />
+赤字部分が該当箇所で.travis.ymlの定義に該当します。<br />
+<br />
+<ul>
+<li>使用するRubyバージョンを書き換え<br />
+<pre class="brush:bash;">travis_cmd rvm\ use\ <span style="color: red;">2.0.0</span>\ --install\ --binary\ --fuzzy --assert --echo --timing</pre>
+</li>
+<li>使用するRedmineバージョンの書き換え<br />
+<pre class="brush:bash;">travis_cmd export\ REDMINE_VERSION\=<span style="color: red;">2.5.2</span> --echo</pre>
+</li>
+<li>対象ブランチの指定<br />
+<pre class="brush:bash;">travis_cmd git\ clone\ --depth\=50\ <span style="color: red;">--branch\=\'\'\</span> https://github.com/two-pack/redmine_xlsx_format_issue_exporter.git\ two-pack/redmine_xlsx_format_issue_exporter --assert --echo --retry --timing</pre>
+</li>
+</ul>
+<br />
+<u style="font-weight: bold;">6. スクリプトを実行する</u><br />
+<div>
+<pre class="brush:bash;">travis@bar:~$ bash ci.sh</pre>
+</div>
+<div>
+<br /></div>
+<div>
+<h3>
+まとめ</h3>
+</div>
+<div>
+.travis.ymlのmatrixやenvの設定を活かしたスクリプトをうまく生成できないため、手間がかかってしまいます。</div>
+<div>
+Travis-CI上でのみ失敗するとかでなければ、大人しくブランチにプッシュしてクラウドで回してもらう方が良さそうです。</div>
+<div>
+<br /></div>
+<div>
+<br /></div>
+<div>
+<blockquote class="tr_bq">
+</blockquote>
+</div>

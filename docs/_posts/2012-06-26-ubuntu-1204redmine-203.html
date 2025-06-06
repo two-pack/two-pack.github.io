@@ -1,0 +1,31 @@
+---
+layout: post
+title: Ubuntu 12.04にRedmine 2.0.3をインストールする
+date: '2012-06-26T11:13:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-06-26T11:13:02.320+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-6958492880072740922
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/06/ubuntu-1204redmine-203.html
+---
+
+Ubuntu 12.04にRedmine 2.0.3をインストールしました。<br />
+<br />
+<u>参考サイト</u><br />
+<ul>
+<li><a href="http://bit.ly/LXLgx1" target="_blank">知らんがな » Redmine 2.0 on Ubuntu 12.04 LTS (64bit)</a></li>
+<li><a href="http://redmine.jp/guide/RedmineInstall/" target="_blank">Redmineのインストール</a></li>
+</ul>
+<br />
+<u>手順</u><br />
+Ubuntu12.04をインストール。VirtualBoxにインストールしました。<br />
+ほぼ上記のサイトどおりですが、以下の点を変えています。<br />
+<ul>
+<li>必要なパッケージのインストールで、libmagick-devがlibmagickcore-devと競合したため抜いた。</li>
+<li>データベースはsqlite3を使用。</li>
+<li>webrickを使用。2.0からは起動は、<br />
+&nbsp;$ script/rails server webrick -e production<br />
+になった。</li>
+</ul>
+<br />
+これでhttp://localhost:3000でつながりました。

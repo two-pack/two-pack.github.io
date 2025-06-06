@@ -1,0 +1,36 @@
+---
+layout: post
+title: Play! Framework 2.0とApacheの設定でのパス
+date: '2012-10-15T23:24:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-10-15T23:24:01.505+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-3217890322888276267
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/10/play-framework-20apache.html
+---
+
+ちょっと試したことのメモ。以下のサイトを参考にさせてもらいました。<br />
+<br />
+<ul>
+<li><a href="http://www.rialivit.jp/blogs/?p=594" target="_blank">Apache使ってPlayFramework 2.0のポート番号をわけて複数アプリを起動する。</a></li>
+<li><a href="http://www.playframework.org/documentation/2.0.4/HTTPServer" target="_blank">Set-up a front-end HTTP server</a><br />
+</li>
+</ul>
+<div>
+<br /></div>
+<div>
+試したことは、上記のサイトのようにApacheを設定したときにPlay!アプリ上でのリンクがどう動くかです。以下のようなリンクを<b>app1</b>の<b>index</b>に埋めておきます。</div>
+<ol>
+<li>&lt;a href="dynamic"&gt;app1 dynamic&lt;/a&gt;</li>
+<li>&lt;a href="public/static.html"&gt;app1 static&lt;/a&gt;</li>
+<li>&lt;a href="/app2/"&gt;app2&lt;/a&gt;</li>
+<li>&lt;a href="/app2/dynamic"&gt;app2 dynamic&lt;/a&gt;</li>
+<li>&lt;a href="/app2/public/static.html"&gt;app2 static&lt;/a&gt;</li>
+</ol>
+<br />
+<b>dynamic</b>はコントローラーへ、staticは静的HTMLへのリンクです。<b>http://127.0.0.1/app1/</b>へアクセスしてapp1のindexが表示され、意図したとおりにリンクが表示できました。<br />
+Play! Framework 2.0は、今のところサブコンテキストが使えないので、Apacheを使うようですが、相対でリンクを張ってあげれば、<br />
+<b>　play run</b><br />
+としたときも、デプロイしたときも想定の動きになりそうです。<br />
+って、当たり前か。<br />
+<br />

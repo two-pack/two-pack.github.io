@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Redmine XLS Export Pluginの競合 | Your awesome title</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Redmine XLS Export Pluginの競合" />
+<meta name="author" content="ソフトウェア開発にまつわる話" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="年頭にXLS Export Pluginのフォーラムで、チケットリストのQUICKリンクでzipファイルが正しく作られないという問題が報告されてました。 調べてみると拡張子はzipなんだけど、実際にはxlsファイルだと判明。。。 ソースを追っていくと以下の部分が該当箇所。 export_nameには出力するファイル名と拡張子が入っています。issues_xlsはxlsファイルの内容で、zipの場合はこの後にrubyzipを使ってzipファイルにする処理があります。 export_name[1] == ‘zip’はtrueだけど、Zip::ZipOutputStream::write_bufferがfalseの場合は、現象が起きるルートになります。 issues_xls=issues_to_xls2(@issues, @project, @query, @settings) return issues_xls unless export_name[1] == &#39;zip&#39; &amp;&amp; defined?(Zip::ZipOutputStream::write_buffer) Zip::ZipOutputStream::write_bufferがない？ rubyzipをrequireしているのにZip::ZipOutputStream::write_bufferがないってどういうこと？ いろいろ調べていくと、Redmine DMSF Pluginが入っている場合に起きる事が判明。 DMSF Pluginではrubyzipではなくzipをbundlerでインストールしていました。 これによってrubyzipとzipの両方がgemに入っている状態になります。 どちらのプラグインも、以下のようにしてロードしています。 require &#39;zip/zip&#39; しかし、ロードパスの優先順位の関係でzipのほうがrubyzipよりも先に見つかるので、zipがrequireされます。 そして、zipにはZip::ZipOutputStream::write_bufferが含まれていない、というのが原因でした。 調査と対応 XLS Export Pluginだけrubyzipを呼び出す方法とかないのかな？と、いろいろ調べてみたんですが分からず。 rubyzipとzipでdiffをとるとrubyzipのほうが包含しているようにみえたので、DMSF Pluginにrubyzip使ってもらえないかとPull-Requestしたら取り込んでもらえました。 いっけんらくちゃくw ＃でも、そもそもZip::ZipOutputStream::write_bufferが無い場合にzip拡張子で出すという処理自体にも問題があると思うんですが。。。" />
+<meta property="og:description" content="年頭にXLS Export Pluginのフォーラムで、チケットリストのQUICKリンクでzipファイルが正しく作られないという問題が報告されてました。 調べてみると拡張子はzipなんだけど、実際にはxlsファイルだと判明。。。 ソースを追っていくと以下の部分が該当箇所。 export_nameには出力するファイル名と拡張子が入っています。issues_xlsはxlsファイルの内容で、zipの場合はこの後にrubyzipを使ってzipファイルにする処理があります。 export_name[1] == ‘zip’はtrueだけど、Zip::ZipOutputStream::write_bufferがfalseの場合は、現象が起きるルートになります。 issues_xls=issues_to_xls2(@issues, @project, @query, @settings) return issues_xls unless export_name[1] == &#39;zip&#39; &amp;&amp; defined?(Zip::ZipOutputStream::write_buffer) Zip::ZipOutputStream::write_bufferがない？ rubyzipをrequireしているのにZip::ZipOutputStream::write_bufferがないってどういうこと？ いろいろ調べていくと、Redmine DMSF Pluginが入っている場合に起きる事が判明。 DMSF Pluginではrubyzipではなくzipをbundlerでインストールしていました。 これによってrubyzipとzipの両方がgemに入っている状態になります。 どちらのプラグインも、以下のようにしてロードしています。 require &#39;zip/zip&#39; しかし、ロードパスの優先順位の関係でzipのほうがrubyzipよりも先に見つかるので、zipがrequireされます。 そして、zipにはZip::ZipOutputStream::write_bufferが含まれていない、というのが原因でした。 調査と対応 XLS Export Pluginだけrubyzipを呼び出す方法とかないのかな？と、いろいろ調べてみたんですが分からず。 rubyzipとzipでdiffをとるとrubyzipのほうが包含しているようにみえたので、DMSF Pluginにrubyzip使ってもらえないかとPull-Requestしたら取り込んでもらえました。 いっけんらくちゃくw ＃でも、そもそもZip::ZipOutputStream::write_bufferが無い場合にzip拡張子で出すという処理自体にも問題があると思うんですが。。。" />
+<link rel="canonical" href="http://localhost:4000/2013/03/30/redmine-xls-export-plugin.html" />
+<meta property="og:url" content="http://localhost:4000/2013/03/30/redmine-xls-export-plugin.html" />
+<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-03-30T09:04:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Redmine XLS Export Pluginの競合" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2013-03-30T09:04:00+09:00","datePublished":"2013-03-30T09:04:00+09:00","description":"年頭にXLS Export Pluginのフォーラムで、チケットリストのQUICKリンクでzipファイルが正しく作られないという問題が報告されてました。 調べてみると拡張子はzipなんだけど、実際にはxlsファイルだと判明。。。 ソースを追っていくと以下の部分が該当箇所。 export_nameには出力するファイル名と拡張子が入っています。issues_xlsはxlsファイルの内容で、zipの場合はこの後にrubyzipを使ってzipファイルにする処理があります。 export_name[1] == ‘zip’はtrueだけど、Zip::ZipOutputStream::write_bufferがfalseの場合は、現象が起きるルートになります。 issues_xls=issues_to_xls2(@issues, @project, @query, @settings) return issues_xls unless export_name[1] == &#39;zip&#39; &amp;&amp; defined?(Zip::ZipOutputStream::write_buffer) Zip::ZipOutputStream::write_bufferがない？ rubyzipをrequireしているのにZip::ZipOutputStream::write_bufferがないってどういうこと？ いろいろ調べていくと、Redmine DMSF Pluginが入っている場合に起きる事が判明。 DMSF Pluginではrubyzipではなくzipをbundlerでインストールしていました。 これによってrubyzipとzipの両方がgemに入っている状態になります。 どちらのプラグインも、以下のようにしてロードしています。 require &#39;zip/zip&#39; しかし、ロードパスの優先順位の関係でzipのほうがrubyzipよりも先に見つかるので、zipがrequireされます。 そして、zipにはZip::ZipOutputStream::write_bufferが含まれていない、というのが原因でした。 調査と対応 XLS Export Pluginだけrubyzipを呼び出す方法とかないのかな？と、いろいろ調べてみたんですが分からず。 rubyzipとzipでdiffをとるとrubyzipのほうが包含しているようにみえたので、DMSF Pluginにrubyzip使ってもらえないかとPull-Requestしたら取り込んでもらえました。 いっけんらくちゃくw ＃でも、そもそもZip::ZipOutputStream::write_bufferが無い場合にzip拡張子で出すという処理自体にも問題があると思うんですが。。。","headline":"Redmine XLS Export Pluginの競合","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2013/03/30/redmine-xls-export-plugin.html"},"url":"http://localhost:4000/2013/03/30/redmine-xls-export-plugin.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Redmine XLS Export Pluginの競合</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2013-03-30T09:04:00+09:00" itemprop="datePublished">Mar 30, 2013
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">ソフトウェア開発にまつわる話</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    年頭に<a href="http://www.redmine.org/boards/3/topics/11986?r=35564#message-35564">XLS Export Pluginのフォーラム</a>で、チケットリストの<b>QUICK</b>リンクでzipファイルが正しく作られないという問題が報告されてました。<br />
+<br />
+調べてみると拡張子はzipなんだけど、実際にはxlsファイルだと判明。。。<br />
+ソースを追っていくと以下の部分が該当箇所。<br />
+export_nameには出力するファイル名と拡張子が入っています。issues_xlsはxlsファイルの内容で、zipの場合はこの後にrubyzipを使ってzipファイルにする処理があります。<br />
+<b>export_name[1] == 'zip'</b>は<b>true</b>だけど、<b>Zip::ZipOutputStream::write_buffer</b>が<b>false</b>の場合は、現象が起きるルートになります。<br />
+<pre class="prettyprint linenums">issues_xls=issues_to_xls2(@issues, @project, @query, @settings)
+    return issues_xls unless export_name[1] == 'zip' &amp;&amp; defined?(Zip::ZipOutputStream::write_buffer)</pre><br />
+<br />
+<h3>Zip::ZipOutputStream::write_bufferがない？</h3>rubyzipをrequireしているのに<b>Zip::ZipOutputStream::write_buffer</b>がないってどういうこと？<br />
+いろいろ調べていくと、<a href="http://www.redmine.org/plugins/dmsf">Redmine DMSF Plugin</a>が入っている場合に起きる事が判明。<br />
+DMSF Pluginでは<b>rubyzip</b>ではなく<b>zip</b>を<a href="https://github.com/danmunn/redmine_dmsf/commit/17a78e855e5077a34a2d0c1b8078ef85467b8cc8">bundlerでインストールしていました</a>。<br />
+<br />
+これによって<b>rubyzip</b>と<b>zip</b>の両方がgemに入っている状態になります。<br />
+どちらのプラグインも、以下のようにしてロードしています。<br />
+<pre class="prettyprint linenums">require 'zip/zip'
+</pre><br />
+しかし、ロードパスの優先順位の関係で<b>zip</b>のほうが<b>rubyzip</b>よりも先に見つかるので、<b>zip</b>がrequireされます。<br />
+そして、<b>zip</b>には<b>Zip::ZipOutputStream::write_buffer</b>が含まれていない、というのが原因でした。<br />
+<br />
+<br />
+<h3>調査と対応</h3>XLS Export Pluginだけ<b>rubyzip</b>を呼び出す方法とかないのかな？と、いろいろ調べてみたんですが分からず。<br />
+<b>rubyzip</b>と<b>zip</b>でdiffをとると<b>rubyzip</b>のほうが包含しているようにみえたので、DMSF Pluginにrubyzip使ってもらえないかと<a href="https://github.com/danmunn/redmine_dmsf/pull/110">Pull-Request</a>したら取り込んでもらえました。<br />
+いっけんらくちゃくw<br />
+<br />
+＃でも、そもそも<b>Zip::ZipOutputStream::write_buffer</b>が無い場合にzip拡張子で出すという処理自体にも問題があると思うんですが。。。<br />
+<br />
+<br />
+
+  </div><a class="u-url" href="/2013/03/30/redmine-xls-export-plugin.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

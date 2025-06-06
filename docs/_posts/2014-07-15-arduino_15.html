@@ -1,0 +1,43 @@
+---
+layout: post
+title: "「Arduinoをはじめよう」ではじめよう（１）"
+date: '2014-07-15T13:33:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Arduino
+modified_time: '2014-07-15T14:06:46.365+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyvVnzNn_ZOD0mdlhow2LX9ylvfG7y9iPty_OjoVEwcazYH1nfXSXUukP_0OFizsVAHJUUAbQ942CQ1jaCdwsrww-_OEIArA-GaHboBIMF37nR9MSRnkKoc1kmeN5C_w9M_fRoVHHqhZA/s72-c/20140714_192935.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-8249084071631776720
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/arduino_15.html
+---
+
+<a href="http://www.oreilly.co.jp/books/9784873113982/"><b>「Arduinoをはじめよう」</b></a>を読みながら、経過を記録していきたいと思います。<br />
+本に書いてあるソースを載せるのはちょっと・・・なので、読んだ内容を参考にして自前でも<a href="https://github.com/two-pack/ArduinoExample"><i>ここで</i></a>書いていきたいと思います。<br />
+<br />
+<a href="http://two-pack-sbs.blogspot.jp/2014/07/arduino.html"><i>前回</i></a>、LEDをつけることができました。次は<i>「プッシュボタンを使ってLEDをコントロール」</i>です。<br />
+<br />
+<h2>タクトスイッチ</h2>以下のようにしたところ、スイッチにかかわらずLEDが点きっぱなしになりました。。。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyvVnzNn_ZOD0mdlhow2LX9ylvfG7y9iPty_OjoVEwcazYH1nfXSXUukP_0OFizsVAHJUUAbQ942CQ1jaCdwsrww-_OEIArA-GaHboBIMF37nR9MSRnkKoc1kmeN5C_w9M_fRoVHHqhZA/s1600/20140714_192935.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiyvVnzNn_ZOD0mdlhow2LX9ylvfG7y9iPty_OjoVEwcazYH1nfXSXUukP_0OFizsVAHJUUAbQ942CQ1jaCdwsrww-_OEIArA-GaHboBIMF37nR9MSRnkKoc1kmeN5C_w9M_fRoVHHqhZA/s1600/20140714_192935.jpg" height="240" width="320" /></a></div><br />
+何が悪いんだろうといろいろ試した結果、タクトスイッチの向きが問題でした。上は横向きでしたが正しくは縦に付けないとダメでした。<br />
+以下のサイトでタクトスイッチについて詳しく書かれていました。縦方向につながっているんですね。なので横につけると、常につながっている状態になっていたということでした。<br />
+<a href="http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/SWtoLED/SWtoLED.htm"><i>スイッチの入/切でＬＥＤを点灯させます</i></a><br />
+<br />
+というわけで、こんな感じでつなげてスイッチを押すとLEDが点くようになりました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjmGEoPk6oHLwWFz4RilRtJ0KStLpTdZZaa5xtbhRfaoRJHzUslwL0DezZXMXTuJfiPcHtG_fciG8k1FfwV6ToZctyHHhVvQ_zHAV-rcEJx88Y4UD49E1QFPSqDzMFqXVf-bE1HPgXvTQY/s1600/20140714_182732.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjmGEoPk6oHLwWFz4RilRtJ0KStLpTdZZaa5xtbhRfaoRJHzUslwL0DezZXMXTuJfiPcHtG_fciG8k1FfwV6ToZctyHHhVvQ_zHAV-rcEJx88Y4UD49E1QFPSqDzMFqXVf-bE1HPgXvTQY/s1600/20140714_182732.jpg" height="240" width="320" /></a></div><br />
+<h2>プルアップ抵抗</h2>上の回路でわからなかったのが、<b>なんで抵抗をつけるのか？</b>です。いろいろ調べてみたところ、おそらくスイッチがオフの時の電圧を安定させるための<b>プルアップ抵抗</b>というものだと思います。以下のサイトがわかりやすかったです。<br />
+<a href="http://www.netdecheck.com/coffee_break/dojyo/004/"><i>第４回　プルアップ・プルダウン抵抗</i></a><br />
+<br />
+こういったことは、<b>「Arduinoをはじめよう」</b>では（今のところ）触れられていないため、図を見ながらそういうもんだと組んでみる感じです。<br />
+出来る限り調べてみたいですが、取っ掛かりが難しい。。。<br />
+<br />
+<h2>ボタンでLED</h2>上の回路でのソースは<a href="https://github.com/two-pack/ArduinoExample/commit/8e4971ebaa4b555f173d31b752d5a21479cc3e2e"><i>こんな</i></a>感じ。<br />
+本とは違って、LED操作の部分を別ファイルにしてみました。同じフォルダにあるファイル（IDE上ではタブ）の定義もIDEで自動的に読まれます。<br />
+<br />
+さらにボタンを押すと、<br />
+赤　→　緑　→　両方　→　消灯<br />
+という順番で点いたり消えたりするように回路と<a href="https://github.com/two-pack/ArduinoExample/commit/97af8691c0eaf0020275241effc5fb34ab629df9"><i>スケッチ</i></a>を作ってみました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirj2rHk9lbgyjtG9SnJcq9QTyHXgw1yVhETq9GOoCsQ1oskaj3nMqgtpstAqMbLJty4_FsyNslwtIUr0ri3a3rs6rX-SR7pMGmELiHMxWxa-KObVKtqbtYwpqtU0JZ1Ghzi1TghjJG5o4/s1600/20140714_201426.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirj2rHk9lbgyjtG9SnJcq9QTyHXgw1yVhETq9GOoCsQ1oskaj3nMqgtpstAqMbLJty4_FsyNslwtIUr0ri3a3rs6rX-SR7pMGmELiHMxWxa-KObVKtqbtYwpqtU0JZ1Ghzi1TghjJG5o4/s1600/20140714_201426.jpg" height="240" width="320" /></a></div><br />
+ここまでで、４章はおしまい。<br />
+<br />
+<br />
+<iframe frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="http://rcm-fe.amazon-adsystem.com/e/cm?t=twopack-22&amp;o=9&amp;p=8&amp;l=as1&amp;asins=487311537X&amp;ref=tf_til&amp;fc1=000000&amp;IS2=1&amp;lt1=_blank&amp;m=amazon&amp;lc1=0000FF&amp;bc1=000000&amp;bg1=FFFFFF&amp;f=ifr" style="height: 240px; width: 120px;"></iframe>

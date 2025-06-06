@@ -1,0 +1,51 @@
+---
+layout: post
+title: RedmineプラグインでMroongaを使うときのテスト
+date: '2017-09-12T07:35:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+modified_time: '2017-09-12T07:35:31.233+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5705619633860401370
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2017/09/redminemroonga.html
+---
+
+<a href="https://github.com/okkez/redmine_full_text_search">Full text search plugin</a>と<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a>が競合した話。<br />
+パッチのロード順でチケットが表示（issues#show）できなった。<br />
+パッチを提示してもらい、パッチを適用する位置を変更して対処した。<br />
+https://github.com/two-pack/redmine_xlsx_format_issue_exporter/issues/50<br />
+<br />
+ここからが本題。<br />
+いつも開発環境はsqlite3でやっているが、Full text search pluginがMroongaを使用するので、<a href="https://redmine.tokyo/projects/unofficialcooking">Unofficial Redmine CookingのRedmine AnsiblePlaybook Unofficial Cooking Edition（闇鍋版）</a>を使用した。<br />
+すると、<b>rake redmine:plugins:test</b>でRedmine XLSX format issue exporterのテストを実行すると以下のようなエラーが出た。<br />
+<pre>Mysql2::Error: The used table type doesn't support FULLTEXT indexes: CREATE fulltext INDEX `index_issue_contents_on_contents` 
+</pre><br />
+調べて見るとdb/schema.rbにテーブル作成時のオプション指定が入らないことが原因。<br />
+プラグインでは以下のようなmigrateが書かれている。<br />
+<pre class="brush:bash;">create_table :issue_contents, options: "ENGINE=Mroonga" do |t|
+            t.integer :project_id
+            t.integer :issue_id, unique: true, null: false
+            t.string :subject
+            t.text :contents, limit: 16.megabytes
+            t.integer :status_id
+            t.boolean :is_private
+          end
+</pre>対してschema.rbは以下のような感じ。<br />
+<pre class="brush:bash;">create_table "issue_contents", force: :cascade do |t|
+    t.integer "project_id", limit: 4
+    t.integer "issue_id",   limit: 4,          null: false
+    t.string  "subject",    limit: 255
+    t.text    "contents",   limit: 4294967295
+    t.integer "status_id",  limit: 4
+    t.boolean "is_private"
+  end
+
+  add_index "issue_contents", ["contents"], name: "index_issue_contents_on_contee
+nts", type: :fulltext
+</pre><br />
+rakeでテストを実行するの際に、db:test:prepareで一度テーブルが削除されてから、schema.rbを元に作成し直す。<br />
+その際に、schema.rbにはENGINEがMroongaではなくInnoDBになってしまうので、FULLTEXTのインデックスが作れない。<br />
+<br />
+結局、db/tasks/redmine.rakeを書き換えた上で、db:drop -&gt; db:create -&gt; db:migrate -&gt; redmine:plugins:test の順で実行した。<br />
+config/application.rbで<b>config.active_record.schema_format = :sql</b>とするとSQLに書きだされるため大丈夫というのも検索しているとあったが、db/structure.sqlにplugin分が書き込まれてないため、rake taskではテーブルがないとエラーになってだめだった。<br />
+<br />

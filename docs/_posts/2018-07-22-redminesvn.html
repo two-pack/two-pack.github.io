@@ -1,0 +1,64 @@
+---
+layout: post
+title: Redmineのチケットに表示されるSVNのコミット情報に対象ブランチを表示する
+date: '2018-07-22T17:50:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+- Redmine Plugin
+- Subversion
+modified_time: '2018-07-22T17:55:34.616+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnWhQ-PdjNwKAyYbcE_zYe3DT_FUKlAvVwKywmVShvSEa0BLZJdzjEWyscHggZcfg0XuwPzAj39hMd9haIVPXc92cqZqdR1kE5TlsRzodmQ5tgZ9fWvHOFW2TpoKwGuAY52l9GwZUe1qA/s72-c/revisions1.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-1111312894236425412
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2018/07/redminesvn.html
+---
+
+Redmineのチケットとリポジトリを関連付けすると、そのチケットに該当のコミットが表示されます。<br />
+<br />
+<div class="separator" style="clear: both; text-align: left;">
+<img border="0" data-original-height="201" data-original-width="478" height="168" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnWhQ-PdjNwKAyYbcE_zYe3DT_FUKlAvVwKywmVShvSEa0BLZJdzjEWyscHggZcfg0XuwPzAj39hMd9haIVPXc92cqZqdR1kE5TlsRzodmQ5tgZ9fWvHOFW2TpoKwGuAY52l9GwZUe1qA/s400/revisions1.png" width="400" /></div>
+<div class="separator" style="clear: both; text-align: left;">
+ここには、どのブランチへのコミットなのかの情報がありません。</div>
+これを解決しようと以下のプラグインが存在します。<br />
+<a href="http://www.redmine.org/plugins/redmine_revision_branches">Git Revision Branches</a><br />
+<br />
+名前からGit専用と見せかけて、実はMercurialにも対応していました。<br />
+でも、私が欲しいのは<b>Subversion</b>！！！！！<br />
+<br />
+というわけで、以下のプルリクエストを作成しました。<br />
+<a href="https://github.com/tleish/redmine_revision_branches/pull/21">Subversion support.</a><br />
+<br />
+これを入れるとSubversionでも以下のように表示されます。<br />
+Redmineはプロジェクトに複数のリポジトリが設定できるため、そのリポジトリ名と後ろにブランチが表示されます。<br />
+<div class="separator" style="clear: both; text-align: left;">
+<img border="0" data-original-height="396" data-original-width="477" height="331" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhitd5_efMrcZso1rx35phFRtAfx__lHX0VEC8Wb5iIVu5YP4sWzn5IUHjtXcz-AV6xKsOoCoILglzc79NhHvvq9SgcRkFWg4lljJI5nA4moFO3ck-sbsdKjg4-CHzOkIiANiq4laCIoqo/s400/revisions2.png" width="400" /></div>
+<div class="separator" style="clear: both; text-align: left;">
+<br /></div>
+認識できるリポジトリは、Subversionの標準的な構成（trunk, branches, tags）を想定しています。<br />
+ただ、Redmine本家のリポジトリからして、<a href="http://www.redmine.org/projects/redmine/repository/show/sandbox">sandbox</a>というのがあるので、さすがにRedmineのプラグインだしなと思って、それも認識できるようにしました。<br />
+trunk以外はその１階層下まで表示する仕組みにしています。<br />
+<br />
+また、一つのリポジトリに複数のプロジェクトを突っ込んでいるような構成も見かけます。<br />
+各プロジェクトの中に、さらにtrunkやbranchesなどがある、例えば、<br />
+http://example.com/svn/projectA<br />
+　/trunk<br />
+　/branches<br />
+　/tags<br />
+http://example.com/svn/projectX<br />
+　/trunk<br />
+　/branches<br />
+　/tags<br />
+みたいな感じのとき、Redmineのプロジェクト、もしくはリポジトリの設定が分かれていて、リポジトリの設定には、<br />
+http://example.com/svn/projectX<br />
+と指定すると思われます。<br />
+こういった場合にprojectX部分は邪魔なので、それを省く設定を入れました。<br />
+複数リポジトリを設定する場合を想定して、カンマ区切りで複数指定できるようにしました。<br />
+<div class="separator" style="clear: both; text-align: left;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtifBsUgwUZcB2nKXLhlmG9_Dn0mKiup9rHBZINu7Wq19O53tmdjn1frdC-gM-CJAnBelbfnhJIDTQcXFOzj-HUzHU-4d11vMKKlStuXyL9Vd-ldkiWPeGdcyrDfDOkBcg6pEyjO2hShg/s1600/settings.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="286" data-original-width="1043" height="172" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtifBsUgwUZcB2nKXLhlmG9_Dn0mKiup9rHBZINu7Wq19O53tmdjn1frdC-gM-CJAnBelbfnhJIDTQcXFOzj-HUzHU-4d11vMKKlStuXyL9Vd-ldkiWPeGdcyrDfDOkBcg6pEyjO2hShg/s640/settings.png" width="640" /></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+<br /></div>
+<div class="separator" style="clear: both; text-align: left;">
+とりあえずこれで自分としては用が足りるとこまでいったかなという感じ。</div>
+<br />
+<br />
+<br />

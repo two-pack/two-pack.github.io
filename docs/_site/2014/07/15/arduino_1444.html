@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>「Arduinoをはじめよう」ではじめよう（２） | Your awesome title</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="「Arduinoをはじめよう」ではじめよう（２）" />
+<meta name="author" content="ソフトウェア開発にまつわる話" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="５章の「PWMで明かりをコントロール」です。 自前（？）でPWM delay関数を使って明るさを変える話でパルス幅変調の説明があります。実際にサンプルでやってみたのですが、50%とか25%とか書いてあるけど、いまいち明るさが変わっているのがわかりづらい。。。5%とかだとわかりました。 ２つ並べればわかるかな？と思い、並べてみました。スケッチはこちら。 結局あんまりわからず、5%の写真になりますｗ PWM 本に従って、ArduinoのPWMが使えるピンでもやりました。私の買ったエントリーキットには本に書いてあった270Ωの抵抗がなかったので330Ωのにしました。 この抵抗はなんのためにあるのか分からなかったので、とりあえず外してみたところ、すごく光りましたｗ 以下のサイトで「ＬＥＤは、電流を何らかの方法で制限してやらないと、壊れてしまうというものなのです。」と書いてありましたorz　煙は出ませんでしたが。 ＬＥＤの基本　その３ 制限抵抗 ただ、ここまでLEDを使う場合には直列で抵抗を挟むことはありませんでした。明るさを調整したのが分かりやすいように、LEDに流れる電圧を下げているのかなとサイトのグラフを見て思いました。あってるかな？ 組み合わせ ボタンとPWMの組み合わせてみるところがあります。 答えを見ずに組み合わせたものを作ってみました。単純にスイッチを押している間、明るさが変化するものです。スケッチはこちら。 ５章はもう少しあります。" />
+<meta property="og:description" content="５章の「PWMで明かりをコントロール」です。 自前（？）でPWM delay関数を使って明るさを変える話でパルス幅変調の説明があります。実際にサンプルでやってみたのですが、50%とか25%とか書いてあるけど、いまいち明るさが変わっているのがわかりづらい。。。5%とかだとわかりました。 ２つ並べればわかるかな？と思い、並べてみました。スケッチはこちら。 結局あんまりわからず、5%の写真になりますｗ PWM 本に従って、ArduinoのPWMが使えるピンでもやりました。私の買ったエントリーキットには本に書いてあった270Ωの抵抗がなかったので330Ωのにしました。 この抵抗はなんのためにあるのか分からなかったので、とりあえず外してみたところ、すごく光りましたｗ 以下のサイトで「ＬＥＤは、電流を何らかの方法で制限してやらないと、壊れてしまうというものなのです。」と書いてありましたorz　煙は出ませんでしたが。 ＬＥＤの基本　その３ 制限抵抗 ただ、ここまでLEDを使う場合には直列で抵抗を挟むことはありませんでした。明るさを調整したのが分かりやすいように、LEDに流れる電圧を下げているのかなとサイトのグラフを見て思いました。あってるかな？ 組み合わせ ボタンとPWMの組み合わせてみるところがあります。 答えを見ずに組み合わせたものを作ってみました。単純にスイッチを押している間、明るさが変化するものです。スケッチはこちら。 ５章はもう少しあります。" />
+<link rel="canonical" href="http://localhost:4000/2014/07/15/arduino_1444.html" />
+<meta property="og:url" content="http://localhost:4000/2014/07/15/arduino_1444.html" />
+<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-07-15T14:06:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="「Arduinoをはじめよう」ではじめよう（２）" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2014-07-15T14:06:00+09:00","datePublished":"2014-07-15T14:06:00+09:00","description":"５章の「PWMで明かりをコントロール」です。 自前（？）でPWM delay関数を使って明るさを変える話でパルス幅変調の説明があります。実際にサンプルでやってみたのですが、50%とか25%とか書いてあるけど、いまいち明るさが変わっているのがわかりづらい。。。5%とかだとわかりました。 ２つ並べればわかるかな？と思い、並べてみました。スケッチはこちら。 結局あんまりわからず、5%の写真になりますｗ PWM 本に従って、ArduinoのPWMが使えるピンでもやりました。私の買ったエントリーキットには本に書いてあった270Ωの抵抗がなかったので330Ωのにしました。 この抵抗はなんのためにあるのか分からなかったので、とりあえず外してみたところ、すごく光りましたｗ 以下のサイトで「ＬＥＤは、電流を何らかの方法で制限してやらないと、壊れてしまうというものなのです。」と書いてありましたorz　煙は出ませんでしたが。 ＬＥＤの基本　その３ 制限抵抗 ただ、ここまでLEDを使う場合には直列で抵抗を挟むことはありませんでした。明るさを調整したのが分かりやすいように、LEDに流れる電圧を下げているのかなとサイトのグラフを見て思いました。あってるかな？ 組み合わせ ボタンとPWMの組み合わせてみるところがあります。 答えを見ずに組み合わせたものを作ってみました。単純にスイッチを押している間、明るさが変化するものです。スケッチはこちら。 ５章はもう少しあります。","headline":"「Arduinoをはじめよう」ではじめよう（２）","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2014/07/15/arduino_1444.html"},"url":"http://localhost:4000/2014/07/15/arduino_1444.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">「Arduinoをはじめよう」ではじめよう（２）</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-07-15T14:06:00+09:00" itemprop="datePublished">Jul 15, 2014
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">ソフトウェア開発にまつわる話</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    ５章の<i>「PWMで明かりをコントロール」</i>です。<br />
+<br />
+<h2>自前（？）でPWM</h2>delay関数を使って明るさを変える話で<b>パルス幅変調</b>の説明があります。実際にサンプルでやってみたのですが、50%とか25%とか書いてあるけど、いまいち明るさが変わっているのがわかりづらい。。。5%とかだとわかりました。<br />
+２つ並べればわかるかな？と思い、並べてみました。スケッチは<a href="https://github.com/two-pack/ArduinoExample/blob/master/compareLED/compareLED.ino">こちら</a>。<br />
+<br />
+結局あんまりわからず、5%の写真になりますｗ<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibcrnSXG6k2kjxptXKTMNAzopW3chApsOZp9RF40ZLfwnDnJKXCSmGZbbotLdcEQEc6esRWQ2B4p7UxgJV-3CCeZbiaS8R5rJSG7FGpR7aGGcDkbZBQs13iWv1Ryb8mtE60y_T-AbR9iE/s1600/20140715_110738.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibcrnSXG6k2kjxptXKTMNAzopW3chApsOZp9RF40ZLfwnDnJKXCSmGZbbotLdcEQEc6esRWQ2B4p7UxgJV-3CCeZbiaS8R5rJSG7FGpR7aGGcDkbZBQs13iWv1Ryb8mtE60y_T-AbR9iE/s1600/20140715_110738.jpg" height="240" width="320" /></a></div><br />
+<h2>PWM</h2>本に従って、ArduinoのPWMが使えるピンでもやりました。私の買ったエントリーキットには本に書いてあった270Ωの抵抗がなかったので330Ωのにしました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi52oTK6xx4iX-g4fNoYqHvBGr_kaoZ_nymkNmxa_038F8pjn9gf2fVBbEdnDpLnU6ot10xrzkj2ULB1PjnNXfmcChrk2pp75CgFKTCsZeaggmRywYHITkAfvHs2jQ8S6uY8Qpy2W1iV54/s1600/20140715_113035.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi52oTK6xx4iX-g4fNoYqHvBGr_kaoZ_nymkNmxa_038F8pjn9gf2fVBbEdnDpLnU6ot10xrzkj2ULB1PjnNXfmcChrk2pp75CgFKTCsZeaggmRywYHITkAfvHs2jQ8S6uY8Qpy2W1iV54/s1600/20140715_113035.jpg" height="240" width="320" /></a></div><br />
+この抵抗はなんのためにあるのか分からなかったので、とりあえず外してみたところ、すごく光りましたｗ<br />
+以下のサイトで<i>「ＬＥＤは、電流を何らかの方法で制限してやらないと、壊れてしまうというものなのです。」</i>と書いてありましたorz　煙は出ませんでしたが。<br />
+<a href="http://www.ele-lab.com/led_iroha3.html">ＬＥＤの基本　その３  制限抵抗</a><br />
+<br />
+ただ、ここまでLEDを使う場合には直列で抵抗を挟むことはありませんでした。明るさを調整したのが分かりやすいように、LEDに流れる電圧を下げているのかなとサイトのグラフを見て思いました。あってるかな？<br />
+<br />
+<h2>組み合わせ</h2>ボタンとPWMの組み合わせてみるところがあります。<br />
+答えを見ずに組み合わせたものを作ってみました。単純にスイッチを押している間、明るさが変化するものです。スケッチは<a href="https://github.com/two-pack/ArduinoExample/blob/master/LEDwithPWMandButton/LEDwithPWMandButton.ino">こちら</a>。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgX_IXVT3Uu73JawoD-ZIMlsAwyhtagLSPTgVfPg-emBV_p80inX-vKBffK0lGZcwpG3ct9T9y46FtyvA0RQe85gmHj6b0bhMaxcd4a7IqMyjGjA1Bhj8jP4YnZ4o-I0-EdpruWDtsAIbE/s1600/20140715_121442.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgX_IXVT3Uu73JawoD-ZIMlsAwyhtagLSPTgVfPg-emBV_p80inX-vKBffK0lGZcwpG3ct9T9y46FtyvA0RQe85gmHj6b0bhMaxcd4a7IqMyjGjA1Bhj8jP4YnZ4o-I0-EdpruWDtsAIbE/s1600/20140715_121442.jpg" height="240" width="320" /></a></div><br />
+<br />
+５章はもう少しあります。<br />
+<br />
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=twopack-22&o=9&p=8&l=as1&asins=B008PQEWIW&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+  </div><a class="u-url" href="/2014/07/15/arduino_1444.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+---
+layout: post
+title: Spring 3.0 + Thymeleafを試してみる(１)
+date: '2012-11-20T19:43:00.003+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Thymeleaf
+- Spring
+modified_time: '2013-01-09T07:35:50.230+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2162697895303564227
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/11/spring-30-thymeleaf.html
+---
+
+まずはSpring 3.0のチュートリアルを探してきて写経しました。<br />
+<a href="http://www.roseindia.net/spring/spring3/spring-3-hello-world.shtml" target="_blank">Spring 3 Hello World Example</a><br />
+<br />
+このチュートリアルでViewはJSPです。ここにThymeleafでのViewを追加します。<br />
+Thymeleafのチュートリアルを見ながら、テキストを置き換えるだけの簡単なコードを書きました。<br />
+<a href="http://www.thymeleaf.org/doc/Tutorial%20-%20Thymeleaf%20+%20Spring%203%2020111112.pdf" target="_blank">TUTORIAL: THYMELEAF + SPRING 3</a><br />
+また、チュートリアルの<a href="https://github.com/thymeleaf/thymeleafexamples-stsm" target="_blank">サンプルソース</a>がGithubで公開されています。<br />
+<br />
+はまったところは以下。<br />
+<br />
+<ul>
+<li>resourcesの配置先をsrcの下に置く必要があった。</li>
+<li>servletのxmlをJSPのものと分けたが、コントローラーも分けてあげる必要があった。</li>
+</ul>
+<br />
+あとはチュートリアル通りでできました。<br />
+今のところはただのテキスト置き換えのみなので、他の構文も試してみたいと思います。<br />
+<br />
+写経からThymeleaf用の追加までのソースは以下です。<br />
+https://bitbucket.org/twopack/helloworldspring3

@@ -1,0 +1,38 @@
+---
+layout: post
+title: Arduino Ethernet Shieldを使ってみた
+date: '2014-08-07T11:50:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Arduino
+modified_time: '2014-08-07T11:50:23.971+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheKftEfDB6Kh32mjfISJv11CLe2JbfGtH_GA7hhVPWMQvtKsu-PUk6ctgg-OrrixhjqWOi4vQVfWnSPNsLVaYlHwPbkbkK8-YvrVAGz49ugM_dJFB-UiMTP-I4eGDriWK9200HCM4k_uI/s72-c/20140807_093429.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-4059182576084630720
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/08/arduino-ethernet-shield.html
+---
+
+ArduinoのEhternetシールドを買ったので使ってみました。以下で安いものがあったので購入しましたが、ピンががつんと曲がった状態で届きました。動いたので良かったですが。。。<br />
+<a href="http://www.miniinthebox.com/ja/ethernet-w5100-shield-for-arduino-support-micro-sd-card_p590372.html">(Arduinoのための)用のイーサネットW5100シールド(マイクロSDカードをサポート) </a><br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheKftEfDB6Kh32mjfISJv11CLe2JbfGtH_GA7hhVPWMQvtKsu-PUk6ctgg-OrrixhjqWOi4vQVfWnSPNsLVaYlHwPbkbkK8-YvrVAGz49ugM_dJFB-UiMTP-I4eGDriWK9200HCM4k_uI/s1600/20140807_093429.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheKftEfDB6Kh32mjfISJv11CLe2JbfGtH_GA7hhVPWMQvtKsu-PUk6ctgg-OrrixhjqWOi4vQVfWnSPNsLVaYlHwPbkbkK8-YvrVAGz49ugM_dJFB-UiMTP-I4eGDriWK9200HCM4k_uI/s1600/20140807_093429.jpg" height="240" width="320" /></a></div>Arduino本体と重ねるとこんな感じ。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeqaXGiz-4GIOh6bmcNZeQXYfBZvdV0TrxDXcIbHpuko3sujgwLHtj7-EtWUDOk572wQl8mQmRoXTItMtZZHrJTrlyoX7Oh3Ku9LvIovTwKNXWhii3XHw73x_xJLCZ8lEoIT40vxuGNjs/s1600/20140807_093619.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeqaXGiz-4GIOh6bmcNZeQXYfBZvdV0TrxDXcIbHpuko3sujgwLHtj7-EtWUDOk572wQl8mQmRoXTItMtZZHrJTrlyoX7Oh3Ku9LvIovTwKNXWhii3XHw73x_xJLCZ8lEoIT40vxuGNjs/s1600/20140807_093619.jpg" height="240" width="320" /></a></div><br />
+<h2>やってみたこと</h2>Ethernetシールド用のライブラリが用意されています。<br />
+<a href="http://arduino.cc/en/Reference/Ethernet">Ethernet library</a><br />
+このライブラリを使って、Webサーバーから情報を取得してLEDをON/OFFすることにします。<br />
+<br />
+本当は、Travis CIの結果をLEDで表示する、をしたかったのですが、調べてみるとArduinoの要領だとHTTPSでの通信は難しいとのことで断念。。。<br />
+<br />
+<h2>実装</h2>Webサーバー側には以下のようなCGIを置きました。<b>led</b>の値を0にするとLEDが消えて、1にすると点くようにします。<br />
+<pre class="prettyprint">#!/usr/bin/ruby
+
+print "Content-Type: text/html\n"
+print "\n"
+print "led:1\n"
+</pre><br />
+スケッチは<a href="https://github.com/two-pack/ArduinoExample/commit/208e7d4468885a33652fc8f0573c5a03507426aa">こちら</a>。<br />
+ライブラリにサンプルとして着いている<a href="http://arduino.cc/en/Tutorial/WebClient">WebClient</a>を参考にしています。<br />
+<br />
+LEDのピンは７番を使っています。Ethernetシールドが4、10〜13のピンを使っているためです。<br />
+こんな感じになりました、、、といっても普通にLEDつけてるのと変わりません。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgl2feNUpooLHze0jZ1WL5TfrfVZdZIU1uGUUB2EWTTzv-v6GNhMk4DPAiilE1vM1vV6JRwbNNzpeQjsd2BEH2xkZ4SC2ccFHyIHikBIer_37JXKtxxrbeFLsXJOUyvmO4gAEJLxEhZffM/s1600/20140807_113334.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgl2feNUpooLHze0jZ1WL5TfrfVZdZIU1uGUUB2EWTTzv-v6GNhMk4DPAiilE1vM1vV6JRwbNNzpeQjsd2BEH2xkZ4SC2ccFHyIHikBIer_37JXKtxxrbeFLsXJOUyvmO4gAEJLxEhZffM/s1600/20140807_113334.jpg" height="240" width="320" /></a></div><br />
+<br />
+シールドを載せてあとはライブラリを使うだけなので、簡単にできますね。

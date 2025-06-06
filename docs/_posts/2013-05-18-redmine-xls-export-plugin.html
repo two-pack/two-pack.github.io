@@ -1,0 +1,31 @@
+---
+layout: post
+title: Redmine XLS Export Plugin で Iconv::InvalidEncoding
+date: '2013-05-18T08:41:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2013-05-19T06:25:11.008+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-3443256456354471890
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2013/05/redmine-xls-export-plugin.html
+---
+
+掲題のエラーになる、とのチケットが発行されました。<br />
+BitNami Redmine Stack使われてますねえ。<br />
+<a href="https://github.com/two-pack/redmine_xls_export/issues/23">https://github.com/two-pack/redmine_xls_export/issues/23</a><br />
+<br />
+エクスポート時にspreadsheet内でIconvを呼び出しているところが該当箇所でした。<br />
+UTF-8 から UTF-16LE の変換で失敗しています。<br />
+<pre class="prettyprint">Iconv::InvalidEncoding (invalid encoding ("UTF-16LE//TRANSLIT//IGNORE", "UTF-8")):
+spreadsheet (0.8.5) lib/spreadsheet/encodings.rb:38:in initialize'
+</pre><br />
+spreadsheetを調べてみるとruby 1.8と1.9で処理が分かれていました。<br />
+1.9.x以上はString#encodeメソッドなどで変換してます。<br />
+1.8.x以下は、Iconvを使って変換しています。<br />
+今回問題が起きている環境はRuby 1.8.7でした。<br />
+<br />
+そもそもUTF-8でないデータが渡ってきてるのでは？？と思いBitNami Redmineでの文字化け情報がないかなあ、、、と調べたら以下がありました。<br />
+これによると、データベースはずいぶん前からUTF-8になっているようなので、大丈夫そうです。。。<br />
+<a href="http://d.hatena.ne.jp/sakaik/20110327/redmine_ok">■[redmine]bitnami::redmine で文字化けしなくなった！</a><br />
+<br />
+他を調べると以下のようなものもありました。環境問題っぽいのでそれで終わりにしました、、、なのか？w<br />
+http://stackoverflow.com/questions/4965796/convert-utf-8-to-unicode-in-ruby

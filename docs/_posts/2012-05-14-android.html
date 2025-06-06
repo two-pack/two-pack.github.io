@@ -1,0 +1,46 @@
+---
+layout: post
+title: Androidのコーディングルール
+date: '2012-05-14T10:54:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-14T14:14:19.872+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-3995691437293445839
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android.html
+---
+
+Androidのコーディングルールについて調べたので備忘録。<br />
+<ul><li><a href="http://source.android.com/source/code-style.html" target="_blank">Code Style Guidelines for Contributors</a></li>
+<li><a href="http://www.textdrop.net/android/code-style-ja.html" target="_blank">コントリビュータのためのAndroidコードスタイルガイドライン 日本語訳</a></li>
+</ul><div><br />
+これにまつわるツール類。</div><div><ol><li>CheckStyle<br />
+Googleが定義を公開してはいないようです。<br />
+以下のページに参考にしました。<br />
+<span style="color: black;"><a href="http://ksoichiro.blogspot.jp/2011/05/android-checkstyle.html" target="_blank">memorandum&nbsp;/&nbsp;<span style="font-family: Arial, Tahoma, Helvetica, FreeSans, sans-serif;">Android CheckStyle設定</span></a><br />
+<br />
+また、UnofficialながらMozillaのものもありました。<br />
+<a href="https://github.com/mozilla-services/mozilla-style">https://github.com/mozilla-services/mozilla-style</a><br />
+<br />
+EclipseでのCheckStyleの設定方法はここを参考にしました（そこからかorz）<br />
+<a href="http://www.atmarkit.co.jp/fjava/rensai3/eclipsetst02/eclipsetst02_2.html">http://www.atmarkit.co.jp/fjava/rensai3/eclipsetst02/eclipsetst02_2.html</a><br />
+<br />
+</span></li>
+<li>Formatter<br />
+以下のページを参考にしました。<br />
+<a href="http://greety.sakura.ne.jp/redo/2011/04/eclipsejava-xml.html" target="_blank">ReDo&nbsp;/&nbsp;EclipseのJavaフォーマッター インポート用XML</a></li>
+</ol><div><br />
+</div><div>また、以下にGoogleが各種ガイドラインを出してる。</div></div><div><ul><li><a href="http://code.google.com/p/google-styleguide/" style="background-color: white; color: #666666; font-family: arial, sans-serif; text-decoration: none;"><span itemprop="name">google-styleguide</span></a></li>
+</ul></div><br />
+<a name='more'></a><br />
+<br />
+追記<br />
+CheckStyleでgenの下にできるBuildConfig.javaも警告になるので、除外設定にするため以下のようにしました。<br />
+<pre class="prettyprint">&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd"&gt;
+&lt;suppressions&gt;
+    &lt;suppress checks="." files=".*[\\/]gen[\\/].*\.java"/&gt;
+    &lt;suppress checks="." files="project.properties"/&gt;
+&lt;/suppressions&gt;
+</pre>

@@ -1,0 +1,63 @@
+---
+layout: post
+title: 'MappingJacksonJsonViewを使ってみる [Spring Framework Advent Calendar 2012 7日目 #jsug
+  ]'
+date: '2012-12-07T23:27:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Spring
+modified_time: '2013-01-09T07:35:20.064+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-9116638083217607344
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/12/mappingjacksonjsonview-spring-framework.html
+---
+
+<a href="http://atnd.org/events/34294">Spring Framework Advent Calendar </a>2012の７日目です。<br />
+２巡目！<br />
+<br />
+これまた<a href="http://two-pack-sbs.blogspot.jp/2012/11/spring3-mvcjsonrest.html">先日ブログで書いた</a>二番煎じですが、Spring MVCでJSONを返すViewの例です。<br />
+<a href="https://bitbucket.org/twopack/jsonrest/overview">ソース</a>はここにあります。<br />
+<br />
+<h1>サーブレットの設定</h1>とりあえず、ソースです。<br />
+<pre class="prettyprint linenums">&lt;beans:bean xmlns="http://www.springframework.org/schema/beans" 
+class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"&gt;
+  &lt;property name="mediaTypes"&gt;
+    &lt;map&gt;
+      &lt;entry key="json" value="application/json" /&gt;
+    &lt;/map&gt;
+  &lt;/property&gt;
+  &lt;property name="defaultViews"&gt;
+    &lt;list&gt;
+      &lt;bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"&gt;
+        &lt;property name="prefixJson" value="true"/&gt;
+      &lt;/bean&gt;
+    &lt;/list&gt;
+  &lt;/property&gt;
+&lt;/beans:bean&gt;
+</pre><br />
+<b><a href="http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/web/servlet/view/ContentNegotiatingViewResolver.html#setMediaTypes(java.util.Map)">ContentNegotiatingViewResolver</a></b> は、リクエストのAccept headerやファイル名をもとにViewを解決します。<br />
+<b>map</b> で指定しているのは、 <b>key</b> がファイルの拡張子、 <b>value</b> がコンテンツタイプです。<br />
+<b>defaultViews</b> は、ViewResolverのチェーンでViewが解決できない場合に使われるViewを指定します。<br />
+今回は、ここで <b>MappingJacksonJsonView</b> を指定することでViewとして使用するようにしています。<br />
+<br />
+<br />
+<h1>コントローラー</h1>こちらは非常にやっつけなコードになっていますw<br />
+<pre class="prettyprint linenums">@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
+public @ResponseBody Person getPerson(@PathVariable int id, Model model) {
+  Person person = new Person();
+  person.setId(id);
+  person.setName("Tom");
+  return person;
+}
+</pre><br />
+<b>@ResponseBody</b> をつけてPOJOを返すことでレスポンスはJSONになります。<br />
+以下のサイトで詳しく説明されています。　＃私が今書いている意味って（ry<br />
+<br />
+<ul><li><a href="http://d.hatena.ne.jp/ryoasai/20110203/1296749495">Spring MVCでJSONデータを返すための手順</a></li>
+</ul><br />
+<br />
+上のコードでは、以下のようなJSONが出力されます。<br />
+<pre class="prettyprint">{"name":"Tom","id":1}
+</pre><br />
+<h1>最後に</h1>今回は <b>MappingJacksonJsonView</b> でしたが、他にもSpringで使える<a href="http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/web/servlet/View.html">Viewはある</a>ので、それらをうまく使うといろいろなことを簡単に行えそうですね。<br />
+<br />
+8日目は @mike_neck さん、よろしくお願いします！

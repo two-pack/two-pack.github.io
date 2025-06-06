@@ -1,0 +1,34 @@
+---
+layout: post
+title: android-bindingを使ってみる その4
+date: '2012-05-28T06:56:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-28T06:56:46.391+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5309674232773560097
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android-binding-4.html
+---
+
+android-bindingを使ってみる、のとりあえず区切りです。<br />
+今回はGalleryを使います。<br />
+実装はこちら。<br />
+<a href="https://bitbucket.org/twopack/android-binding-sample/changeset/33c63d3b41e8">https://bitbucket.org/twopack/android-binding-sample/changeset/33c63d3b41e8</a><br />
+<br />
+android-bindingのドキュメントに直接Galleryについての記載はありませんが、GalleryクラスはAdapterViewを継承していてこれについてはサポートしているのでListViewなどと同じように実装できます。<br />
+<a href="http://code.google.com/p/android-binding/wiki/BindableAttributes" target="_blank">android-binding - Attributes that is (going) to be supported in Android Binding</a><br />
+<a href="http://developer.android.com/reference/android/widget/Gallery.html" target="_blank">Gallery | Android Developers</a><br />
+<br />
+<br />
+基本的に前回などにListViewで行ったのと同等の実装が可能です。<br />
+はまったところについて書いておきます。<br />
+<br />
+<h3>項目のレイアウトが左寄せになる。<br />
+</h3>Galleryは選択されている項目はセンタリングされているものだと思っていたのに、なぜか左寄せに。。。<br />
+項目のレイアウトにLinerLayoutを含んでいたためでした。Galleryともandroid-bindingとも関係ないところでしたorz<br />
+<br />
+<h3>selectedPositionが反映されない？<br />
+</h3>android-bindingで<b>selectedPosition</b>属性をバインドすると、選択されている項目の位置を取得できます。<br />
+<b>onItemSelected</b>属性のバインドを行って、選択項目が変わったときにその位置を表示するようなサンプルを作っていますが、selectedPositionを<b>onItemSelected</b>属性の<b>Invoke()</b>で確認すると値が更新されず、前の値のままでした。<br />
+このバインド自体は<a href="http://developer.android.com/reference/android/widget/AdapterView.OnItemSelectedListener.html#onItemSelected(android.widget.AdapterView&lt;?&gt;, android.view.View, int, long)" target="_blank">AdapterView.onItemSelected()</a>へのバインドなので、<b>Invoke()</b>の引数で選択された位置を取得すればよかったようです。<br />
+bitbucketに登録したサンプルでは、この差が分かるように両方表示するようにしてあります。<br />
+<br />

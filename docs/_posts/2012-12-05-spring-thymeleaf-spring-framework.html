@@ -1,0 +1,107 @@
+---
+layout: post
+title: 'Spring + Thymeleafでデザインの分離を進める（のとっかかり） [Spring Framework Advent Calendar 2012
+  5日目 #jsug ]'
+date: '2012-12-05T06:52:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Thymeleaf
+- Spring
+modified_time: '2013-01-09T07:35:50.229+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-1824361655603368633
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/12/spring-thymeleaf-spring-framework.html
+---
+
+<a href="http://atnd.org/events/34294">Spring Framework Advent Calendar 2012</a>の５日目です。<br />
+<br />
+とっかかりということで、Hello Worldです。<br />
+以前のブログでもこの組み合わせについて書いていますが、導入を含めて少しまとめた形で書いていこうと思います。<br />
+以下の環境で確認しています。<br />
+<br />
+<ul><li>Max OS X 10.7.5</li>
+<li>Eclipse JavaEE Juno SR1</li>
+<li>JDK 1.6</li>
+<li>Spring MVC 3.1.1.RELEASE</li>
+<li>Thymeleaf 2.0.13</li>
+</ul><br />
+<br />
+<h1>プロジェクト作成</h1><br />
+<h2>Spring MVCテンプレートからのプロジェクト作成</h2>Spring MVCのテンプレートからプロジェクトを作ります。<br />
+Eclipseで、<br />
+<b>New -&gt; Other -&gt; Spring Template Project -&gt; Spring MVC Project</b><br />
+から作成します。ウィザードを完了した状態で私の環境ではプロジェクトにエラーがある状態でした。これらは以下を実行して解消しました。<br />
+<ul><li><b>Run -&gt; Run As -&gt; Maven Build</b> で <b>Goals</b> に <b>compile</b> を指定して実行する。</li>
+<li>プロジェクトで右クリックして <b>Maven -&gt; Update Project</b> を選択する。</li>
+</ul><br />
+<h2>Thymeleafのライブラリを依存関係に追加</h2>Spring 3.xでThymeleafを使う場合には、 <b>thymeleaf-spring3</b> を使用します。<br />
+使用するには、Mavenのpom.xmlに以下を追加します。<br />
+<pre class="prettyprint linenums">&lt;dependency&gt;
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;artifactId&gt;thymeleaf-spring3&lt;/artifactId&gt;
+<span class="Apple-tab-span" style="white-space: pre;"> </span>&lt;version&gt;2.0.13&lt;/version&gt;
+&lt;/dependency&gt;
+</pre><br />
+<h1>テンプレートエンジンの変更</h1>Spring MVCのテンプレートで作成されるプロジェクトは、JSPのテンプレートエンジンを使ったHello Worldです。これをThymeleafのテンプレートエンジンに差し替えます。<br />
+<br />
+<h2>サーブレットの設定</h2>サーブレットの設定ファイルを以下のように書き換えます。<br />
+<pre class="prettyprint linenums">&lt;beans:bean id=&quot;templateResolver&quot; class=&quot;org.thymeleaf.templateresolver.ServletContextTemplateResolver&quot;&gt;
+ &lt;beans:property name=&quot;prefix&quot; value=&quot;/WEB-INF/templates/&quot; /&gt;  
+ &lt;beans:property name=&quot;suffix&quot; value=&quot;.html&quot; /&gt;
+ &lt;beans:property name=&quot;templateMode&quot; value=&quot;HTML5&quot; /&gt;
+&lt;/beans:bean&gt;
+ 
+&lt;beans:bean id=&quot;templateEngine&quot; class=&quot;org.thymeleaf.spring3.SpringTemplateEngine&quot;&gt;
+ &lt;beans:property name=&quot;templateResolver&quot; ref=&quot;templateResolver&quot; /&gt;
+&lt;/beans:bean&gt;
+
+&lt;beans:bean class=&quot;org.thymeleaf.spring3.view.ThymeleafViewResolver&quot;&gt;
+ &lt;beans:property name=&quot;templateEngine&quot; ref=&quot;templateEngine&quot; /&gt;
+&lt;/beans:bean&gt;
+</pre><br />
+<b>templateResolver</b> の <b>property</b> の意味合いは以下の通り。<br />
+<ul><li><b>prefix</b> と <b>suffix</b> は、Viewテンプレートの検索先を指定します。この場合は、 <b>/WEB-INF/templates/*.html</b> からViewテンプレートを探します。</li>
+<li><b>templateMode</b> は、Viewテンプレートで使用する形式を指定します。</li>
+指定できる形式は、<a href="http://www.thymeleaf.org/apidocs/thymeleaf/2.0.2/org/thymeleaf/templatemode/StandardTemplateModeHandlers.html">ここ</a>を参照してください。 </ul><br />
+<h2>テンプレートの置き換え</h2>Hello WorldのJSPのテンプレートからThymeleafのテンプレートに置き換えます。<br />
+サーブレットの設定で書いた通り、 <b>/WEB-INF/templates</b> を作成してベースにするHTMLファイルを置きます。<br />
+今回は、 <b>home.jsp</b> を <b>home.html</b> とリネームして、JSPテンプレートのプロジェクトを実行した際に生成されたHTMLを中身としました。<br />
+この時点では、動的に出力は変化しません。<br />
+<br />
+<h1>動的な出力</h1>JSPテンプレートのHello Worldでは、現在時刻を表示するようになっていました。<br />
+同じことをThymeleafテンプレートでもやってみます。<br />
+<br />
+<h2>データの作成</h2>コントローラーの <b>home</b> メソッドは以下のように書き換えます。<br />
+<pre class="prettyprint linenums">@RequestMapping(value = &quot;/&quot;, method = RequestMethod.GET)
+public String home(Locale locale, Model model) {
+ logger.info(&quot;Welcome home! The client locale is {}.&quot;, locale);
+ 
+ Date date = new Date();
+ DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+ 
+ String formattedDate = dateFormat.format(date);
+ 
+ String message = &quot;  The time on the server is &quot; + formattedDate + &quot;. &quot;;
+ 
+ model.addAttribute(&quot;serverTimeMessage&quot;, message );
+ 
+ return &quot;home&quot;;
+}
+</pre><br />
+JSPからの変更点はL10〜12です。<br />
+Thymeleafでは後述するようにHTMLのタグ属性で置換対象を指定します。このため、タグの中身全体を <b>message</b> で作成して <b>serverTimeMessage</b> 属性でViewに渡しています。<br />
+<br />
+<h2>テンプレートでのデータの受け取り</h2>テンプレートを以下のように変更して、コントローラーからの <b>serverTimeMessage</b> を出力に反映します。<br />
+<pre class="prettyprint linenums">&lt;P th:text=&quot;${serverTimeMessage}&quot;&gt;  The time on the server is 2012/12/05 10:01:10 JST. &lt;/P&gt;
+</pre><br />
+<b>th:text</b> でコントローラーで設定した <b>serverTimeMessage</b> を指定しています。実行時にタグの中身が置き換わります。<br />
+<b>th:text</b> と属性で指定することで、タグの中身を想定する内容でHTMLに記述する事ができ、HTMLのみをブラウザで表示した場合にも、実行時と同様の表示が可能になります。これによって、デザインと実装の分離が進む事がThymeleafの利点となります。<br />
+<br />
+<br />
+<h1>まとめ</h1>ここまでで実行するとJSPテンプレートと同様に現在時刻を表示するHello Worldができました。<br />
+Thymeleafのテンプレートで指定できる属性は、 <b><a href="http://www.thymeleaf.org/doc/Tutorial%20-%20Using%20Thymeleaf%2020121017.pdf">The Standard Dialect</a></b> としてTurtorialに記載があります。ここではごく簡単な例でしたが、他にもいろいろな指定が可能です。<br />
+また、Springと合わせた使い方についても別の<a href="http://www.thymeleaf.org/doc/Tutorial%20-%20Thymeleaf%20+%20Spring%203%2020121017.pdf">Turtorial</a>としてまとまっています。今回はこれを参考にしています。<br />
+<br />
+最後に、ソースについては<a href="https://bitbucket.org/twopack/spring-thymeleaf/">ここ</a>で公開しています。セクションの単位でコミットしました。<br />
+<br />
+<br />
+６日目はKouhei Tokiさんです！よろしくお願いします！

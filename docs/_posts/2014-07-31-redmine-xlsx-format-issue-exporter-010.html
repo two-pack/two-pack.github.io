@@ -1,0 +1,26 @@
+---
+layout: post
+title: リリース：Redmine XLSX format issue exporter 0.1.0
+date: '2014-07-31T09:43:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+modified_time: '2014-07-31T09:43:02.740+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1og8ABy7hc6WVLgH_AfBqYdJkd9KaeN4zFejsYDAfF8Zzcz1S2qrzk3W29j8GDbS8ZxF7ddk2dttctqFpMpzfadDN4wfGw-VKhEYOuG6eLy44ABtbxhF2tm9jhDGelGMcJ-DBj_x1tDM/s72-c/issues_page.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-6508601118847042013
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/redmine-xlsx-format-issue-exporter-010.html
+---
+
+Redmineのチケット一覧を<b>XLSX形式</b>で出力するプラグイン、<br />
+<pre><b><a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a></b></pre>を作りました。<a href="http://www.redmine.org/plugins/redmine_xlsx_format_issue_exporter">Plugins Directoryにも登録</a>しました。<br />
+<br />
+<h2>機能</h2>Redmineにはチケット一覧の右下からCSVやPDFで出力する機能が標準であります。そのXLSX版です。プラグインをインストールすると、右下の赤丸部分のようにリンクが追加されます。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1og8ABy7hc6WVLgH_AfBqYdJkd9KaeN4zFejsYDAfF8Zzcz1S2qrzk3W29j8GDbS8ZxF7ddk2dttctqFpMpzfadDN4wfGw-VKhEYOuG6eLy44ABtbxhF2tm9jhDGelGMcJ-DBj_x1tDM/s1600/issues_page.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1og8ABy7hc6WVLgH_AfBqYdJkd9KaeN4zFejsYDAfF8Zzcz1S2qrzk3W29j8GDbS8ZxF7ddk2dttctqFpMpzfadDN4wfGw-VKhEYOuG6eLy44ABtbxhF2tm9jhDGelGMcJ-DBj_x1tDM/s1600/issues_page.png" height="60" width="320" /></a></div><br />
+リンクを押すとCSVエクスポートと同じように、オプションで選択している項目を出力するか、全ての項目を出力するかを選択するダイアログがでます。また、チケットの説明をつけるかも選択できます。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5GpkzPrQexyB6jCvUostNhc6BGjs0PRO_4MjDtqspS-A-eDvJuVqLn8iWNTP7OUX_EXbOk7h7A1ch0033anAxRhFM9hM1nMFOHlC4CbpSoSWIy9gYLlPPsAHcq73OKnG6ER5JcA-itMs/s1600/dialog.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5GpkzPrQexyB6jCvUostNhc6BGjs0PRO_4MjDtqspS-A-eDvJuVqLn8iWNTP7OUX_EXbOk7h7A1ch0033anAxRhFM9hM1nMFOHlC4CbpSoSWIy9gYLlPPsAHcq73OKnG6ER5JcA-itMs/s1600/dialog.png" height="168" width="320" /></a></div><br />
+あとはエクスポートボタンを押すダウンロードがはじまります。XLSXの中身は、CSVダウンロードと同等のものにある程度の書式設定（ヘッダの色、ヘッダの固定、折り返し、列の幅）がされています。<br />
+<br />
+<h2>Redmine XLS Exportとの違い</h2>Excel形式でエクスポートするプラグインとして<a href="https://github.com/two-pack/redmine_xls_export">Redmine XLS Export</a>もあります。こちらには、XLS形式でのチケット一覧の出力以外に、履歴や添付ファイルを出力する機能などもあります。Redmine XLSX format issue exporterでは、シンプルにRedmine標準のCSVエクスポートのXLSX版という位置づけにしたいと考えています。<br />
+<br />
+Plugins Directoryに登録したついでに<a href="https://github.com/two-pack/redmine_xls_export">Redmine XLS Export</a>の<a href="http://www.redmine.org/plugins/redmine_xls_export">Plugins Directoryを見たら</a>、すでにオフィシャルには３年以上更新されていません。リポジトリもなくZIPで公開されているのみという状態だったので、自分でZIPからGithubに遷してメンテしているんですよね。もう更新しないのかなあ。。。<br />
+<br />

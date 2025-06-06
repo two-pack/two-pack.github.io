@@ -1,0 +1,34 @@
+---
+layout: post
+title: JenkinsをUbuntu 11.10に入れる
+date: '2011-10-30T10:17:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Jenkins
+modified_time: '2011-10-30T10:17:33.862+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5976918861918660231
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2011/10/jenkinsubuntu-1110.html
+---
+
+ちょっとずつでも調べたり試したことを残していこう、ということで始めようと思います。<br />
+<br />
+Ubuntu 11.10(Oneiric Ocelot)では、Jenkinsがデフォルトのリポジトリから入れれます。<br />
+<blockquote class="tr_bq">   <span><span style="background-color: #f3f3f3;"></span></span><span style="background-color: white;">$ sudo apt-get install jenkins</span><br />
+</blockquote>ブラウザーからhttp://localhost:8080にアクセスすれば、もうJenkins！・・・と思ったら404。<br />
+起動のコマンドは/etc/init/jenkins.confに書かれているようです。中で以下のように書かれていました。<br />
+<blockquote class="tr_bq">env JAVA_HOME="/usr/lib/jvm/default-java"<br />
+・・・<br />
+script<br />
+&nbsp;&nbsp;&nbsp; JENKINS_ARGS="--webroot=$JENKINS_RUN/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT"<br />
+&nbsp;&nbsp;&nbsp; exec daemon --name=jenkins --inherit --output=$JENKINS_LOG/jenkins.log --user=$USER \<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -- $JAVA_HOME/java $JAVA_OPTS -jar $JENKINS_ROOT/jenkins.war $JENKINS_ARGS \<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --preferredClassLoader=java.net.URLClassLoader<br />
+end script</blockquote>JAVA_HOMEに設定されているフォルダがUbuntu 11.10のデフォルトでは無いようです。<br />
+open-jdkが入っていますが、他のも入れて切り替えるようにしないとできないのかもです。<br />
+いずれにしても、これが原因で実行できていなかったようなので、以下のように直したら動きました。<br />
+<blockquote class="tr_bq">script<br />
+&nbsp;&nbsp;&nbsp; JENKINS_ARGS="--webroot=$JENKINS_RUN/war --httpPort=$HTTP_PORT --ajp13Port=$AJP_PORT"<br />
+&nbsp;&nbsp;&nbsp; exec daemon --name=jenkins --inherit --output=$JENKINS_LOG/jenkins.log --user=$USER \<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -- /usr/bin/java $JAVA_OPTS -jar $JENKINS_ROOT/jenkins.war $JENKINS_ARGS \<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --preferredClassLoader=java.net.URLClassLoader<br />
+end script </blockquote>

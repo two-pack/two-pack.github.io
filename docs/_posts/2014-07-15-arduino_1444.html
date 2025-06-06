@@ -1,0 +1,35 @@
+---
+layout: post
+title: "「Arduinoをはじめよう」ではじめよう（２）"
+date: '2014-07-15T14:06:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Arduino
+modified_time: '2014-07-15T14:06:31.921+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibcrnSXG6k2kjxptXKTMNAzopW3chApsOZp9RF40ZLfwnDnJKXCSmGZbbotLdcEQEc6esRWQ2B4p7UxgJV-3CCeZbiaS8R5rJSG7FGpR7aGGcDkbZBQs13iWv1Ryb8mtE60y_T-AbR9iE/s72-c/20140715_110738.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2810432059510017717
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/arduino_1444.html
+---
+
+５章の<i>「PWMで明かりをコントロール」</i>です。<br />
+<br />
+<h2>自前（？）でPWM</h2>delay関数を使って明るさを変える話で<b>パルス幅変調</b>の説明があります。実際にサンプルでやってみたのですが、50%とか25%とか書いてあるけど、いまいち明るさが変わっているのがわかりづらい。。。5%とかだとわかりました。<br />
+２つ並べればわかるかな？と思い、並べてみました。スケッチは<a href="https://github.com/two-pack/ArduinoExample/blob/master/compareLED/compareLED.ino">こちら</a>。<br />
+<br />
+結局あんまりわからず、5%の写真になりますｗ<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibcrnSXG6k2kjxptXKTMNAzopW3chApsOZp9RF40ZLfwnDnJKXCSmGZbbotLdcEQEc6esRWQ2B4p7UxgJV-3CCeZbiaS8R5rJSG7FGpR7aGGcDkbZBQs13iWv1Ryb8mtE60y_T-AbR9iE/s1600/20140715_110738.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEibcrnSXG6k2kjxptXKTMNAzopW3chApsOZp9RF40ZLfwnDnJKXCSmGZbbotLdcEQEc6esRWQ2B4p7UxgJV-3CCeZbiaS8R5rJSG7FGpR7aGGcDkbZBQs13iWv1Ryb8mtE60y_T-AbR9iE/s1600/20140715_110738.jpg" height="240" width="320" /></a></div><br />
+<h2>PWM</h2>本に従って、ArduinoのPWMが使えるピンでもやりました。私の買ったエントリーキットには本に書いてあった270Ωの抵抗がなかったので330Ωのにしました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi52oTK6xx4iX-g4fNoYqHvBGr_kaoZ_nymkNmxa_038F8pjn9gf2fVBbEdnDpLnU6ot10xrzkj2ULB1PjnNXfmcChrk2pp75CgFKTCsZeaggmRywYHITkAfvHs2jQ8S6uY8Qpy2W1iV54/s1600/20140715_113035.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi52oTK6xx4iX-g4fNoYqHvBGr_kaoZ_nymkNmxa_038F8pjn9gf2fVBbEdnDpLnU6ot10xrzkj2ULB1PjnNXfmcChrk2pp75CgFKTCsZeaggmRywYHITkAfvHs2jQ8S6uY8Qpy2W1iV54/s1600/20140715_113035.jpg" height="240" width="320" /></a></div><br />
+この抵抗はなんのためにあるのか分からなかったので、とりあえず外してみたところ、すごく光りましたｗ<br />
+以下のサイトで<i>「ＬＥＤは、電流を何らかの方法で制限してやらないと、壊れてしまうというものなのです。」</i>と書いてありましたorz　煙は出ませんでしたが。<br />
+<a href="http://www.ele-lab.com/led_iroha3.html">ＬＥＤの基本　その３  制限抵抗</a><br />
+<br />
+ただ、ここまでLEDを使う場合には直列で抵抗を挟むことはありませんでした。明るさを調整したのが分かりやすいように、LEDに流れる電圧を下げているのかなとサイトのグラフを見て思いました。あってるかな？<br />
+<br />
+<h2>組み合わせ</h2>ボタンとPWMの組み合わせてみるところがあります。<br />
+答えを見ずに組み合わせたものを作ってみました。単純にスイッチを押している間、明るさが変化するものです。スケッチは<a href="https://github.com/two-pack/ArduinoExample/blob/master/LEDwithPWMandButton/LEDwithPWMandButton.ino">こちら</a>。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgX_IXVT3Uu73JawoD-ZIMlsAwyhtagLSPTgVfPg-emBV_p80inX-vKBffK0lGZcwpG3ct9T9y46FtyvA0RQe85gmHj6b0bhMaxcd4a7IqMyjGjA1Bhj8jP4YnZ4o-I0-EdpruWDtsAIbE/s1600/20140715_121442.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgX_IXVT3Uu73JawoD-ZIMlsAwyhtagLSPTgVfPg-emBV_p80inX-vKBffK0lGZcwpG3ct9T9y46FtyvA0RQe85gmHj6b0bhMaxcd4a7IqMyjGjA1Bhj8jP4YnZ4o-I0-EdpruWDtsAIbE/s1600/20140715_121442.jpg" height="240" width="320" /></a></div><br />
+<br />
+５章はもう少しあります。<br />
+<br />
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=twopack-22&o=9&p=8&l=as1&asins=B008PQEWIW&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>

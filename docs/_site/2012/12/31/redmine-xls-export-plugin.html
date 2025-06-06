@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Redmine XLS Export pluginへの機能追加 | Your awesome title</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Redmine XLS Export pluginへの機能追加" />
+<meta name="author" content="ソフトウェア開発にまつわる話" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="以前、Redmine XLS Export plugin をgithubに入れて機能追加をしたりしてました。 ただ、0.2.0から大きくソースが変更されて以来、放置していました orz 過去のブログ Redmine XLS Export plugin Redmiine XLS Plugin 0.2.0を試す フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。 https://github.com/two-pack/redmine_xls_export リポジトリの整理 上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。 officialRedmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。 featuresRedmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。 次のリリースがあったら、 official へ追加してから features にマージ、と言う形で管理していけるといいかなと考えています。 日付の形式を指定する機能追加 以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。 https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb 以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。 今回、この辺なんとかしないとなあ、、、と思ったのは、ALminiumのプラグインリストに、上記githubのアドレスから取得しているのがコメントアウトされていたこと。 せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。 今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。" />
+<meta property="og:description" content="以前、Redmine XLS Export plugin をgithubに入れて機能追加をしたりしてました。 ただ、0.2.0から大きくソースが変更されて以来、放置していました orz 過去のブログ Redmine XLS Export plugin Redmiine XLS Plugin 0.2.0を試す フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。 https://github.com/two-pack/redmine_xls_export リポジトリの整理 上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。 officialRedmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。 featuresRedmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。 次のリリースがあったら、 official へ追加してから features にマージ、と言う形で管理していけるといいかなと考えています。 日付の形式を指定する機能追加 以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。 https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb 以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。 今回、この辺なんとかしないとなあ、、、と思ったのは、ALminiumのプラグインリストに、上記githubのアドレスから取得しているのがコメントアウトされていたこと。 せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。 今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。" />
+<link rel="canonical" href="http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html" />
+<meta property="og:url" content="http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html" />
+<meta property="og:site_name" content="Your awesome title" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-12-31T00:14:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Redmine XLS Export pluginへの機能追加" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2012-12-31T00:14:00+09:00","datePublished":"2012-12-31T00:14:00+09:00","description":"以前、Redmine XLS Export plugin をgithubに入れて機能追加をしたりしてました。 ただ、0.2.0から大きくソースが変更されて以来、放置していました orz 過去のブログ Redmine XLS Export plugin Redmiine XLS Plugin 0.2.0を試す フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。 https://github.com/two-pack/redmine_xls_export リポジトリの整理 上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。 officialRedmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。 featuresRedmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。 次のリリースがあったら、 official へ追加してから features にマージ、と言う形で管理していけるといいかなと考えています。 日付の形式を指定する機能追加 以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。 https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb 以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。 今回、この辺なんとかしないとなあ、、、と思ったのは、ALminiumのプラグインリストに、上記githubのアドレスから取得しているのがコメントアウトされていたこと。 せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。 今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。","headline":"Redmine XLS Export pluginへの機能追加","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html"},"url":"http://localhost:4000/2012/12/31/redmine-xls-export-plugin.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Your awesome title</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Redmine XLS Export pluginへの機能追加</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2012-12-31T00:14:00+09:00" itemprop="datePublished">Dec 31, 2012
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">ソフトウェア開発にまつわる話</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    以前、<a href="http://www.redmine.org/plugins/redmine_xls_export">Redmine XLS Export plugin</a> をgithubに入れて機能追加をしたりしてました。<br />
+ただ、0.2.0から大きくソースが変更されて以来、放置していました orz<br />
+<br />
+<b><u>過去のブログ</u></b><br />
+<ul>
+<li><a href="http://two-pack-sbs.blogspot.jp/2011/12/redmine-xls-export-plugin.html">Redmine XLS Export plugin</a></li>
+<li><a href="http://two-pack-sbs.blogspot.jp/2012/06/redmiine-xls-plugin-020.html">Redmiine XLS Plugin 0.2.0を試す</a></li>
+</ul>
+フォーラムに新しい翻訳が上がったのを機に、リポジトリを整理して対応をしました。<br />
+https://github.com/two-pack/redmine_xls_export<br />
+<br />
+<h3>
+<u>リポジトリの整理</u></h3>
+上記の通り、大幅なソース変更が入ったこともあり、以下の２つのブランチを作って整理しました。<br />
+<br />
+<ul>
+<li><b>official</b>Redmineのプラグインサイトで公開されているオフィシャルのソースを入れているブランチ。<br />XLS Exportプラグインは、作者がリポジトリでの公開をしていない（RedmineのプラグインサイトでZIP形式で展開されている）ので、追いやすいようにという意味もあります。</li>
+<li><b>features</b>Redmineのフォーラムでは、有志の方たちが翻訳などをアップしています。これらの取り込みや、後述するような個人的な機能追加などを行うブランチとして作りました。</li>
+</ul>
+<br />
+次のリリースがあったら、 <b>official</b> へ追加してから <b>features</b> にマージ、と言う形で管理していけるといいかなと考えています。<br />
+<br />
+<h3>
+<u>日付の形式を指定する機能追加</u></h3>
+以前のバージョンで追加していた機能に関して、0.2.x用に変えて機能追加しました。コミットは以下です。<br />
+<a href="https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb">https://github.com/two-pack/redmine_xls_export/commit/0a5b1e68ca68c38dc46e075aaf506b7b8c7156bb</a><br />
+<br />
+以前のバージョンで追加機能に対しても翻訳を頂いていたので、その辺も取り込みつつ対応しました。<br />
+<br />
+<br />
+今回、この辺なんとかしないとなあ、、、と思ったのは、<a href="https://github.com/alminium/alminium/blob/master/config/redmine-plugins.lst">ALminiumのプラグインリスト</a>に、上記githubのアドレスから取得しているのがコメントアウトされていたこと。<br />
+せっかく使ってもらっていたのに、放置して使ってもらえなくなったのは残念だったなあ、、、と思い、整理をはじめました。<br />
+今後も、フォーラムをウォッチして翻訳など最新の状態を取り込んでいけたらなと思っています。
+  </div><a class="u-url" href="/2012/12/31/redmine-xls-export-plugin.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Your awesome title</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Your awesome title</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/jekyll"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">jekyll</span></a></li><li><a href="https://www.twitter.com/jekyllrb"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jekyllrb</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

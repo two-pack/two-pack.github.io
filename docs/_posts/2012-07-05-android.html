@@ -1,0 +1,37 @@
+---
+layout: post
+title: Androidアプリのリリース版がインストールされた端末での開発
+date: '2012-07-05T06:04:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-07-05T06:04:33.872+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2957007321615347068
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/07/android.html
+---
+
+Androidのアプリは署名が行われています。<br />
+初期設定でこの署名は、デバッグ、リリースで異なるものが使われています。<br />
+<br />
+Playストアに登録するときは当然リリース版になります。<br />
+このため、Playストアに登録したものをダウンロードしてある端末を使用してデバッグしようとすると、apkインストール時に以下のメッセージが出て失敗します。<br />
+＃Eclipseでの結果です。<br />
+<blockquote>
+<span style="font-size: x-small;">[2012-07-05 05:57:23 - ConnectLibraries] Re-installation failed due to different application signatures.</span><br />
+<span style="font-size: x-small;">[2012-07-05 05:57:23 - ConnectLibraries] You must perform a full uninstall of the application. WARNING: This will remove the application data!</span><br />
+<span style="font-size: x-small;">[2012-07-05 05:57:23 - ConnectLibraries] Please execute 'adb uninstall jp.gr.java_conf.twopack.connect_libraries' in a shell.</span><br />
+<span style="font-size: x-small;">[2012-07-05 05:57:23 - ConnectLibraries] Launch canceled!</span></blockquote>
+<br />
+メッセージに従って一度アンインストールすればうまく行きますが、アプリのデータも消えてしまうので不便この上ないです。<br />
+このため、リリース用の署名をデバッグ用の署名にする方法があります。<br />
+以下のサイトで方法が載っていました。<br />
+<div style="text-align: left;">
+　　<a href="http://bit.ly/NzAckc" target="_blank">Blog Progamisty Android: Converting release keys to debug</a></div>
+<br />
+<ol>
+<li>以下のコマンドを実行します。＜＞の部分は置き換えてください。<br /><span style="font-size: x-small;">$ keytool -importkeystore -v -srckeystore ＜リリース署名のファイル＞ -destkeystore ＜出力先ファイル＞ -srcstorepass ＜リリース署名のStoreパスワード＞ -deststorepass android -srcalias ＜リリース署名のエイリアス＞ -destalias androiddebugkey -srckeypass ＜リリース署名のKeyパスワード＞ -destkeypass android</span></li>
+<li>Windows -&gt; Preferences -&gt; Android - &gt; Build で Custom debug keystoreに作成した署名を指定する。</li>
+<li>リビルドする。</li>
+</ol>
+<br />
+<br />
+これで、Playストアでインストールしたアプリがある状態でも、アンインストールなしでデバッグできます。

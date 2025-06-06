@@ -1,0 +1,29 @@
+---
+layout: post
+title: "「Arduinoをはじめよう」ではじめよう（４）"
+date: '2014-07-17T14:45:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Arduino
+modified_time: '2014-07-17T14:45:17.845+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjajts_GPviNdJPN4uRTXiAi9sogYy71Ro2-qSUAMjV5Nt0Q1ffpm_EWYKJbHfL95L5QNuySPNLnRJGPcQY8qDFDRvrK1lh80TAKXGa43EwNgn1xYvAmQoG61osWpwBNDOOm6EmMSKGmfA/s72-c/20140717_120515.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-4341620450930858117
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/arduino_17.html
+---
+
+第６章をやってみました。ここまでやってきたことを組み合わせて、３色のLEDを混ぜたランプをつくるものです。<br />
+PCでProcessingを使ってWebから情報を取ってきて、それを元にシリアルでArduinoに色を伝えるという仕組みです。<br />
+ランプになってませんが、こんな感じになりました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjajts_GPviNdJPN4uRTXiAi9sogYy71Ro2-qSUAMjV5Nt0Q1ffpm_EWYKJbHfL95L5QNuySPNLnRJGPcQY8qDFDRvrK1lh80TAKXGa43EwNgn1xYvAmQoG61osWpwBNDOOm6EmMSKGmfA/s1600/20140717_120515.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjajts_GPviNdJPN4uRTXiAi9sogYy71Ro2-qSUAMjV5Nt0Q1ffpm_EWYKJbHfL95L5QNuySPNLnRJGPcQY8qDFDRvrK1lh80TAKXGa43EwNgn1xYvAmQoG61osWpwBNDOOm6EmMSKGmfA/s1600/20140717_120515.jpg" height="240" width="320" /></a></div><br />
+これでひと通り読み終わりました。<br />
+巻末に付いているリファレンスをざっと読んでいて、<b>tone関数</b>と<b>attachInterrupt関数</b>が気になりました。エントリーキットに圧電スピーカーも付いていたので、音を出してみることにしました。<a href="https://github.com/two-pack/ArduinoExample/commit/89c8550a14060062e65aba98e80851ead6a713e4">ソースはこちら</a>。<br />
+<br />
+<b>tone関数</b>は、指定した周波数の矩形波を出す関数です。1行書くだけで、音が出ました！<br />
+<pre class="prettyprint">tone(SPEAKER, scale[i]);
+</pre><br />
+<b>attachInterrupt関数</b>は、割り込みの関数です。タクトスイッチで音を止めたり出したりするのを割り込みでやってみました。<br />
+<pre class="prettyprint">attachInterrupt(SWITCH, stop, RISING);
+</pre>と、SWITCHで指定したピンがLOW -> HIGHの場合にstop関数を呼び出すようにしました。４章ででていたバウンシングなのか、連続して割り込みが出るケースが結構ありました。delayを挟んだりしてみたのですが、うまく改善できず。。。。こういうのはループの中でやるべきなのかな？<br />
+<br />
+実際に動かしてみて音が出たところです。<br />
+<iframe width="560" height="315" src="//www.youtube.com/embed/kSMq08grWXw" frameborder="0" allowfullscreen></iframe><br />

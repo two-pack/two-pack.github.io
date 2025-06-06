@@ -1,0 +1,39 @@
+---
+layout: post
+title: Android BindingのチュートリアルでHello World
+date: '2012-07-29T17:56:00.004+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-07-29T17:59:02.298+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5318791246640399049
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/07/android-bindinghello-world.html
+---
+
+<a href="http://andytsui.wordpress.com/2012/06/04/tutorial-hello-android-binding-new/" target="_blank">Android Bindingのチュートリアル</a>を作者のAndyさんが書いています。<br />
+ひな形を生成するAntのスクリプトができたとのことで更新されたため、やってみました。<br />
+<ul>
+<li><a href="http://andytsui.wordpress.com/2012/06/04/tutorial-hello-android-binding-new/" style="background-color: white;" target="_blank">[Tutorial] Hello Android Binding (new)</a></li>
+</ul>
+準備としては、以下です。<br />
+<ol>
+<li><span style="background-color: white;">Eclipseと<a href="http://developer.android.com/sdk/index.html" target="_blank">Android SDK</a>を用意。</span></li>
+<li><span style="background-color: white;">Android-Binding (v0.5+)を<a href="http://code.google.com/p/android-binding/downloads/list" target="_blank">ダウンロード</a>。</span></li>
+<li><span style="background-color: white;">Antのビルドスクリプトを<a href="http://code.google.com/p/android-binding/downloads/detail?name=antbuild.1.0.zip&amp;can=2&amp;q=" target="_blank">ダウンロード</a>。</span></li>
+</ol>
+準備ができたらHello Worldしてみます。<br />
+<ol>
+<li><span style="background-color: white;">新規でプロジェクトを作ります。</span></li>
+<li><span style="background-color: white;">libsフォルダにダウンロードしたAndroid-Binding(android-binding-v30.バージョン.jar)をコピーします。</span></li>
+<li><span style="background-color: white;">ダウンロードしたAntのビルドスクリプト（antbuild.zip）を展開して、プロジェクトのルートにコピーします。コピーしたらF5でリフレッシュしてください。</span></li>
+<li><span style="background-color: white;">ビルドスクリプトを使ってApplicationクラスを作ります。build.xmlで右クリック-&gt;Run As -&gt; Ant Build... を選択します。</span></li>
+<li><span style="background-color: white;">create_application_classをチェックしてRunします。クラス名を入力するダイアログがでますので入力します。</span><span style="background-color: white;">F5でリフレッシュするとApplicationクラスができています。</span></li>
+<li><span style="background-color: white;">ビルドスクリプトを使ってActivityクラスを作ります。build.xmlで右クリック-&gt;Run As -&gt; Ant Build... を選択します。</span></li>
+<li><span style="background-color: white;">new-activityをチェックしてRunします。クラス名を入力するダイアログがでますので入力します。</span><span style="background-color: white;">F5でリフレッシュするとApplicationクラスができています。</span></li>
+</ol>
+<br />
+これでHello Worldのできあがりです。<br />
+実行すると、チュートリアルのページにあるような画面が表示されます。<br />
+<br />
+今の段階ではそれほどひな形を作る機能がそれほど便利というわけではないですが、まだ始まったばかりなので今後に期待です。<br />
+<br />
+<br />

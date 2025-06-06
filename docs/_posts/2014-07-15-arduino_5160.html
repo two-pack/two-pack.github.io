@@ -1,0 +1,30 @@
+---
+layout: post
+title: "「Arduinoをはじめよう」ではじめよう（３）"
+date: '2014-07-15T16:41:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Arduino
+modified_time: '2014-07-15T16:41:49.930+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzchzlg8uQWPw-311R8-fgnbmWJSPs6WN7QT5DaCCSRr3O5z_RnIb-TgUB4hX8fKcpmcIaLPXVcbw3tL3wQu_GnBZ5hLaQeAnIKfj9UnEbZXsSzN_4irwQjFI2GJDdHiLpiqDtDqYxph4/s72-c/20140715_153225.jpg
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5496963382725224862
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/arduino_5160.html
+---
+
+５章の残りです。<br />
+<br />
+<h2>プッシュボタンの代わりに光センサを使う</h2>タクトスイッチの代わりに、光センサ（CdSセル）を使ってみました。センサを覆うとLEDが消えました。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzchzlg8uQWPw-311R8-fgnbmWJSPs6WN7QT5DaCCSRr3O5z_RnIb-TgUB4hX8fKcpmcIaLPXVcbw3tL3wQu_GnBZ5hLaQeAnIKfj9UnEbZXsSzN_4irwQjFI2GJDdHiLpiqDtDqYxph4/s1600/20140715_153225.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzchzlg8uQWPw-311R8-fgnbmWJSPs6WN7QT5DaCCSRr3O5z_RnIb-TgUB4hX8fKcpmcIaLPXVcbw3tL3wQu_GnBZ5hLaQeAnIKfj9UnEbZXsSzN_4irwQjFI2GJDdHiLpiqDtDqYxph4/s1600/20140715_153225.jpg" height="240" width="320" /></a></div><br />
+アナログ入力を使って光量によってLEDの明るさを変えるのもできました。<b>ANALOG IN</b>につないでいます。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAjajL-mIjqMuKzxYjoOo26_yhpJ6SzMRFW6U0IrxuQF7F_abrrqaLM_7e_y2pFZDYLbiAJoM9OamH4UaqQZ48kSv_A1Ia8Lj_sQikMz1Cp38YABwBKFRxE9Mjz-UUfY-K5kg79TgowU0/s1600/20140715_153155.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAjajL-mIjqMuKzxYjoOo26_yhpJ6SzMRFW6U0IrxuQF7F_abrrqaLM_7e_y2pFZDYLbiAJoM9OamH4UaqQZ48kSv_A1Ia8Lj_sQikMz1Cp38YABwBKFRxE9Mjz-UUfY-K5kg79TgowU0/s1600/20140715_153155.jpg" height="240" width="320" /></a></div><br />
+<h2>シリアル通信</h2>ここでシリアル通信を行って、ArduinoからPCにアナログ入力の数値を表示するコードがでてきます。<br />
+Serialオブジェクトが用意されていて、<b>println</b>メソッドで簡単に出力できました。ここまでデバッグの方法は出てきていませんが、IDEで特別な機能もないようなので、これを使ってデバッグする感じでしょうか。<br />
+IDEのシリアルモニタから、以下のように出力されている結果を確認できます。<br />
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhppXrp3t6c8cjnCAzss4X8HmUsX2k-rQcr1Y2_VP0EY9Q0mR5asDetDzkVAXRUcIcHdkvs2SX7x64UPkMQnFUNxWqnaOcFkAePzPX71GvDNf4zaNctzYnFLi7L68eXd8wQcSpqT9Cs0pE/s1600/serial.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhppXrp3t6c8cjnCAzss4X8HmUsX2k-rQcr1Y2_VP0EY9Q0mR5asDetDzkVAXRUcIcHdkvs2SX7x64UPkMQnFUNxWqnaOcFkAePzPX71GvDNf4zaNctzYnFLi7L68eXd8wQcSpqT9Cs0pE/s1600/serial.png" height="183" width="320" /></a></div><br />
+<h2>モータや電球などの駆動</h2>私の買ったエントリーキットには、この項で説明されている部品は含まれていませんでした。訳注にある部品とかは検索すると通販で買えるようです。というわけで、実際にやってみていません。<br />
+Arduinoのピンからは20mAまでしか出せないので、モーターなど大きな電流が必要なものは動かせないとのこと。本ではVin端子から電源をとってMOSFETというトランジスタでON/OFFを制御するとあります。わからない・・・・全然わからない・・・・ということで検索したら、以下でわかりやすい回答がありました。<br />
+<a href="http://www.senio.co.jp/bbs/viewtopic.php?f=7&t=85"><b>Vinについて</b></a><br />
+<br />
+また、検索していてトランジスタで電流を増幅して動かすというサイトがありました。う〜ん、難しい。。。。<br />
+<a href="http://makers-with-myson.blog.so-net.ne.jp/2013-11-11"><b>Arduino でモータを動かす　[Arduino]</b></a><br />
+<br />

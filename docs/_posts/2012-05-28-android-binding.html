@@ -1,0 +1,45 @@
+---
+layout: post
+title: android-bindingのライセンスについて
+date: '2012-05-28T07:46:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-28T07:46:14.423+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-3328156653547102044
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android-binding.html
+---
+
+android-bindingのライセンスは、サイトに書いてある通りLGPLです。<br />
+<a href="http://code.google.com/p/android-binding/">http://code.google.com/p/android-binding/</a><br />
+<br />
+AndroidアプリにLGPLのライブラリを使うことは、ソース公開の必要になる場合があるようです。<br />
+<br />
+<ul>
+<li><a href="http://d.hatena.ne.jp/pekeq/20110126/p1" target="_blank">LGPLとAndroid - 近況</a></li>
+<li><a href="http://d.hatena.ne.jp/pekeq/20110201/p1" target="_blank">LGPLとAndroid その２</a></li>
+<li><a href="http://fnya.cocolog-nifty.com/blog/2012/01/android-lgpl-26.html" target="_blank">Android アプリに LGPL ライブラリを組み込むとソースコード開示義務が発生するらしい: あるＳＥのつぶやき</a></li>
+<li><a href="http://www.codearc.net/%E6%8A%80%E8%A1%93%E6%83%85%E5%A0%B1/lgpl%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E8%BF%BD%E8%A8%98.html" target="_blank">LGPLに関する追記 « Code Archives</a></li>
+</ul>
+<br />
+<br />
+LGPLは動的リンクであれば影響を受けないという認識です。<br />
+Androidの場合は、apk、dexにLGPLのライブラリ自体を含むことになるため、影響を受けるということになるという解釈のようです。<br />
+私としては妥当だと考えています。<br />
+<br />
+というわけで、LGPLを商用利用する場合は（当たり前ですけど）ソース公開の必要性などに注意が必要となります。<br />
+別にAndroidアプリに限らずですね。<br />
+ちなみに、Android自体は<b><a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache Software License, 2.0</a></b>で、なぜこのライセンスなのかについて以下で記載されており、LGPLが引き合いに出されています。<br />
+<a href="http://source.android.com/source/licenses.html" target="_blank">Licenses | Android Open Source</a><br />
+<br />
+<br />
+話は戻ってandroid-bindingです。<br />
+Androidのライブラリなわけですが、上記のとおりLPGLのライセンスとなっています。<br />
+商用利用しにくいということで、昨年の年末にライセンス変更について提起されていました。<br />
+<a href="https://groups.google.com/group/androidbinding/browse_thread/thread/1711f6f186b6a898">https://groups.google.com/group/androidbinding/browse_thread/thread/1711f6f186b6a898</a><br />
+<br />
+提起にされているスレッドでは、MITライセンスへの変更を行うつもりとの記載がありますが、今現在（2012/5/28）LGPLのままです。<br />
+折角のいいライブラリなので広く使えるように、ぜひライセンス変更がされるといいなと思います。<br />
+いいなと思うからには、やっぱりチケット切っておかないと・・・w<br />
+<a href="http://code.google.com/p/android-binding/issues/detail?id=25">http://code.google.com/p/android-binding/issues/detail?id=25</a><br />
+<br />
+とりあえず、今回調べて作ろうと思っていたのはソース公開するからいいんですがw

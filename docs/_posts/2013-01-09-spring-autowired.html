@@ -1,0 +1,65 @@
+---
+layout: post
+title: "[Spring] Autowiredアノテーションを使っているクラスのユニットテスト"
+date: '2013-01-09T07:33:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Spring
+modified_time: '2013-01-09T07:33:50.587+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-966283008262930170
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2013/01/spring-autowired.html
+---
+
+ちょっと確認のために試してみました。ソースは以下。<br />
+https://bitbucket.org/twopack/jsonrest/commits/e5353d883dffe31f99948a977b938c69<br />
+試したかったのは、 <b>@Autowired </b>でインジェクションしているクラスをJUnitで動かすにはどうするかです。<br />
+<br />
+上記のソースで <b>autoPerson</b> を <b>@Autowired</b> してます。<br />
+決めうちでアクセスすると、<b>autoPerson</b> にアクセスして <b>Micheal</b> を返すようにしています。<br />
+<br />
+テスト側で対応を行わない場合、テストを実行すると  <b>autoPerson</b> で <b>NullPointerException</b> になります。JUnitで実行時には、 <b>@Autowired</b> でインジェクションが行われていないことが原因です。<br />
+対策のポイントは、以下のサイトを参照しました。<br />
+<br />
+<ul>
+<li><a href="http://hamletdarcy.blogspot.jp/2008/12/autowired-junit-tests-with-spring-25.html">Autowired JUnit Tests with Spring 2.5</a></li>
+<li><a href="http://stackoverflow.com/questions/8487589/spring-junit-testing-with-autowired-annotation">Spring JUnit testing with @Autowired annotation</a></li>
+</ul>
+<br />
+<br />
+<h3>
+@Autowiredアノテーションを有効にする</h3>
+１つ目のポイントは、JUnitのテストに <b>@RunWith(SpringJUnit4ClassRunner.class)</b> と <b>@ContextConfiguration</b> を記載して、 Spring の TestRunner で動くようにします。<br />
+<pre class="prettyprint linenums">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration
+public class HomeControllerTest {
+....
+}
+</pre>
+<br />
+<b>@ContextConfiguration</b> を記載すると、クラスパス上の <b>テストクラス名-context.xml</b> を読み込んで設定します。<br />
+この中で、インジェクションするbeanを設定します。<br />
+<pre class="prettyprint linenums">&lt;beans:beans xmlns="http://www.springframework.org/schema/mvc"
+　　xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+　　xmlns:beans="http://www.springframework.org/schema/beans"
+　　xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"&gt;
+　　&lt;beans:bean name="Person" class="jp.gr.java_conf.twopack.sample.jsonrest.Person"&gt;&lt;/beans:bean&gt;
+　　&lt;/beans:beans&gt;
+</pre>
+<br />
+<h3>
+テスト対象クラスのインスタンス化</h3>
+１つ目のポイントでOK・・・かと思いきや、状況は変わりませんでした。<br />
+以下のようにアプリケーションコンテキストのメソッドを使ってテスト対象をインスタンス化する必要がありました。<br />
+<pre class="prettyprint linenums">@Autowired
+ApplicationContext ctx;
+ 
+HomeController sut;
+  
+@Before
+public void setup() {
+  sut = ctx.getAutowireCapableBeanFactory().createBean(HomeController.class);
+}
+</pre>
+<br />
+<br />
+ここまでで、テストも通るようになりました。

@@ -1,0 +1,41 @@
+---
+layout: post
+title: 'Springで提供されているモッククラス [Spring Framework Advent Calendar 2012 11日目 #jsug ]'
+date: '2012-12-11T23:59:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Spring
+modified_time: '2013-01-09T07:35:20.063+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-7336772695241889512
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/12/spring-spring-framework-advent-calendar.html
+---
+
+<a href="http://atnd.org/events/34294">Spring Framework Advent Calendar 2012</a>の11日目です。<br />
+4巡目！間に合うか！（今23:50w）<br />
+<br />
+Spring Frameworkではテスト用のモッククラスが提供されています。<br />
+<br />
+一例としてMockHttpServletResponseを使ったテストケースが以下のようなものです。<br />
+<pre class="prettyprint linenums">@Test
+public void testGetName_Tom() throws Exception {
+  MockHttpServletResponse response = new MockHttpServletResponse();
+  assertThat(sut.getName(response, 1), is(&quot;Tom&quot;));
+  assertThat(response.getStatus(), is(HttpServletResponse.SC_OK));
+}
+</pre><br />
+テスト対象のメソッドはコントローラーのもので、HttpServletResponseを引数に取っています。<br />
+<pre class="prettyprint linenums">@RequestMapping(value = &quot;/person/name/{id}&quot;, method = RequestMethod.GET)
+ public @ResponseBody String getName(HttpServletResponse response,
+           @PathVariable int id) {
+  if(id == 1) {
+   return &quot;Tom&quot;;
+  }
+  
+  response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+  return &quot;Not found.&quot;;
+ }
+</pre><br />
+HttpServletResponseのようなインスタンス化できないものについて、モックがあらかじめ用意されているのは非常に便利です。うまく使ってJunitを書きたいですね。<br />
+<br />
+ソース全体はここでアップしています。ざっくりな内容なのはご容赦を。。。<br />
+https://bitbucket.org/twopack/jsonrest/commits/f7038c946113f538ffc4d5ee1cd729d5

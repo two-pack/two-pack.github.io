@@ -1,0 +1,29 @@
+---
+layout: post
+title: Redmineのリポジトリから特定ソースの修正をGoogle Apps Scriptでメールする
+date: '2018-10-17T23:03:00.002+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Google Apps Script
+- Redmine
+modified_time: '2018-10-17T23:03:26.402+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3PujfkyZo3vV58DW4c7eRMFBQSqGDJFwxDZEWBmtdiTDKGjnkGNz53MOKoXfcYS78bSjjC1HR3vzClR4gLzAKlOe-HdoWXk-bp9p3kUCFE6nTQD8rivJXumsrRvyKIV6ahFT-e_G7OXc/s72-c/trigger.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-5692251204501469370
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2018/10/redminegoogle-apps-script.html
+---
+
+Redmineのプラグインを作成していると、関連する本体側の修正に影響を受けることがあります。<br />
+また、私の作っている<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a>は、RedmineのCSVエクスポート機能と同等を目指しているので、変更に追随するようにしています。<br />
+<br />
+Redmine本体へのコミットは、<a href="https://toot.redmine.jp/">Mastodon</a>や<a href="https://discordapp.com/invite/tHgdVSj">Discord</a>のBOTで確認できますが、流してみる感じになるので見逃してしまいがちです。<br />
+CIで失敗する場合はいいのですが、スルーしてなんか動きがおかしくなったり、<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter/issues/63">本体側のバグ修正をプラグイン側にも反映すべき場合があったり</a>が続いたので、対策を考えて見ました、の結果です。<br />
+<br />
+今回はGoogle Apps Scriptを使って見ました。<a href="https://script.google.com/">Google Apps Script</a>を使うと、cron的なトリガーでスクリプトを動かすことができます。<br />
+設定画面はこんな感じ。<br />
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3PujfkyZo3vV58DW4c7eRMFBQSqGDJFwxDZEWBmtdiTDKGjnkGNz53MOKoXfcYS78bSjjC1HR3vzClR4gLzAKlOe-HdoWXk-bp9p3kUCFE6nTQD8rivJXumsrRvyKIV6ahFT-e_G7OXc/s1600/trigger.png" imageanchor="1"><img border="0" data-original-height="136" data-original-width="802" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3PujfkyZo3vV58DW4c7eRMFBQSqGDJFwxDZEWBmtdiTDKGjnkGNz53MOKoXfcYS78bSjjC1HR3vzClR4gLzAKlOe-HdoWXk-bp9p3kUCFE6nTQD8rivJXumsrRvyKIV6ahFT-e_G7OXc/s1600/trigger.png" /></a><br />
+<br />
+作成したスクリプトは、<a href="http://www.redmine.org/projects/redmine/repository">redmine.orgのリポジトリページ</a>へアクセスして、今日のコミットがあればメールするというものです。<br />
+以下のような感じ。targetsにURLを追加していけば、複数のソースをチェックできます。<br />
+<script src="https://gist.github.com/two-pack/2c4164bd5f9eb492c35814ca94a0734b.js"></script><br />
+<br />
+これでちょっとは見逃しが少なくなるといいんですが。。。

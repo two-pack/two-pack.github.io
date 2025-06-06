@@ -1,0 +1,61 @@
+---
+layout: post
+title: Redmiine XLS Plugin 0.2.0を試す
+date: '2012-06-26T15:11:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+modified_time: '2013-01-09T07:36:29.001+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-2573715044607940377
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/06/redmiine-xls-plugin-020.html
+---
+
+Redmiine XLS Plugin 0.2.0がリリースされました。<br />
+http://www.redmine.org/plugins/redmine_xls_export<br />
+<br />
+変更点をざっくり訳すと以下との事。<br />
+<ul><li>Rails 3 (Redmine 2.x.x) 対応。</li>
+<li>Controllerを全面書き換え - IssuesControllerのモンキーパッチはいらなくなった。</li>
+<li>ジャーナルのエクスポートを改善。</li>
+<li>ジャーナルのエクスポートでファイルへの分割ができるようになった。</li>
+<li>添付ファイルをZIPでエクスポートできるようになった。</li>
+<li>エクスポート時の開始オフセットを設定できるようになった。</li>
+</ul>というわけで試してみます。<br />
+<br />
+<u>インストール</u><br />
+<br />
+インストール手順も上記に載っています。コマンドを併記していきます。<br />
+環境は<a href="http://two-pack-sbs.blogspot.jp/2012/06/ubuntu-1204redmine-203.html" target="_blank">ここ</a>で作ったUbuntu12.04+Redmine2.0.3です。 <br />
+<ol><li><b>Install spreadsheet gem ('gem install spreadsheet')</b><br />
+$ sudo /usr/local/bin/gem install spreadsheet --no-rdoc --no-ri<br />
+</li>
+<li><b>Install rubyzip gem if you want to use export attachments feature</b><br />
+$ sudo /usr/local/bin/gem install rubyzip --no-rdoc --no-ri<br />
+</li>
+<li><b>Install plugin Plugin views with revisions if you do not have it installed</b><br />
+<a href="http://www.redmine.org/plugins/redmine_plugin_views_revisions" target="_blank">Plugin views revisions</a>とXLS Pluginをpluginsフォルダにコピーする。</li>
+<li><b>Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins</b><br />
+$ rake redmine:plugins:migrate RAILS_ENV=production</li>
+<li><b>Run rake task</b><br />
+$ rake redmine:plugins:process_version_change RAILS_ENV=production</li>
+<li><b>Login and configure the plugin (Administration &gt; Plugins &gt; Configure)</b><br />
+サーバーを立ち上げて確認します。</li>
+</ol>しかし、動かない！<br />
+というわけで調べてみたらRedmineをインストールしたときに、<br />
+$ bundle install<br />
+としていましたが、ここに関連づいたところへgem installで入っていないのが問題なようです。<br />
+RedmineのルートフォルダにあるGemfileに以下のように追加して再度bundle installしました。<br />
+gem 'spreadsheet'<br />
+gem 'rubyzip'<br />
+<br />
+<br />
+<u>確認したこと</u><br />
+<ul><li><i>ジャーナルのエクスポートでファイルへの分割ができるようになった。</i><br />
+ジャーナルってのは履歴ですね（いまさらw）。履歴が多い場合に一つのセルに入っているのは見にくかったですが、これを別ファイルに分割できるようになっています。これはいいですね。</li>
+<li><i>添付ファイルをZIPでエクスポートできるようになった。</i><br />
+されていました。</li>
+<li><i>エクスポート時の開始オフセットを設定できるようになった。</i>これは少し挙動が分かりにくいですが、チケットの一覧の上から何番目以降をエクスポートするというものみたいです。例えば５つ表示している時に2<i>を指定すると3つ目以降がエクスポートされました。</i></li>
+</ul><br />
+<u>翻訳</u><br />
+最近ほっておいたせいで、githubのほうまで手が回らなかったですが、とりあえず日本語訳を作ってフォーラムには出しました。そのうちもう一度整理しないと。。<br />
+http://www.redmine.org/boards/3/topics/11986?r=31579#message-31579<br />

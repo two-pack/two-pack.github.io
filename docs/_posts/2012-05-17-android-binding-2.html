@@ -1,0 +1,68 @@
+---
+layout: post
+title: android-bindingを使ってみる その2
+date: '2012-05-17T06:50:00.004+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-17T06:51:17.913+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-6976669759864612493
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android-binding-2.html
+---
+
+android-bindingの続きです。<br />
+<a href="https://bitbucket.org/twopack/android-binding-sample/changeset/bb43ab2cba02" target="_blank">前回のソース</a>にアクティビティの開始を追加しました。<br />
+ポイントは以下です。それぞれソースのリンクも併記します。<br />
+<ol>
+<li>ViewModelのJUnitでテストできる状態を維持する。<br /><a href="https://bitbucket.org/twopack/android-binding-sample/changeset/6cf2bd843f36">https://bitbucket.org/twopack/android-binding-sample/changeset/6cf2bd843f36</a></li>
+<li>アクティビティの開始をテストする。<br /><a href="https://bitbucket.org/twopack/android-binding-sample/changeset/c44ee14f5722">https://bitbucket.org/twopack/android-binding-sample/changeset/c44ee14f5722</a></li>
+</ol>
+<br />
+<h3>
+
+
+
+1. ViewModelのJUnitでテストできる状態を維持する。</h3>
+android-bindingのサンプルである<a href="http://code.google.com/p/android-binding/wiki/MarkupDemo" target="_blank">MarkupDemo</a>では、リストビューの項目をクリックした際にインテントを発行してアクティビティを開始するコードがあります。<br />
+リストビューの項目をクリックした際の処理は、Commandクラスを使用したバインドによって行われます。<br />
+<br />
+layoutの中でバインドできる属性については、以下のページで記載されています。<br />
+http://code.google.com/p/android-binding/wiki/BindingSyntax<br />
+<div>
+<br /></div>
+<br />
+<pre class="prettyprint">// ”onClickItem”は、layoutのbinding:onItemClickedで定義したもの。
+public final Command onClickItem = new Command() {
+
+        @Override
+        public void Invoke(final View view, final Object... args) {
+            // ここにクリック時の処理
+        };
+};
+</pre>
+<br />
+ここで単純にインテントを発行すると、Androidの中のものを動かさないといけなくなるため、JUnitでの（エミュレータを使用しない）テストができません。<br />
+そこで、実際のインテント発行はアクティビティ側で実装し、アクティビティで実装したメソッドをViewModelに登録して呼び出すようにしました。<br />
+ViewModelとしては、登録されたメソッドの呼び出しまでは責務となるため、JUnitでテストが可能です。<br />
+<br />
+<h3>
+
+
+
+２. アクティビティの開始をテストする。</h3>
+ViewModelはメソッドの呼び出しまでを責務としたため、アクティビティ側の実装としてインテント発行のテストが必要になります。<br />
+こちらはエミュレータでテストすると割り切って実装することにしました。<br />
+以下を参考にしました。<br />
+<ul>
+<li><a href="http://bit.ly/wpSQHd" target="_blank">Androidアプリを“超”魅力的にする3種類のUIテスト</a></li>
+</ul>
+<div>
+AndroidのテストクラスはJUnit3をベースにしています。今回の実装でテストコードをJUnit4で書いていたので、プロジェクト自体を別としました。<br />
+<br />
+やはり、エミュレータにインストールしてテストすることになるので時間がかかるのが難です。以下を使うなどしてもう一工夫したいところです。<br />
+<br />
+<ul>
+<li><a href="http://bit.ly/J8HkYK" target="_blank">Robolectric: Unit Test your Android Application</a></li>
+</ul>
+<div>
+<br /></div>
+</div>

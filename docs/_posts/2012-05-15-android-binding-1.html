@@ -1,0 +1,36 @@
+---
+layout: post
+title: android-bindingを使ってみる その1
+date: '2012-05-15T15:14:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+modified_time: '2012-05-15T15:14:30.191+09:00'
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-788358224625500686
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2012/05/android-binding-1.html
+---
+
+Androidアプリ開発での自動テストをやってみようと言う流れで、<a href="http://code.google.com/p/android-binding/">android-binding</a>を使ってみました。<br />
+参考のサイトを参考にしました。<br />
+<ul>
+<li><a href="https://skydrive.live.com/view.aspx?cid=8088DCDBD1F217CA&amp;resid=8088DCDBD1F217CA%21326">より効率的に開発するために ～スマートフォン時代のソフトウェアテスト・アプローチ</a></li>
+<li><a href="http://d.hatena.ne.jp/nakaji999/20110614/1308069994">[Android]Android&nbsp;Bindingを使ってみた(1)</a>〜(3)</li>
+<li><a href="http://andytsui.wordpress.com/2011/10/05/tutorial-list-views-in-android-binding-14/">[Tutorial] List Views in Android Binding (1/4) </a>〜 (4/4)</li>
+<li><a href="http://blog.tworks.jp/archives/218">双方向Bindingが可能なAndroid Binding v0.45を使ってみた</a></li>
+<li><a href="http://d.hatena.ne.jp/yohpapa/20110925/1316961627">Android Binding Markup Demoを読み解く ～リストクリックからイベント駆動まで～</a></li>
+</ul>
+<br />
+とりあえず使ってみた＆テスト書いてみたというソースは以下です。Activityに記述するコード量が非常に少なくなっていると思います。<br />
+<a href="https://bitbucket.org/twopack/android-binding-sample/changeset/bb43ab2cba02">https://bitbucket.org/twopack/android-binding-sample/changeset/bb43ab2cba02</a><br />
+<br />
+また、PojoViewModelを使うとMVVMのViewModelをPOJOにできるため、テストコードの実行時にAndroid環境へのインストールが不要になります。これはTDDを行う上でテストの実行にかかる時間が大分短くなるのでとてもいいです。<br />
+<br />
+テストコードをエミュレータで動かさないと、NoClassDefFoundErrorが起きてしまいました。ここではまりましたが、エミュレータ外で動かす場合には、Eclipseで以下の設定を行いました。<br />
+<blockquote class="tr_bq">
+<ol>
+<li><b>Debug Configurations</b>の<b>Classpath</b>で<b>Bootstrap Entry</b>に<b>JRE</b>を追加。 <b>User Entries</b>に<b>android.jar</b>を追加。</li>
+<li><b>Debug Configurations</b>の<b>JRE</b>で<b>Environment execution</b>で<b>JavaSE-1.6</b>を選択。</li>
+<li><b>Debug Configurations</b>の<b>Environment</b>で<b>Select othr...</b>で<b>Eclipse JUnit Launcher</b>を選択。</li>
+</ol>
+</blockquote>
+<br />
+やってみたのはごく簡単なものなので、メリットを享受したままで実際にどこまで有効に使えるのか、引き続き試してみたいと思います。

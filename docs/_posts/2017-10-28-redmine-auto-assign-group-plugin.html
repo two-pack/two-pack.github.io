@@ -1,0 +1,42 @@
+---
+layout: post
+title: Redmine Auto Assign Group Pluginを作りました！
+date: '2017-10-28T16:28:00.000+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+- Redmine Plugin
+modified_time: '2017-10-28T16:28:53.122+09:00'
+thumbnail: https://4.bp.blogspot.com/-uiH0uJDC9nw/WfQwX33S_ZI/AAAAAAAAhzo/E_VzMQICC0g992U8zLQlizZYMNGKgoatACLcBGAs/s72-c/groups_rules_tab_input_rule.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-687793925089232740
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2017/10/redmine-auto-assign-group-plugin.html
+---
+
+<a href="https://github.com/two-pack/redmine_auto_assign_group" target="_blank">Redmine Auto Assign Group Plugin</a>を作りました！<br />
+<div class="separator" style="clear: both; text-align: left;">
+<a href="https://4.bp.blogspot.com/-uiH0uJDC9nw/WfQwX33S_ZI/AAAAAAAAhzo/E_VzMQICC0g992U8zLQlizZYMNGKgoatACLcBGAs/s1600/groups_rules_tab_input_rule.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="197" data-original-width="598" height="105" src="https://4.bp.blogspot.com/-uiH0uJDC9nw/WfQwX33S_ZI/AAAAAAAAhzo/E_VzMQICC0g992U8zLQlizZYMNGKgoatACLcBGAs/s320/groups_rules_tab_input_rule.png" width="320" /></a></div>
+<br />
+<a href="https://twitter.com/akipii" target="_blank">@akipii</a>さんが既に<a href="http://forza.cocolog-nifty.com/blog/2017/10/redmine_auto_as.html" target="_blank">ブログで取り上げてくださっています</a>。ありがたや！<br />
+<span style="font-size: xx-small;">で、ブログ書いてないと気づいた。。。</span><br />
+<h3>
+きっかけ</h3>
+<a href="http://redmine.org/">redmine.org</a>のフォーラムに以下の投稿がありました。<br />
+<a href="http://www.redmine.org/boards/3/topics/52985" target="_blank">Plugin to automatically assign new users to groups?</a><br />
+<br />
+ユーザーの登録時に自動的にグループを設定したいという要求は、結構昔からあったようです。<br />
+上の投稿から<a href="http://www.redmine.org/boards/2/topics/30039" target="_blank">参照されているスレッド</a>は2012/04に開始されています。<br />
+パッチやプラグインの書き込みがありますが、条件によって別のグループを設定したい、というのが今回の投稿でした。<br />
+<br />
+ユースケースとして挙げられていた、グループごとでアクセス権限を行なうような運用は、規模が大きかったり複数の組織が絡むようなときに、手間が大幅に削減できそうな感じがしました。<br />
+他にも思いつかないようなシーンが隠れてそうだなあとも思い、なんか既にありそうな感じ・・・と思ったんでググってもないから、面白そうだし作るか！ということにしました。<br />
+<h3>
+使い方</h3>
+GitHubに<a href="https://github.com/two-pack/redmine_auto_assign_group" target="_blank">インストール方法</a>と<a href="https://github.com/two-pack/redmine_auto_assign_group/wiki/Usage" target="_blank">簡単な使い方</a>を書きました。<br />
+グループの設定画面から、グループごとに正規表現でルールを設定できます。<br />
+ユーザーが追加された際に、ルールに合致するとそのグループに追加されます。<br />
+<h3>
+今後の方向性</h3>
+とりあえず、正規表現のチェック機能が必要と思っています。<br />
+あとは、グループ横断でのルール一覧もあるといいかな、と思ったり、いらないんじゃないかな、と思ったり。<br />
+作ったばかりなので、フィードバックを頂いたら考えていこうかなあと思います。<br />
+<br />

@@ -1,0 +1,47 @@
+---
+layout: post
+title: RedmineプラグインのCI環境を作る
+date: '2014-07-23T19:18:00.001+09:00'
+author: ソフトウェア開発にまつわる話
+tags:
+- Redmine
+- Travis CI
+modified_time: '2014-07-26T09:06:28.543+09:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4p5jUTRjvGANM228t_QRkO6NtF8EkD6e6eJzxwLed7zUsTE9v0UjUEDrwtpwSRAr1Bn5dQYGXOlJyODC35SfdowEUrcNLJ1WV0wkoAUDtx4BQgqzdsCxwbFbOEkcUb8R4wqE3H_2-_RY/s72-c/result.png
+blogger_id: tag:blogger.com,1999:blog-469434601551305913.post-7948810948661090628
+blogger_orig_url: https://two-pack-sbs.blogspot.com/2014/07/redmineci.html
+---
+
+１年ぐらい前にNDSでRedmineプラグインのテスト書いてとLTしましたが、幾ばくかのテストを自分で書きました。<br />
+テストを書いたので次はCI環境を作りたいと思います。<br />
+<iframe allowfullscreen="" frameborder="0" height="356" marginheight="0" marginwidth="0" scrolling="no" src="//www.slideshare.net/slideshow/embed_code/25767272" style="border-width: 1px 1px 0; border: 1px solid #CCC; margin-bottom: 5px; max-width: 100%;" width="427"> </iframe> <br />
+<div style="margin-bottom: 5px;">
+<strong> <a href="https://www.slideshare.net/twopackas/20130831-25767272" target="_blank" title="Redmineプラグインのテストを書いてくれませんか？ #niigatarb">Redmineプラグインのテストを書いてくれませんか？ #niigatarb</a> </strong> from <strong><a href="http://www.slideshare.net/twopackas" target="_blank">Tatsuya Saito</a></strong>&nbsp;</div>
+<br />
+<h2>
+Travis Integration for Redmine Plugins</h2>
+調べてみたところ、以下を見つけました。<br />
+<a href="https://github.com/alexbevi/redmine_plugins_travis-ci">Travis Integration for Redmine Plugins</a><br />
+Redmineプラグインのテストをするには、当たり前ですがRedmineが必要になります。なので、CIの環境にRedmineをインストールするところから始めないとなのですが、その辺をTravis CI向けにスクリプト化したものです。<br />
+これは便利そうということで、これを使っての環境構築を試してみました。<br />
+<br />
+追記：上記のリポジトリでRedmineをダウンロードしてくるソースが<a href="https://github.com/edavis10/redmine/">edavis10のところ</a>になっていました。ここもミラーしているようですが、<a href="http://www.redmine.org/boards/1/topics/42747">Redmineのフォーラム</a>でgithubのリポジトリが示されていたので、<a href="https://github.com/two-pack/redmine_plugins_travis-ci/commit/e130f4a69e4efeee1fe1b00ccbe70504f6a9fd23">フォークしてソースに書き換えました</a>。<br />
+追記の追記：<a href="https://github.com/alexbevi/redmine_plugins_travis-ci/pull/3">プルリクエスト</a>を出して取り込まれました。<br />
+<h2>
+手順</h2>
+手順は以下のとおりです。Travis CIで対象のリポジトリをCI対象にしている状態とします。<br />
+<ol>
+<li>Travis Integration for Redmine Pluginsをクローンしてくる。</li>
+<li><b>.travis*</b>をプラグインのルートフォルダにコピーする。</li>
+<li><b>.travis.yml</b>で定義されている<b>branches</b>を書き換える。クローンしたままだとtestingブランチのみが対象となるため、フックが効かないことがあるかもです。</li>
+<li><b>.travis.yml</b>で定義されている<b>env</b>を書き換える。<b>REDMINE_VERSION</b>で指定されたバージョンのRedmineでテストをします。複数指定する場合は、行をコピーしてバージョンを書き換えてください。</li>
+<li><b>.travis.yml</b>で定義されている<b>PLUGIN</b>をプラグイン名に書き換える。</li>
+<li><b>.travis*</b>をコミットする。コミットがフックされてビルドが開始されます。</li>
+</ol>
+<h2>
+結果</h2>
+できた環境は<a href="https://travis-ci.org/two-pack/redmine_xls_export">こちら</a>。テストも成功しました。<br />
+<div class="separator" style="clear: both;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4p5jUTRjvGANM228t_QRkO6NtF8EkD6e6eJzxwLed7zUsTE9v0UjUEDrwtpwSRAr1Bn5dQYGXOlJyODC35SfdowEUrcNLJ1WV0wkoAUDtx4BQgqzdsCxwbFbOEkcUb8R4wqE3H_2-_RY/s1600/result.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4p5jUTRjvGANM228t_QRkO6NtF8EkD6e6eJzxwLed7zUsTE9v0UjUEDrwtpwSRAr1Bn5dQYGXOlJyODC35SfdowEUrcNLJ1WV0wkoAUDtx4BQgqzdsCxwbFbOEkcUb8R4wqE3H_2-_RY/s1600/result.png" height="188" width="320" /></a></div>
+<b>.travis.yml</b>の<b>rvm</b>と<b>REDMINE_VERSION</b>のマトリックスでビルドが実行されます。<br />
+非常に簡単にRedmineプラグインのCI環境を作ることができました。RedmineプラグインのCI環境を作るハードルを下げてくれますね。
