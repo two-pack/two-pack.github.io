@@ -10,17 +10,17 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="まずはSpring 3.0のチュートリアルを探してきて写経しました。 Spring 3 Hello World Example このチュートリアルでViewはJSPです。ここにThymeleafでのViewを追加します。 Thymeleafのチュートリアルを見ながら、テキストを置き換えるだけの簡単なコードを書きました。 TUTORIAL: THYMELEAF + SPRING 3 また、チュートリアルのサンプルソースがGithubで公開されています。 はまったところは以下。 resourcesの配置先をsrcの下に置く必要があった。 servletのxmlをJSPのものと分けたが、コントローラーも分けてあげる必要があった。 あとはチュートリアル通りでできました。 今のところはただのテキスト置き換えのみなので、他の構文も試してみたいと思います。 写経からThymeleaf用の追加までのソースは以下です。 https://bitbucket.org/twopack/helloworldspring3" />
 <meta property="og:description" content="まずはSpring 3.0のチュートリアルを探してきて写経しました。 Spring 3 Hello World Example このチュートリアルでViewはJSPです。ここにThymeleafでのViewを追加します。 Thymeleafのチュートリアルを見ながら、テキストを置き換えるだけの簡単なコードを書きました。 TUTORIAL: THYMELEAF + SPRING 3 また、チュートリアルのサンプルソースがGithubで公開されています。 はまったところは以下。 resourcesの配置先をsrcの下に置く必要があった。 servletのxmlをJSPのものと分けたが、コントローラーも分けてあげる必要があった。 あとはチュートリアル通りでできました。 今のところはただのテキスト置き換えのみなので、他の構文も試してみたいと思います。 写経からThymeleaf用の追加までのソースは以下です。 https://bitbucket.org/twopack/helloworldspring3" />
-<link rel="canonical" href="http://localhost:4000/2012/11/20/spring-30-thymeleaf.html" />
-<meta property="og:url" content="http://localhost:4000/2012/11/20/spring-30-thymeleaf.html" />
+<link rel="canonical" href="https://two-pack.github.io/2012/11/20/spring-30-thymeleaf.html" />
+<meta property="og:url" content="https://two-pack.github.io/2012/11/20/spring-30-thymeleaf.html" />
 <meta property="og:site_name" content="Step by Step" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2012-11-20T19:43:00+09:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Spring 3.0 + Thymeleafを試してみる(１)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2012-11-20T19:43:00+09:00","datePublished":"2012-11-20T19:43:00+09:00","description":"まずはSpring 3.0のチュートリアルを探してきて写経しました。 Spring 3 Hello World Example このチュートリアルでViewはJSPです。ここにThymeleafでのViewを追加します。 Thymeleafのチュートリアルを見ながら、テキストを置き換えるだけの簡単なコードを書きました。 TUTORIAL: THYMELEAF + SPRING 3 また、チュートリアルのサンプルソースがGithubで公開されています。 はまったところは以下。 resourcesの配置先をsrcの下に置く必要があった。 servletのxmlをJSPのものと分けたが、コントローラーも分けてあげる必要があった。 あとはチュートリアル通りでできました。 今のところはただのテキスト置き換えのみなので、他の構文も試してみたいと思います。 写経からThymeleaf用の追加までのソースは以下です。 https://bitbucket.org/twopack/helloworldspring3","headline":"Spring 3.0 + Thymeleafを試してみる(１)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2012/11/20/spring-30-thymeleaf.html"},"url":"http://localhost:4000/2012/11/20/spring-30-thymeleaf.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ソフトウェア開発にまつわる話"},"dateModified":"2012-11-20T19:43:00+09:00","datePublished":"2012-11-20T19:43:00+09:00","description":"まずはSpring 3.0のチュートリアルを探してきて写経しました。 Spring 3 Hello World Example このチュートリアルでViewはJSPです。ここにThymeleafでのViewを追加します。 Thymeleafのチュートリアルを見ながら、テキストを置き換えるだけの簡単なコードを書きました。 TUTORIAL: THYMELEAF + SPRING 3 また、チュートリアルのサンプルソースがGithubで公開されています。 はまったところは以下。 resourcesの配置先をsrcの下に置く必要があった。 servletのxmlをJSPのものと分けたが、コントローラーも分けてあげる必要があった。 あとはチュートリアル通りでできました。 今のところはただのテキスト置き換えのみなので、他の構文も試してみたいと思います。 写経からThymeleaf用の追加までのソースは以下です。 https://bitbucket.org/twopack/helloworldspring3","headline":"Spring 3.0 + Thymeleafを試してみる(１)","mainEntityOfPage":{"@type":"WebPage","@id":"https://two-pack.github.io/2012/11/20/spring-30-thymeleaf.html"},"url":"https://two-pack.github.io/2012/11/20/spring-30-thymeleaf.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Step by Step" /></head>
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://two-pack.github.io/feed.xml" title="Step by Step" /></head>
 <body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">Step by Step</a><nav class="site-nav">
