@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://two-pack.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://two-pack.github.io/" rel="alternate" type="text/html" /><updated>2025-06-06T23:06:40+09:00</updated><id>https://two-pack.github.io/feed.xml</id><title type="html">Step by Step</title><subtitle></subtitle><entry><title type="html">思い付きでBloggerから移行を開始しました。</title><link href="https://two-pack.github.io/2025/06/06/move-to-github-pages.html" rel="alternate" type="text/html" title="思い付きでBloggerから移行を開始しました。" /><published>2025-06-06T00:00:00+09:00</published><updated>2025-06-06T00:00:00+09:00</updated><id>https://two-pack.github.io/2025/06/06/move-to-github-pages</id><content type="html" xml:base="https://two-pack.github.io/2025/06/06/move-to-github-pages.html"><![CDATA[<p>最近Qiitaでしか書いてなかったため、Qiitaに書きづらいものを書くならBloggerなのか、とふと思ってしまいました。
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://two-pack.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://two-pack.github.io/" rel="alternate" type="text/html" /><updated>2025-06-15T18:19:25+09:00</updated><id>https://two-pack.github.io/feed.xml</id><title type="html">Step by Step</title><subtitle></subtitle><entry><title type="html">OpenAI CUAモデルのTesting Agent Demo（を見たメモ）</title><link href="https://two-pack.github.io/2025/06/15/openai-testing-agent-demo.html" rel="alternate" type="text/html" title="OpenAI CUAモデルのTesting Agent Demo（を見たメモ）" /><published>2025-06-15T00:00:00+09:00</published><updated>2025-06-15T00:00:00+09:00</updated><id>https://two-pack.github.io/2025/06/15/openai-testing-agent-demo</id><content type="html" xml:base="https://two-pack.github.io/2025/06/15/openai-testing-agent-demo.html"><![CDATA[<h1 id="はじめに">はじめに</h1>
+<p><a href="https://github.com/openai/openai-testing-agent-demo">Testing Agent Demo</a>
+Open AIの <a href="https://platform.openai.com/docs/models/computer-use-preview">Computer-Using Agent (CUA) モデル</a> を使ったデモ。
+触ってみようと思った結果、Tier3以上でないとそもそもモデルが使えないことが分かって終了！でしたが、ちょっと見たことのメモ。</p>
+
+<h1 id="とりあえずreadme通りやってみる">とりあえずREADME通りやってみる</h1>
+
+<p>サクッと行くと思いましたが、</p>
+<ul>
+  <li>Windows 11</li>
+  <li>Ubuntu 24.04.1 on WSL2</li>
+</ul>
+
+<p>という環境のせいもあってか、以下のあたりがうまくいきませんでした。（深追いせず）</p>
+
+<ul>
+  <li>sample-test-appがそもそも動かずエラーになる。</li>
+  <li>cua-serverでPlaywrightを動かす際に、ディスプレイ無いよエラーになる。
+    <ul>
+      <li>これはヘッドレスにするようにコードを変えれば動いた。</li>
+    </ul>
+  </li>
+  <li>cua-serverは.envを見てくれない。</li>
+</ul>
+
+<p>とはいえ、起動すると以下の感じでテストケースを自然言語で入力する画面が表示されます。
+<img src="/assets/2025-06-15-demo-screenshot-01.png" alt="テストケースの入力画面" /></p>
+
+<p><strong>Variables</strong> は、URLなどを設定する画面です。
+<img src="/assets/2025-06-15-demo-screenshot-02.png" alt="設定画面" /></p>
+
+<p><strong>Submib</strong> すると、テストケースを解釈してテスト手順を作成、それを実行していきます。
+<img src="/assets/2025-06-15-demo-screenshot-03.png" alt="テスト実行画面" /></p>
+
+<p>前述の通り、サンプルアプリが動かなかったこともあり、テストは動いていません。
+別のサンプルアプリでもやってみましたが、今度はモデルのエラーになっていて、これはOpenAIの課金が足りずTier3になっていないので、そもそもCUAのモデルが使える状態じゃなかったという落ちでした。
+<img src="/assets/2025-06-15-model-error.png" alt="モデルエラー" /></p>
+
+<h1 id="実装について">実装について</h1>
+
+<p>動かないのでちょっと実装を見ていた際のメモ。</p>
+
+<h2 id="プロンプト">プロンプト</h2>
+
+<p><a href="https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/lib/constants.ts">https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/lib/constants.ts</a></p>
+
+<p>ここにプロンプトがあります。
+テストケースをテストステップに解釈しなおすプロンプトと、テストステップをCUAに食わせてテストを実行するプロンプトです。
+なるほど、こんな感じでステップに落とすといいのかと思って、Geminiに同じ間でスクリーンショットと合わせて投げてみたらいい感じでした。</p>
+
+<h2 id="playwrightの操作">Playwrightの操作</h2>
+
+<p><a href="https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/handlers/cua-loop-handler.ts">https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/handlers/cua-loop-handler.ts</a>
+<a href="https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/handlers/action-handler.ts">https://github.com/openai/openai-testing-agent-demo/blob/main/cua-server/src/handlers/action-handler.ts</a></p>
+
+<p>この辺で行ってるようで、スクリーンショットを取ってテストステップを繰り返し確認しながら動かしているようです。</p>
+
+<h1 id="というわけで">というわけで</h1>
+
+<p>追加課金したらCUA modelを試してみたいですが、参考にしたプロンプトと <a href="https://github.com/autifyhq/aethr">Aether</a> との組み合わせもやってみたいところ。</p>]]></content><author><name></name></author><summary type="html"><![CDATA[はじめに Testing Agent Demo Open AIの Computer-Using Agent (CUA) モデル を使ったデモ。 触ってみようと思った結果、Tier3以上でないとそもそもモデルが使えないことが分かって終了！でしたが、ちょっと見たことのメモ。]]></summary></entry><entry><title type="html">思い付きでBloggerから移行を開始しました。</title><link href="https://two-pack.github.io/2025/06/06/move-to-github-pages.html" rel="alternate" type="text/html" title="思い付きでBloggerから移行を開始しました。" /><published>2025-06-06T00:00:00+09:00</published><updated>2025-06-06T00:00:00+09:00</updated><id>https://two-pack.github.io/2025/06/06/move-to-github-pages</id><content type="html" xml:base="https://two-pack.github.io/2025/06/06/move-to-github-pages.html"><![CDATA[<p>最近Qiitaでしか書いてなかったため、Qiitaに書きづらいものを書くならBloggerなのか、とふと思ってしまいました。
 で、GitHub Pagesにお引越ししようと思って雑に作業中です。</p>]]></content><author><name></name></author><summary type="html"><![CDATA[最近Qiitaでしか書いてなかったため、Qiitaに書きづらいものを書くならBloggerなのか、とふと思ってしまいました。 で、GitHub Pagesにお引越ししようと思って雑に作業中です。]]></summary></entry><entry><title type="html">RedmineプラグインをGitHub Actionsでテストする</title><link href="https://two-pack.github.io/2020/01/18/redminegithub-actions.html" rel="alternate" type="text/html" title="RedmineプラグインをGitHub Actionsでテストする" /><published>2020-01-18T17:22:00+09:00</published><updated>2020-01-18T17:22:00+09:00</updated><id>https://two-pack.github.io/2020/01/18/redminegithub-actions</id><content type="html" xml:base="https://two-pack.github.io/2020/01/18/redminegithub-actions.html"><![CDATA[<a href="https://qiita.com/two_pack/items/31d159b28663b57614c4" target="_blank">Redmine Advent Calendar 2019</a>の<a href="https://qiita.com/two_pack/items/31d159b28663b57614c4" target="_blank">Qiita</a>で書きました。追っかけで<a href="https://qiita.com/two_pack/items/665680e886889f1a2467" target="_blank">もう一つ</a>。<br />
 Travis-CIで行っていたRedmineプラグインのCIを、GitHub Actionsに変更したものです。<br />
 GitHub Actionsをやってみようというのが動機づけですが、結果的に実行も早かったのでよかったです。<br />
@@ -259,42 +318,4 @@ GitHubに<a href="https://github.com/two-pack/redmine_auto_assign_group" target=
 とりあえず、正規表現のチェック機能が必要と思っています。<br />
 あとは、グループ横断でのルール一覧もあるといいかな、と思ったり、いらないんじゃないかな、と思ったり。<br />
 作ったばかりなので、フィードバックを頂いたら考えていこうかなあと思います。<br />
-<br />]]></content><author><name>ソフトウェア開発にまつわる話</name></author><category term="Redmine" /><category term="Redmine Plugin" /><summary type="html"><![CDATA[Redmine Auto Assign Group Pluginを作りました！ @akipiiさんが既にブログで取り上げてくださっています。ありがたや！ で、ブログ書いてないと気づいた。。。 きっかけ redmine.orgのフォーラムに以下の投稿がありました。 Plugin to automatically assign new users to groups? ユーザーの登録時に自動的にグループを設定したいという要求は、結構昔からあったようです。 上の投稿から参照されているスレッドは2012/04に開始されています。 パッチやプラグインの書き込みがありますが、条件によって別のグループを設定したい、というのが今回の投稿でした。 ユースケースとして挙げられていた、グループごとでアクセス権限を行なうような運用は、規模が大きかったり複数の組織が絡むようなときに、手間が大幅に削減できそうな感じがしました。 他にも思いつかないようなシーンが隠れてそうだなあとも思い、なんか既にありそうな感じ・・・と思ったんでググってもないから、面白そうだし作るか！ということにしました。 使い方 GitHubにインストール方法と簡単な使い方を書きました。 グループの設定画面から、グループごとに正規表現でルールを設定できます。 ユーザーが追加された際に、ルールに合致するとそのグループに追加されます。 今後の方向性 とりあえず、正規表現のチェック機能が必要と思っています。 あとは、グループ横断でのルール一覧もあるといいかな、と思ったり、いらないんじゃないかな、と思ったり。 作ったばかりなので、フィードバックを頂いたら考えていこうかなあと思います。]]></summary></entry><entry><title type="html">RedmineプラグインでMroongaを使うときのテスト</title><link href="https://two-pack.github.io/2017/09/12/redminemroonga.html" rel="alternate" type="text/html" title="RedmineプラグインでMroongaを使うときのテスト" /><published>2017-09-12T07:35:00+09:00</published><updated>2017-09-12T07:35:00+09:00</updated><id>https://two-pack.github.io/2017/09/12/redminemroonga</id><content type="html" xml:base="https://two-pack.github.io/2017/09/12/redminemroonga.html"><![CDATA[<a href="https://github.com/okkez/redmine_full_text_search">Full text search plugin</a>と<a href="https://github.com/two-pack/redmine_xlsx_format_issue_exporter">Redmine XLSX format issue exporter</a>が競合した話。<br />
-パッチのロード順でチケットが表示（issues#show）できなった。<br />
-パッチを提示してもらい、パッチを適用する位置を変更して対処した。<br />
-https://github.com/two-pack/redmine_xlsx_format_issue_exporter/issues/50<br />
-<br />
-ここからが本題。<br />
-いつも開発環境はsqlite3でやっているが、Full text search pluginがMroongaを使用するので、<a href="https://redmine.tokyo/projects/unofficialcooking">Unofficial Redmine CookingのRedmine AnsiblePlaybook Unofficial Cooking Edition（闇鍋版）</a>を使用した。<br />
-すると、<b>rake redmine:plugins:test</b>でRedmine XLSX format issue exporterのテストを実行すると以下のようなエラーが出た。<br />
-<pre>Mysql2::Error: The used table type doesn't support FULLTEXT indexes: CREATE fulltext INDEX `index_issue_contents_on_contents` 
-</pre><br />
-調べて見るとdb/schema.rbにテーブル作成時のオプション指定が入らないことが原因。<br />
-プラグインでは以下のようなmigrateが書かれている。<br />
-<pre class="brush:bash;">create_table :issue_contents, options: "ENGINE=Mroonga" do |t|
-            t.integer :project_id
-            t.integer :issue_id, unique: true, null: false
-            t.string :subject
-            t.text :contents, limit: 16.megabytes
-            t.integer :status_id
-            t.boolean :is_private
-          end
-</pre>対してschema.rbは以下のような感じ。<br />
-<pre class="brush:bash;">create_table "issue_contents", force: :cascade do |t|
-    t.integer "project_id", limit: 4
-    t.integer "issue_id",   limit: 4,          null: false
-    t.string  "subject",    limit: 255
-    t.text    "contents",   limit: 4294967295
-    t.integer "status_id",  limit: 4
-    t.boolean "is_private"
-  end
-
-  add_index "issue_contents", ["contents"], name: "index_issue_contents_on_contee
-nts", type: :fulltext
-</pre><br />
-rakeでテストを実行するの際に、db:test:prepareで一度テーブルが削除されてから、schema.rbを元に作成し直す。<br />
-その際に、schema.rbにはENGINEがMroongaではなくInnoDBになってしまうので、FULLTEXTのインデックスが作れない。<br />
-<br />
-結局、db/tasks/redmine.rakeを書き換えた上で、db:drop -&gt; db:create -&gt; db:migrate -&gt; redmine:plugins:test の順で実行した。<br />
-config/application.rbで<b>config.active_record.schema_format = :sql</b>とするとSQLに書きだされるため大丈夫というのも検索しているとあったが、db/structure.sqlにplugin分が書き込まれてないため、rake taskではテーブルがないとエラーになってだめだった。<br />
-<br />]]></content><author><name>ソフトウェア開発にまつわる話</name></author><category term="Redmine" /><summary type="html"><![CDATA[Full text search pluginとRedmine XLSX format issue exporterが競合した話。 パッチのロード順でチケットが表示（issues#show）できなった。 パッチを提示してもらい、パッチを適用する位置を変更して対処した。 https://github.com/two-pack/redmine_xlsx_format_issue_exporter/issues/50 ここからが本題。 いつも開発環境はsqlite3でやっているが、Full text search pluginがMroongaを使用するので、Unofficial Redmine CookingのRedmine AnsiblePlaybook Unofficial Cooking Edition（闇鍋版）を使用した。 すると、rake redmine:plugins:testでRedmine XLSX format issue exporterのテストを実行すると以下のようなエラーが出た。 Mysql2::Error: The used table type doesn't support FULLTEXT indexes: CREATE fulltext INDEX `index_issue_contents_on_contents` 調べて見るとdb/schema.rbにテーブル作成時のオプション指定が入らないことが原因。 プラグインでは以下のようなmigrateが書かれている。 create_table :issue_contents, options: "ENGINE=Mroonga" do |t| t.integer :project_id t.integer :issue_id, unique: true, null: false t.string :subject t.text :contents, limit: 16.megabytes t.integer :status_id t.boolean :is_private end 対してschema.rbは以下のような感じ。 create_table "issue_contents", force: :cascade do |t| t.integer "project_id", limit: 4 t.integer "issue_id", limit: 4, null: false t.string "subject", limit: 255 t.text "contents", limit: 4294967295 t.integer "status_id", limit: 4 t.boolean "is_private" end]]></summary></entry></feed>
+<br />]]></content><author><name>ソフトウェア開発にまつわる話</name></author><category term="Redmine" /><category term="Redmine Plugin" /><summary type="html"><![CDATA[Redmine Auto Assign Group Pluginを作りました！ @akipiiさんが既にブログで取り上げてくださっています。ありがたや！ で、ブログ書いてないと気づいた。。。 きっかけ redmine.orgのフォーラムに以下の投稿がありました。 Plugin to automatically assign new users to groups? ユーザーの登録時に自動的にグループを設定したいという要求は、結構昔からあったようです。 上の投稿から参照されているスレッドは2012/04に開始されています。 パッチやプラグインの書き込みがありますが、条件によって別のグループを設定したい、というのが今回の投稿でした。 ユースケースとして挙げられていた、グループごとでアクセス権限を行なうような運用は、規模が大きかったり複数の組織が絡むようなときに、手間が大幅に削減できそうな感じがしました。 他にも思いつかないようなシーンが隠れてそうだなあとも思い、なんか既にありそうな感じ・・・と思ったんでググってもないから、面白そうだし作るか！ということにしました。 使い方 GitHubにインストール方法と簡単な使い方を書きました。 グループの設定画面から、グループごとに正規表現でルールを設定できます。 ユーザーが追加された際に、ルールに合致するとそのグループに追加されます。 今後の方向性 とりあえず、正規表現のチェック機能が必要と思っています。 あとは、グループ横断でのルール一覧もあるといいかな、と思ったり、いらないんじゃないかな、と思ったり。 作ったばかりなので、フィードバックを頂いたら考えていこうかなあと思います。]]></summary></entry></feed>
