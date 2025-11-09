@@ -1,11 +1,6 @@
 ---
-layout: page
+layout: redirect
 title: About
 permalink: /about/
+redirect_to: https://two-pack.github.io/profile/
 ---
-
-# Saito
-
-Software developer / QA Engineer
-
-[https://linktr.ee/two_pack](https://linktr.ee/two_pack)
