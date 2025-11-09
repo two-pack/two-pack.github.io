@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    {% if page.redirect_to %}
+    <meta http-equiv="refresh" content="0; url={{ page.redirect_to }}">
+    <link rel="canonical" href="{{ page.redirect_to }}">
+    <script>
+        window.location.href = "{{ page.redirect_to }}";
+    </script>
+    {% endif %}
+</head>
+<body>
+    <p>リダイレクト中...</p>
+    {% if page.redirect_to %}
+    <p>自動的にリダイレクトされない場合は、<a href="{{ page.redirect_to }}">こちらをクリック</a>してください。</p>
+    {% endif %}
+</body>
+</html>
+
