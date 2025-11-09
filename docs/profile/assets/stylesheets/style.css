@@ -49,9 +49,9 @@ body::before {
 }
 
 .container {
-    max-width: 700px;
+    max-width: 850px;
     min-width: 300px;
-    width: max(300px, min(100%, 700px));
+    width: max(300px, min(100%, 850px));
     background: var(--bg-main);
     border: 5px solid var(--accent-burgundy);
     padding: 50px 40px;
@@ -141,7 +141,7 @@ body::before {
 
 .social-links {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px;
     margin-top: 50px;
 }
@@ -151,7 +151,7 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 10px;
     background: rgba(20, 20, 20, 0.8);
     border: 4px solid var(--accent-burgundy);
     text-decoration: none;
@@ -183,6 +183,10 @@ body::before {
 
 .social-link:nth-child(5) {
     transform: rotate(-0.4deg);
+}
+
+.social-link:nth-child(6) {
+    transform: rotate(0.3deg);
 }
 
 .social-link::before {
@@ -250,6 +254,16 @@ body::before {
     background: rgba(20, 20, 20, 0.95);
 }
 
+.social-link:nth-child(6):hover {
+    transform: translateY(-3px) rotate(0.3deg) !important;
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 4px 8px rgba(0, 0, 0, 0.8),
+        0 0 0 2px var(--accent-gold);
+    border-color: var(--accent-gold);
+    background: rgba(20, 20, 20, 0.95);
+}
+
 .social-link:focus {
     outline: 3px solid var(--accent-gold);
     outline-offset: 2px;
@@ -269,12 +283,13 @@ body::before {
 }
 
 .social-label {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--text-main);
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
 }
 
 .social-link:hover .social-label {
@@ -283,20 +298,31 @@ body::before {
 }
 
 /* Icon colors */
-.icon-x {
-    fill: var(--text-main);
+.icon-x,
+img.icon-x {
+    filter: brightness(0) invert(1);
 }
 
 .social-link[href*="x.com"]:hover .icon-x {
-    fill: var(--text-main);
+    filter: brightness(0) invert(1);
 }
 
-.icon-github {
-    fill: var(--text-main);
+.icon-email,
+img.icon-email {
+    filter: brightness(0) invert(1);
+}
+
+.social-link[href*="mailto"]:hover .icon-email {
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(30deg);
+}
+
+.icon-github,
+img.icon-github {
+    filter: brightness(0) invert(1);
 }
 
 .social-link[href*="github.com"]:hover .icon-github {
-    fill: var(--accent-gold);
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(30deg);
 }
 
 .icon-qiita {
@@ -307,20 +333,37 @@ body::before {
     fill: var(--accent-gold);
 }
 
-.icon-oncyber {
+.icon-oncyber,
+img.icon-oncyber {
     /* SVG file already has white fill */
+    width: 36px;
+    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .social-link[href*="oncyber"]:hover .icon-oncyber {
     filter: sepia(1) saturate(5) hue-rotate(30deg);
 }
 
-.icon-blog {
-    fill: var(--text-main);
+.social-link[href*="oncyber"] {
+    padding: 12px 8px;
+}
+
+.social-link[href*="oncyber"] .social-label {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.icon-blog,
+img.icon-blog {
+    filter: brightness(0) invert(1);
 }
 
 .social-link[href*="two-pack.github.io"]:hover .icon-blog {
-    fill: var(--accent-burgundy);
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(330deg);
 }
 
 /* Responsive design */
@@ -375,11 +418,19 @@ body::before {
     }
 
     .social-link:nth-child(4) {
-        grid-column: 2 / 4;
+        grid-column: 1 / 3;
     }
 
     .social-link:nth-child(5) {
-        grid-column: 4 / 6;
+        grid-column: 3 / 5;
+    }
+
+    .social-link:nth-child(6) {
+        grid-column: 5 / 7;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .social-link:nth-child(1) {
@@ -402,6 +453,10 @@ body::before {
         transform: rotate(-0.4deg);
     }
 
+    .social-link:nth-child(6) {
+        transform: rotate(0.3deg);
+    }
+
     .social-link {
         padding: 8px;
         aspect-ratio: 1 / 1;
@@ -409,6 +464,8 @@ body::before {
         justify-content: center;
         align-items: center;
         gap: 0;
+        min-width: 0;
+        width: 100%;
     }
 
     .social-link:nth-child(1):hover {
@@ -431,10 +488,41 @@ body::before {
         transform: translateY(-3px) rotate(0.7deg) !important;
     }
 
+    .social-link:nth-child(6):hover {
+        transform: translateY(-3px) rotate(0.3deg) !important;
+    }
+
     .social-icon {
         width: 36px;
         height: 36px;
         margin-bottom: 15px;
+    }
+
+    .icon-oncyber,
+    img.icon-oncyber,
+    .social-link:nth-child(6) .social-icon,
+    .social-link:nth-child(6) img.social-icon,
+    .social-link[href*="oncyber"] .social-icon,
+    .social-link[href*="oncyber"] img {
+        width: 36px !important;
+        height: 36px !important;
+        max-width: 36px !important;
+        max-height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+    }
+
+    .social-link[href*="oncyber"] {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        aspect-ratio: 1 / 1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
 
     .social-label {
@@ -501,6 +589,15 @@ body::before {
         transform: rotate(0.7deg);
     }
 
+    .social-link:nth-child(6) {
+        grid-column: 2 / 3;
+        transform: rotate(0.3deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .social-link {
         padding: 8px;
         background: rgba(20, 20, 20, 0.8);
@@ -514,6 +611,9 @@ body::before {
         gap: 0;
         aspect-ratio: 1 / 1;
         min-height: auto;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .social-link:nth-child(1):hover {
@@ -536,6 +636,10 @@ body::before {
         transform: translateY(-3px) rotate(0.7deg) !important;
     }
 
+    .social-link:nth-child(6):hover {
+        transform: translateY(-3px) rotate(0.3deg) !important;
+    }
+
     .social-link::before {
         display: block;
     }
@@ -545,6 +649,33 @@ body::before {
         height: 32px;
         margin-bottom: 10px;
         flex-shrink: 0;
+    }
+
+    .icon-oncyber,
+    img.icon-oncyber,
+    .social-link:nth-child(6) .social-icon,
+    .social-link:nth-child(6) img.social-icon,
+    .social-link[href*="oncyber"] .social-icon,
+    .social-link[href*="oncyber"] img {
+        width: 32px !important;
+        height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
+        display: block !important;
+    }
+
+    .social-link[href*="oncyber"] {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        aspect-ratio: 1 / 1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
 
     .social-label {
