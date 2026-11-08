@@ -28,7 +28,16 @@ Markdown本文...
 ## ローカル確認
 
 ```
-cd docs && bundle exec jekyll serve --livereload
+cd docs && bundle install && bundle exec jekyll serve --livereload
 ```
 
 → http://127.0.0.1:4000/
+
+# 依存関係の更新
+
+- ビルドは GitHub Pages の標準ビルド（`actions/jekyll-build-pages`）で、Jekyll は 3.10.0 に固定されている
+- `docs/Gemfile.lock` はコミットする。Dependabot が gem の実バージョンを見て、脆弱性を検出するために必要
+- workflow の `uses:` を変えたら `gh actions-lock` を実行し、`.github/workflows/actions.lock` を更新してコミットする
+  - 拡張機能は `gh extension install github/gh-actions-lock` で入れる
+  - Dependabot が出すアクション更新のプルリクエストでは、ロックファイルも一緒に更新される
+- `verify-lockfile` workflow が、ロックファイルと workflow のずれをプルリクエストで検出する
