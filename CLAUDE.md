@@ -35,8 +35,11 @@ cd docs && bundle install && bundle exec jekyll serve --livereload
 
 # 依存関係の更新
 
-- ビルドは GitHub Pages の標準ビルド（`actions/jekyll-build-pages`）で、Jekyll は 3.10.0 に固定されている
-- `docs/Gemfile.lock` はコミットする。Dependabot が gem の実バージョンを見て、脆弱性を検出するために必要
+- ビルドは自前の workflow で行う。`ruby/setup-ruby` と `bundle exec jekyll build` で、`docs/Gemfile.lock` にある gem をそのまま使う
+  - `actions/jekyll-build-pages` は、コンテナ画像の gem が2024年8月のまま更新されておらず、ロックした gem が使われないため、やめた
+  - Jekyll は 3.10.0 のまま。`github-pages` gem が固定している
+- `docs/Gemfile.lock` はコミットする。本番ビルドで使う gem の版を決め、Dependabot が脆弱性を検出するためにも必要
+- 記事の URL は日付を含む。ビルドのタイムゾーンで日付がずれるため、ローカルで出力を比べるときは `TZ=UTC` を付ける
 - workflow の `uses:` を変えたら `gh actions-lock` を実行し、`.github/workflows/actions.lock` を更新してコミットする
   - 拡張機能は `gh extension install github/gh-actions-lock` で入れる
   - Dependabot が出すアクション更新のプルリクエストでは、ロックファイルも一緒に更新される
